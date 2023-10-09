@@ -24,7 +24,6 @@ export default function Page() {
                 </div>
 
                 <div className="home__header-content">
-                    <h1 className="mb-4">Login</h1>
                     <LoginForm />
                 </div>
             </div>

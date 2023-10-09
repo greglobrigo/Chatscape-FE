@@ -11,6 +11,7 @@ type ForgotPasswordProps = {
 export default function ForgotPassword({ emailRef, handleSubmit, setAction }: ForgotPasswordProps) {
     return (
         <div className="w-full max-w-xs">
+            <h2 className="mb-4 text-center">Forgot Password</h2>
             <form className="bg-white shadow-md rounded px-8 pt-6 pb-8">
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -25,8 +26,8 @@ export default function ForgotPassword({ emailRef, handleSubmit, setAction }: Fo
                         Send Email
                     </button>
                 </div>
-                <div onClick={() => setAction({ login: true, register: false, forgotPassword: false })} className="flex items-center justify-center">
-                    <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+                <div onClick={() => setAction({ login: true, register: false, forgotPassword: false })} className="flex items-center justify-center cursor-pointer">
+                    <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
                         Don't have an account? Sign Up
                     </a>
                 </div>

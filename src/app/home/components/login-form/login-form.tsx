@@ -48,7 +48,7 @@ function LoginForm() {
         action.forgotPassword ?
           <ForgotPassword emailRef={emailRef} handleSubmit={handleSubmit} setAction={setAction} />
           : action.register ?
-            <Register emailRef={emailRef} passwordRef={passwordRef} confirmPasswordRef={confirmPasswordRef} nameRef={nameRef} handleRef={handleRef} handleSubmit={handleSubmit} />
+            <Register emailRef={emailRef} passwordRef={passwordRef} confirmPasswordRef={confirmPasswordRef} nameRef={nameRef} handleRef={handleRef} handleSubmit={handleSubmit} setAction={setAction} />
             : <Login emailRef={emailRef} passwordRef={passwordRef} handleSubmit={handleSubmit} setAction={setAction}/>
       }
     </>
