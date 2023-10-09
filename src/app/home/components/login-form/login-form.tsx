@@ -1,6 +1,5 @@
 'use client'
 import { useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { AxiosResponse, AxiosError } from 'axios';
 import Login from '../login-form/login';
@@ -10,7 +9,6 @@ import ConfirmEmail from './confirm-email';
 import ConfirmForgottenPassword from './confirm-forgotten-password';
 
 function LoginForm() {
-  const router = useRouter();
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
