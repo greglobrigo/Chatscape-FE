@@ -1,6 +1,5 @@
 type ConfirmEmailProps = {
     emailRef: React.RefObject<HTMLInputElement>;
-    handleSubmit: React.MouseEventHandler<HTMLButtonElement>;
     setAction: React.Dispatch<React.SetStateAction<{
         login: boolean;
         register: boolean;
@@ -10,7 +9,7 @@ type ConfirmEmailProps = {
     }>>;
 }
 
-export default function ConfirmEmail({ emailRef, handleSubmit, setAction }: ConfirmEmailProps) {
+export default function ConfirmEmail({ emailRef, setAction }: ConfirmEmailProps) {
     return (
         <div className="w-full max-w-xs bg-gradient-to-r from-blue-600 via-blue-400 to-white">
             <h2 className="mb-4 text-center">Confirm Email</h2>
@@ -23,7 +22,7 @@ export default function ConfirmEmail({ emailRef, handleSubmit, setAction }: Conf
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Email" />
                 </div>
                 <div className="flex flex-col items-center justify-between mb-4">
-                    <button onClick={handleSubmit}
+                    <button onClick={()=>console.log('Confirm Email')}
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4" type="button">
                         Send Email
                     </button>

@@ -25,39 +25,18 @@ function LoginForm() {
     confirmForgottenPassword: false
   })
 
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
-    console.log('clicked')
-    const email = emailRef.current?.value;
-    const password = passwordRef.current?.value;
-    await axios({
-      method: 'post',
-      url: 'http://localhost:3001/users/login',
-      data: {
-        email: email,
-        password: password
-      }
-    }).then((res: AxiosResponse) => {
-      if (res.data.status === 'success' && res.data.token && res.data.message === 'Login Successful') {
-        router.push('/chat');
-      }
-    }).catch((err: AxiosError) => {
-      console.log(err.response?.data);
-    })
-  }
-
   return (
     <>
       {
         action.forgotPassword ?
-          <ForgotPassword emailRef={emailRef} handleSubmit={handleSubmit} setAction={setAction} />
+          <ForgotPassword emailRef={emailRef} setAction={setAction} />
           : action.register ?
-            <Register emailRef={emailRef} passwordRef={passwordRef} confirmPasswordRef={confirmPasswordRef} nameRef={nameRef} handleRef={handleRef} handleSubmit={handleSubmit} setAction={setAction} />
+            <Register emailRef={emailRef} passwordRef={passwordRef} confirmPasswordRef={confirmPasswordRef} nameRef={nameRef} handleRef={handleRef} setAction={setAction} />
             : action.confirmEmail ?
-              <ConfirmEmail emailRef={emailRef} handleSubmit={handleSubmit} setAction={setAction} />
+              <ConfirmEmail emailRef={emailRef} setAction={setAction} />
               : action.confirmForgottenPassword ?
-                <ConfirmForgottenPassword emailRef={emailRef} handleSubmit={handleSubmit} setAction={setAction} />
-              : <Login emailRef={emailRef} passwordRef={passwordRef} handleSubmit={handleSubmit} setAction={setAction} />
+                <ConfirmForgottenPassword emailRef={emailRef} setAction={setAction} />
+                : <Login emailRef={emailRef} passwordRef={passwordRef} setAction={setAction} />
       }
     </>
   );

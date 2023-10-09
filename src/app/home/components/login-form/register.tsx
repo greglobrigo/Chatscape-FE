@@ -4,7 +4,6 @@ type RegisterProps = {
     passwordRef: React.RefObject<HTMLInputElement>;
     confirmPasswordRef: React.RefObject<HTMLInputElement>;
     handleRef: React.RefObject<HTMLInputElement>;
-    handleSubmit: React.MouseEventHandler<HTMLButtonElement>;
     setAction: React.Dispatch<React.SetStateAction<{
         login: boolean;
         register: boolean;
@@ -14,7 +13,7 @@ type RegisterProps = {
     }>>;
 }
 
-export default function Register({ emailRef, passwordRef, nameRef, handleRef, confirmPasswordRef, handleSubmit, setAction }: RegisterProps) {
+export default function Register({ emailRef, passwordRef, nameRef, handleRef, confirmPasswordRef, setAction }: RegisterProps) {
     return (
         <>
             <div className="w-full max-w-xs bg-gradient-to-r from-blue-600 via-blue-400 to-white">
@@ -56,7 +55,7 @@ export default function Register({ emailRef, passwordRef, nameRef, handleRef, co
                             className="shadow appearance-none borde rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************" />
                     </div>
                     <div className="flex flex-col items-center justify-between mb-4">
-                        <button onClick={handleSubmit}
+                        <button onClick={()=>console.log('Register')}
                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4" type="button">
                             Sign Up
                         </button>
