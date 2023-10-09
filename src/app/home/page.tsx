@@ -15,19 +15,19 @@ export default function Page() {
                 <div className="home__header-content">
                     <div className="bg color-[black] text-center">
                         <h1>Welcome to Chatscape!</h1>
-                        <div className="justify-center">
-                        <Image src="/home.svg" alt="home" width={500} height={500} />
+                        <div className="flex justify-center">
+                            <a href="https://storyset.com/people" target="_blank" rel="noopener noreferrer">
+                                <Image src="/home.svg" alt="home" width={500} height={500} />
+                            </a>
                         </div>
                     </div>
                 </div>
 
                 <div className="home__header-content">
-                    <h1>Login</h1>
-                    {/* write me a login and logout input */}
+                    <h1 className="mb-4">Login</h1>
                     <LoginForm />
                 </div>
             </div>
         </>
     )
-    //<a href="https://storyset.com/people">People illustrations by Storyset</a>
 }
