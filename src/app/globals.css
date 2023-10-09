@@ -42,37 +42,33 @@ a {
 }
 
 .gradient__bg {
-  background:-moz-radial-gradient(circle at 3% 25%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 25%);
+  /* global 92%+ browsers support */
+  background:radial-gradient(circle at 3% 25%, rgb(157, 174, 192) 0%, rgba(62, 139, 255, 0.818) 25%);
 
   /* safari 5.1+,chrome 10+ */
-  background:-webkit-radial-gradient(circle at 3% 25%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 25%);
+  background:-webkit-radial-gradient(circle at 3% 25%, rgb(157, 174, 192) 0%, rgba(62, 139, 255, 0.818) 25%);
 
   /* opera 11.10+ */
-  background:-o-radial-gradient(circle at 3% 25%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 25%);
+  background:-moz-radial-gradient(circle at 3% 25%, rgb(157, 174, 192) 0%, rgba(62, 139, 255, 0.818) 25%);
 
   /* ie 10+ */
-  background:-ms-radial-gradient(circle at 3% 25%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 25%);
-
-  /* global 92%+ browsers support */
-  background:radial-gradient(circle at 3% 25%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 25%);
+  background:-o-radial-gradient(circle at 3% 25%, rgb(157, 174, 192) 0%, rgba(62, 139, 255, 0.818) 25%);
 }
 
 .gradient__bg__center {
-  background:-moz-radial-gradient(circle at 50% 50%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 60%);
-
-  /* safari 5.1+,chrome 10+ */
-  background:-webkit-radial-gradient(circle at 50% 50%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 60%);
-
-  /* opera 11.10+ */
-  background:-o-radial-gradient(circle at 50% 50%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 60%);
-
-  /* ie 10+ */
-  background:-ms-radial-gradient(circle at 50% 50%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 60%);
 
   /* global 92%+ browsers support */
-  background:radial-gradient(circle at 50% 50%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 60%);
+  background:radial-gradient(circle at 50% 50%, rgb(157, 174, 192) 0%, rgba(62, 139, 255, 0) 60%);
 
-  background: radial-gradient(circle at 50% 50%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 60%);
+  /* opera 11.10+ */
+  background:-moz-radial-gradient(circle at 50% 50%, rgb(157, 174, 192) 0%, rgba(62, 139, 255, 0) 60%);
+
+  /* safari 5.1+,chrome 10+ */
+  background:-webkit-radial-gradient(circle at 50% 50%, rgb(157, 174, 192) 0%, rgba(62, 139, 255, 0) 60%);
+
+  /* ie 10+ */
+  background:-o-radial-gradient(circle at 50% 50%, rgb(157, 174, 192) 0%, rgba(62, 139, 255, 0) 60%);
+
 }
 
 .gradient__bg__left {

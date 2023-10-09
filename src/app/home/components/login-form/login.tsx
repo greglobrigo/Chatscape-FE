@@ -1,17 +1,17 @@
 type LoginProps = {
-    emailRef: React.RefObject<HTMLInputElement>;
-    passwordRef: React.RefObject<HTMLInputElement>;
-    handleSubmit: React.MouseEventHandler<HTMLButtonElement>;
-    setAction: React.Dispatch<React.SetStateAction<{
-        login: boolean;
-        register: boolean;
-        forgotPassword: boolean;
-    }>>;
+  emailRef: React.RefObject<HTMLInputElement>;
+  passwordRef: React.RefObject<HTMLInputElement>;
+  handleSubmit: React.MouseEventHandler<HTMLButtonElement>;
+  setAction: React.Dispatch<React.SetStateAction<{
+    login: boolean;
+    register: boolean;
+    forgotPassword: boolean;
+  }>>;
 }
 
-export default function Login({emailRef, passwordRef, handleSubmit, setAction}: LoginProps){
-    return(
-        <div className="w-full max-w-xs">
+export default function Login({ emailRef, passwordRef, handleSubmit, setAction }: LoginProps) {
+  return (
+      <div className="w-full max-w-xs bg-gradient-to-r from-blue-600 via-blue-400 to-white">
         <h1 className="mb-4 text-center">Login</h1>
         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8">
           <div className="mb-4">
@@ -28,7 +28,7 @@ export default function Login({emailRef, passwordRef, handleSubmit, setAction}: 
             <input ref={passwordRef} name="password"
               className="shadow appearance-none borde rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************" />
           </div>
-          <div onClick={() => setAction({login: false, register: false, forgotPassword: true})} className="flex flex-col items-center justify-center mb-4 cursor-pointer">
+          <div onClick={() => setAction({ login: false, register: false, forgotPassword: true })} className="flex flex-col items-center justify-center mb-4 cursor-pointer">
             <button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4" type="button">
               Sign In
             </button>
@@ -36,12 +36,12 @@ export default function Login({emailRef, passwordRef, handleSubmit, setAction}: 
               Forgot Password?
             </a>
           </div>
-          <div onClick={() => setAction({login: false, register: true, forgotPassword: false})} className="flex items-center justify-center cursor-pointer">
+          <div onClick={() => setAction({ login: false, register: true, forgotPassword: false })} className="flex items-center justify-center cursor-pointer">
             <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
               Don't have an account? Sign Up
             </a>
           </div>
         </form>
       </div>
-    )
+  )
 }

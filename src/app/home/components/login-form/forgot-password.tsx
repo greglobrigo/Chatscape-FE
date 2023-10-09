@@ -10,7 +10,7 @@ type ForgotPasswordProps = {
 
 export default function ForgotPassword({ emailRef, handleSubmit, setAction }: ForgotPasswordProps) {
     return (
-        <div className="w-full max-w-xs">
+        <div className="w-full max-w-xs bg-gradient-to-r from-blue-600 via-blue-400 to-white">
             <h2 className="mb-4 text-center">Forgot Password</h2>
             <form className="bg-white shadow-md rounded px-8 pt-6 pb-8">
                 <div className="mb-4">

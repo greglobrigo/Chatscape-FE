@@ -6,7 +6,7 @@ import './navbar.css';
 export default function Navbar () {
 
   return (
-    <div className="gpt3__navbar">
+    <div className="gpt3__navbar absolute top-0">
       <div className="gpt3__navbar-links">
         <div className="gpt3__navbar-links_logo">
           <h1>glxd</h1>
