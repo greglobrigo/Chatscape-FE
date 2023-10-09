@@ -1,4 +1,4 @@
-type ForgotPasswordProps = {
+type confirmForgottenPassword = {
     emailRef: React.RefObject<HTMLInputElement>;
     handleSubmit: React.MouseEventHandler<HTMLButtonElement>;
     setAction: React.Dispatch<React.SetStateAction<{
@@ -10,10 +10,10 @@ type ForgotPasswordProps = {
     }>>;
 }
 
-export default function ForgotPassword({ emailRef, handleSubmit, setAction }: ForgotPasswordProps) {
+export default function confirmForgottenPassword({ emailRef, handleSubmit, setAction }: confirmForgottenPassword) {
     return (
         <div className="w-full max-w-xs bg-gradient-to-r from-blue-600 via-blue-400 to-white">
-            <h2 className="mb-4 text-center">Forgot Password</h2>
+            <h2 className="mb-4 text-center">Confirm Forgotten Password</h2>
             <form className="bg-white shadow-md rounded px-8 pt-6 pb-8">
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2">

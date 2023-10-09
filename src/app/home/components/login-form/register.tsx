@@ -9,6 +9,8 @@ type RegisterProps = {
         login: boolean;
         register: boolean;
         forgotPassword: boolean;
+        confirmEmail: boolean;
+        confirmForgottenPassword: boolean;
     }>>;
 }
 
@@ -59,7 +61,7 @@ export default function Register({ emailRef, passwordRef, nameRef, handleRef, co
                             Sign Up
                         </button>
                     </div>
-                    <div onClick={() => setAction({ login: true, register: false, forgotPassword: false })} className="flex items-center justify-center cursor-pointer">
+                    <div onClick={() => setAction({ login: true, register: false, forgotPassword: false, confirmEmail: false, confirmForgottenPassword: false })} className="flex items-center justify-center cursor-pointer">
                         <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
                             Already have an account? Sign In
                         </a>

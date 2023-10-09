@@ -6,6 +6,8 @@ import { AxiosResponse, AxiosError } from 'axios';
 import Login from '../login-form/login';
 import Register from '../login-form/register';
 import ForgotPassword from '../login-form/forgot-password';
+import ConfirmEmail from './confirm-email';
+import ConfirmForgottenPassword from './confirm-forgotten-password';
 
 function LoginForm() {
   const router = useRouter();
@@ -18,7 +20,9 @@ function LoginForm() {
   const [action, setAction] = useState({
     login: true,
     register: false,
-    forgotPassword: false
+    forgotPassword: false,
+    confirmEmail: false,
+    confirmForgottenPassword: false
   })
 
   const handleSubmit = async (event: any) => {
@@ -49,7 +53,11 @@ function LoginForm() {
           <ForgotPassword emailRef={emailRef} handleSubmit={handleSubmit} setAction={setAction} />
           : action.register ?
             <Register emailRef={emailRef} passwordRef={passwordRef} confirmPasswordRef={confirmPasswordRef} nameRef={nameRef} handleRef={handleRef} handleSubmit={handleSubmit} setAction={setAction} />
-            : <Login emailRef={emailRef} passwordRef={passwordRef} handleSubmit={handleSubmit} setAction={setAction}/>
+            : action.confirmEmail ?
+              <ConfirmEmail emailRef={emailRef} handleSubmit={handleSubmit} setAction={setAction} />
+              : action.confirmForgottenPassword ?
+                <ConfirmForgottenPassword emailRef={emailRef} handleSubmit={handleSubmit} setAction={setAction} />
+              : <Login emailRef={emailRef} passwordRef={passwordRef} handleSubmit={handleSubmit} setAction={setAction} />
       }
     </>
   );
