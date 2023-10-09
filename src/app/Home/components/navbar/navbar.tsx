@@ -13,25 +13,25 @@ export default function Navbar () {
           <h1>glxd</h1>
         </div>
         <div className="gpt3__navbar-links_container">
-          <p><a href="#home">Home</a></p>
-          <p><a href="#about">About</a></p>
-          <p><a href="#possibility">Projects</a></p>
-          <p><a href="#features">Contact</a></p>
-          <p><a href="#blog">Resume</a></p>
+          <p><a href="#home"></a></p>
+          <p><a href="#about"></a></p>
+          <p><a href="#possibility"></a></p>
+          <p><a href="#features"></a></p>
+          <p><a href="#blog"></a></p>
         </div>
       </div>
       <div className="gpt3__navbar-menu">
         {toggleMenu
-          ? <RiCloseLine color="#fff" size={27} onClick={() => setToggleMenu(false)} />
-          : <RiMenu3Line color="#fff" size={27} onClick={() => setToggleMenu(true)} />}
+          ? <RiCloseLine className="invisible" color="#fff" size={27} onClick={() => setToggleMenu(false)} />
+          : <RiMenu3Line className="invisible" color="#fff" size={27} onClick={() => setToggleMenu(true)} />}
         {toggleMenu && (
         <div className="gpt3__navbar-menu_container scale-up-center">
           <div className="gpt3__navbar-menu_container-links">
-            <p><a href="#home">Home</a></p>
-            <p><a href="#about">About</a></p>
-            <p><a href="#possibility">Projects</a></p>
-            <p><a href="#features">Contact</a></p>
-            <p><a href="#blog">Resume</a></p>
+            <p><a href="#home"></a></p>
+            <p><a href="#about"></a></p>
+            <p><a href="#possibility"></a></p>
+            <p><a href="#features"></a></p>
+            <p><a href="#blog"></a></p>
           </div>
         </div>
         )}

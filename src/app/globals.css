@@ -1,27 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --font-family: 'Manrope', sans-serif;
+  --gradient-text: linear-gradient(89.97deg, #19e8e2 1.84%, #3d71df 102.67%);
+  --gradient-text2: linear-gradient(89.97deg, #81AFDD 1.84%, #60ec14 102.67%);
+  --gradient-text3: linear-gradient(89.97deg, #AE67FA 1.84%, #F49867 102.67%);
+  --gradient-bar: linear-gradient(103.22deg, #AE67FA -13.86%, #F49867 99.55%);
+  --color-bg: #dfdfdf;
+  --color-footer : #031B34;
+  --color-blog: #042c54;
+  --color-text: #81AFDD;
+  --color-subtext: #FF8A71;
+  --card-height: auto;
+  --card-width: calc(var(--card-height) / 1.2)
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+@property --rotate {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: var(--color-bg);
+}
+
+a {
+  color: unset;
+  text-decoration: none;
+}
+
+.gradient__bg {
+  background:-moz-radial-gradient(circle at 3% 25%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 25%);
+
+  /* safari 5.1+,chrome 10+ */
+  background:-webkit-radial-gradient(circle at 3% 25%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 25%);
+
+  /* opera 11.10+ */
+  background:-o-radial-gradient(circle at 3% 25%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 25%);
+
+  /* ie 10+ */
+  background:-ms-radial-gradient(circle at 3% 25%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 25%);
+
+  /* global 92%+ browsers support */
+  background:radial-gradient(circle at 3% 25%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 25%);
+}
+
+.gradient__bg__center {
+  background:-moz-radial-gradient(circle at 50% 50%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 60%);
+
+  /* safari 5.1+,chrome 10+ */
+  background:-webkit-radial-gradient(circle at 50% 50%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 60%);
+
+  /* opera 11.10+ */
+  background:-o-radial-gradient(circle at 50% 50%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 60%);
+
+  /* ie 10+ */
+  background:-ms-radial-gradient(circle at 50% 50%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 60%);
+
+  /* global 92%+ browsers support */
+  background:radial-gradient(circle at 50% 50%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 60%);
+
+  background: radial-gradient(circle at 50% 50%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 60%);
+}
+
+.gradient__bg__left {
+  background: radial-gradient(circle at 5% 50%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 15%);
+}
+
+.gradient__text {
+  background: var(--gradient-text);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+.gradient__text2 {
+  background: var(--gradient-text2);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient__text3 {
+  background: var(--gradient-text3);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section__padding {
+  padding: 4rem 6rem;
+}
+
+.section__margin {
+  margin: 4rem 6rem;
+}
+
+.breathe {
+  background: linear-gradient(90deg, #F49867, #F49867, #19e8e2, #3d71df, #81AFDD, #60ec14, #F49867, #8167f4);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  animation: gradient 10s linear infinite;
+}
+
+@keyframes gradient {
+  0% {
+      background-position: 0% 20%;
+  }
+  10% {
+      background-position: 20% 40%;
+  }
+  20% {
+      background-position: 40% 60%;
+  }
+  30% {
+      background-position: 60% 80%;
+  }
+  40% {
+      background-position: 80% 100%;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+
+  .gradient__bg__left {
+    background: radial-gradient(circle at 10% 40%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 20%);
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .gradient__bg__left {
+    background: radial-gradient(circle at 10% 30%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 15%);
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .section__padding {
+    padding: 4rem;
+  }
+
+  .section__margin {
+    margin: 4rem;
+  }
+
+  .gradient__bg__left {
+    background: radial-gradient(circle at 5% 30%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 35%);
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .section__padding {
+    padding: 4rem 2rem;
+  }
+
+  .section__margin {
+    margin: 4rem 2rem;
+  }
 }
