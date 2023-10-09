@@ -1,32 +1,36 @@
-'use client';
+'use client'
 import { useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { AxiosResponse, AxiosError } from 'axios';
 
-
 function LoginForm() {
+  const router = useRouter();
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
-    const emailRef = useRef<HTMLInputElement>(null);
-    const passwordRef = useRef<HTMLInputElement>(null);
-
-     const handleSubmit = async (event: any) => {
-        event.preventDefault();
-        console.log('clicked')
-        const email = emailRef.current?.value;
-        const password = passwordRef.current?.value;
-        await axios({
-            method: 'post',
-            url: 'http://localhost:3001/users/login',
-            data: {
-                email: email,
-                password: password
-            }
-        }).then((res:AxiosResponse) => {
-            console.log(res.data);
-        }).catch((err:AxiosError) => {
-            console.log(err.response?.data);
-        })
-    }
+   const handleSubmit = async (event: any) => {
+    event.preventDefault();
+    console.log('clicked')
+    const email = emailRef.current?.value;
+    const password = passwordRef.current?.value;
+    await axios({
+      method: 'post',
+      url: 'http://localhost:3001/users/login',
+      data: {
+        email: email,
+        password: password
+      }
+    }).then((res:AxiosResponse) => {
+      if (res.data.status === 'success' && res.data.token && res.data.message === 'Login Successful') {
+        console.log(res.data);
+        console.log('passed')
+        router.push('/chat');
+      }
+    }).catch((err:AxiosError) => {
+      console.log(err.response?.data);
+    })
+  }
 
     return (
         <div className="w-full max-w-xs">

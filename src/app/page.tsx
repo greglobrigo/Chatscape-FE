@@ -1,9 +1,6 @@
-import Home from './Home'
+import { redirect } from 'next/navigation';
+import Page from './page';
 
-export default function Main() {
-  return (
-   <>
-   <Home/>
-   </>
-  )
+export default function App() {
+  return redirect('/home')
 }

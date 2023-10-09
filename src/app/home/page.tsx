@@ -6,7 +6,7 @@ import Image from 'next/image'
 import LoginForm from "./components/login-form/login-form";
 
 
-export default function Home() {
+export default function Page() {
 
     return (
         <>
