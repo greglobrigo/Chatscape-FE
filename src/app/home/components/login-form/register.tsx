@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 
 type RegisterProps = {
     emailRef: React.RefObject<HTMLInputElement>;
@@ -18,7 +17,6 @@ type RegisterProps = {
 }
 
 export default function Register({ emailRef, passwordRef, nameRef, handleRef, confirmPasswordRef, setAction }: RegisterProps) {
-    const router = useRouter();
     const [errormessage, setErrorMessage] = useState<string>('');
 
     const handleRegister = async () => {
@@ -110,14 +108,14 @@ export default function Register({ emailRef, passwordRef, nameRef, handleRef, co
                         <input ref={handleRef} name="handle"
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="@handle" />
                     </div>
-                    <div className="mb-6">
+                    <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
                             Password
                         </label>
                         <input ref={passwordRef} name="password"
                             className="shadow appearance-none borde rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************" />
                     </div>
-                    <div className="mb-6">
+                    <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
                             Password Confirmation
                         </label>
