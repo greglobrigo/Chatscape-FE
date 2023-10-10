@@ -1,7 +1,5 @@
 'use client'
 import { useRef, useState } from 'react';
-import axios from 'axios';
-import { AxiosResponse, AxiosError } from 'axios';
 import Login from '../login-form/login';
 import Register from '../login-form/register';
 import ForgotPassword from '../login-form/forgot-password';
