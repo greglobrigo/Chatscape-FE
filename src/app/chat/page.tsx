@@ -54,9 +54,11 @@ export default function Page() {
             <div className='flex flex-col'>
                 <Header />
                 <div className="flex shadow-lg rounded-lg bg-white">
-                    <RightSideBar />
+                    <LeftSideBar
+                    chats={chats}
+                    />
                     <MainChat />
-                    <LeftSideBar />
+                    <RightSideBar />
                 </div>
             </div>
         </>
