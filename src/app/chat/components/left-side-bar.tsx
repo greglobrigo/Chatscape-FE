@@ -8,10 +8,9 @@ type LeftSideBarProps = {
 export default function LeftSideBar({ chats }: LeftSideBarProps) {
     console.log(chats);
     return (
-        <div id="r-sidebar" className="hidden sm:flex sm:flex-col sm:min-w-[100px] md:flex md:flex-col md:min-w-[300px] lg:w-2/6 bg-gray-300 h-[90vh] overflow-y-auto
-        ">
+        <div id="r-sidebar" className="hidden sm:flex sm:flex-col sm:min-w-[100px] md:flex md:flex-col md:min-w-[300px] lg:w-2/6 bg-gray-300 h-[90vh] overflow-y-auto">
 
-            <div className="flex flex-col w-full border-r-2 overflow-y-auto">
+            <div className="flex flex-col w-full border-r-2">
                 <div className="border-b-2 py-4 px-2">
                     <input
                         type="text"
