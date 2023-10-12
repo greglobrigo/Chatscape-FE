@@ -18,7 +18,7 @@ export default function LeftSideBar({ chats, user_id }: LeftSideBarProps) {
             <div className="flex flex-col w-full border-r-2">
 
                 <div className="border-b-2 py-4 px-2">
-                    <h1 className="text-lg font-semibold text-center">Chat groups</h1>
+                    <h1 className="text-lg font-semibold text-center">Chats</h1>
                 </div>
             </div>
             <div className='overflow-y-auto'>
@@ -64,7 +64,7 @@ export default function LeftSideBar({ chats, user_id }: LeftSideBarProps) {
                                 }
                                 {
                                     chat.chat_type === 'group' || chat.chat_type === 'public' &&
-                                    <span className="text-gray-500 text-md">{chat.messages.user_id === user_id ? 'You: ' : chat.messages.sender} {chat.messages.message_text}</span>
+                                    <span className="text-gray-500 text-md">{chat.messages.user_id === user_id ? 'You: ' : chat.messages.sender === 'System' ? null : chat.messages.sender} {chat.messages.message_text}</span>
                                 }
                                 <span className="text-xs text-gray-500">{moment(chat.messages.created_at).fromNow()}</span>
                             </div>
