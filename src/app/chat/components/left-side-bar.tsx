@@ -9,20 +9,7 @@ type LeftSideBarProps = {
     user_id: string;
 };
 
-interface Messages {
-    id: number;
-    chat_id: number;
-    user_id: number;
-    message_text: string;
-    event_message: boolean;
-    sender: string;
-}
-
-
-
 export default function LeftSideBar({ chats, user_id }: LeftSideBarProps) {
-
-    const [messages, setMessages] = useState<Messages[]>([]);
 
     return (
         <div id="r-sidebar" className="hidden sm:flex sm:flex-col sm:min-w-[100px] md:flex md:flex-col md:min-w-[300px] lg:w-2/6 bg-gray-300 h-[90vh] overflow-y-auto">

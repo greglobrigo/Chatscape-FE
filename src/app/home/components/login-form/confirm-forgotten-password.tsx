@@ -12,7 +12,7 @@ type confirmForgottenPassword = {
     }>>;
 }
 
-export default function confirmForgottenPassword({ emailRef, setAction }: confirmForgottenPassword) {
+export default function ConfirmForgottenPassword({ emailRef, setAction }: confirmForgottenPassword) {
     const email = localStorage.getItem('email') || '';
 
     const [errormessage, setErrorMessage] = useState<string>('');
@@ -117,7 +117,7 @@ export default function confirmForgottenPassword({ emailRef, setAction }: confir
                     </div>
                     <div onClick={() => setAction({ login: true, register: false, forgotPassword: false, confirmEmail: false, confirmForgottenPassword: false })} className="flex items-center justify-center cursor-pointer">
                         <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
-                            Don't have an account? Sign Up
+                            Don&apos;t have an account? Sign Up
                         </a>
                     </div>
                 </form>

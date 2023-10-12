@@ -91,7 +91,7 @@ export default function Login({ emailRef, passwordRef, setAction }: LoginProps) 
           </div>
           <div onClick={() => setAction({ login: false, register: true, forgotPassword: false, confirmEmail: false, confirmForgottenPassword: false })} className="flex items-center justify-center cursor-pointer">
             <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
-              Don't have an account? Sign Up
+              Don&apos;t have an account? Sign Up
             </a>
           </div>
         </form>

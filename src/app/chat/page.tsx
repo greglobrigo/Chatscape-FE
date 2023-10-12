@@ -28,10 +28,10 @@ interface ActiveUser {
 }
 
 export default function Page() {
-    const router = useRouter();
     const [chats, setChats] = useState<Chat[]>([]);
     const [activeUsers, setActiveUsers] = useState<ActiveUser[]>([]);
     const [user_id, setUserId] = useState<string>('');
+    const router = useRouter();
 
     useEffect(() => {
         const id = localStorage.getItem('user_id');
@@ -58,7 +58,7 @@ export default function Page() {
         }).catch((error) => {
             console.log(error);
         })
-    }, []);
+    }, [router]);
 
 
     return (
