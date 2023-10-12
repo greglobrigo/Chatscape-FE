@@ -6,10 +6,20 @@ import RightSideBar from './components/right-side-bar';
 import Header from './components/header';
 import MainChat from './components/main-chat';
 import LeftSideBar from './components/left-side-bar';
+import { UUID } from 'crypto';
 
 interface Chat {
-    chat_id: number;
+    id: number;
+    chat_type: string;
     chat_name: string;
+    messages: {
+        id: number;
+        chat_id: number;
+        user_id: UUID;
+        message_text: string;
+        event_message:boolean;
+        sender: string;
+    };
 }
 
 interface ActiveUser {

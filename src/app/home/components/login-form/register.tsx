@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 type RegisterProps = {
     emailRef: React.RefObject<HTMLInputElement>;
@@ -18,6 +18,8 @@ type RegisterProps = {
 
 export default function Register({ emailRef, passwordRef, nameRef, handleRef, confirmPasswordRef, setAction }: RegisterProps) {
     const [errormessage, setErrorMessage] = useState<string>('');
+    const [avatar, setAvatar] = useState<any>(null);
+    const avatarList = [1, 2, 3, 4, 5, 6]
 
     const handleRegister = async () => {
         const email = emailRef.current?.value;
@@ -30,27 +32,32 @@ export default function Register({ emailRef, passwordRef, nameRef, handleRef, co
         const setEmail = (email: string) => {
             localStorage.setItem('email', email);
         }
-        if (password !== password_confirmation) {
-            setErrorMessage('Passwords do not match');
-            return;
-        } else if (password && password.length < 8) {
-            setErrorMessage('Password must be at least 8 characters');
+        if (!email) {
+            setErrorMessage('Email is required');
             return;
         } else if (email && !regexEmailFormat.test(email)) {
             setErrorMessage('Email is not valid');
             return;
-        } else if (!email) {
-            setErrorMessage('Email is required');
-            return;
-        }
-        else if (!name) {
+        } else if (!name) {
             setErrorMessage('Name is required');
             return;
         } else if (!handle) {
             setErrorMessage('Handle is required');
             return;
         } else if (!regexHandleFormat.test(handle)) {
-            setErrorMessage('Handle must be at least 3 characters, contain an @ at the beginning, and only contain letters, numbers, and underscores');
+            setErrorMessage('Handle must be at least 3 characters, contain one @ at the beginning, and only contain letters, numbers, and underscores');
+            return;
+        } else if (!password) {
+            setErrorMessage('Password is required');
+            return;
+        } else if (password && password.length < 8) {
+            setErrorMessage('Password must be at least 8 characters');
+            return;
+        } else if (password !== password_confirmation) {
+            setErrorMessage('Passwords do not match');
+            return;
+        } else if (!avatar) {
+            setErrorMessage('Please choose an avatar');
             return;
         } else {
             axios({
@@ -121,6 +128,23 @@ export default function Register({ emailRef, passwordRef, nameRef, handleRef, co
                         </label>
                         <input ref={confirmPasswordRef} name="password_confirmation"
                             className="shadow appearance-none borde rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************" />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                            Choose your avatar
+                        </label>
+                        <div className="flex flex-row justify-center">
+                            {
+                                avatarList.map((avatarNumber) => (
+                                    <div key={avatarNumber} className="flex items-center justify-center w-full">
+                                        <label className="flex flex-col items-center">
+                                            <img src={`/${avatarNumber}.png`} className="w-10 h-10 rounded-full mb-2" />
+                                            <input onClick={() => setAvatar(avatarNumber)} type="radio" className="form-radio" name="avatar" />
+                                        </label>
+                                    </div>
+                                ))
+                            }
+                        </div>
                     </div>
                     <div className="flex flex-col items-center justify-between mb-4">
                         <button onClick={handleRegister}
