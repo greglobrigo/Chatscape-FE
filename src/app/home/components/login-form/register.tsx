@@ -70,7 +70,8 @@ export default function Register({ emailRef, passwordRef, nameRef, handleRef, co
                     password,
                     name,
                     handle,
-                    password_confirmation
+                    password_confirmation,
+                    avatar
                 }
             }).then((response) => {
                 if (response.data.status === 'success') {
