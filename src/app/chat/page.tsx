@@ -71,7 +71,9 @@ export default function Page() {
                     user_id={user_id}
                     />
                     <MainChat />
-                    <RightSideBar />
+                    <RightSideBar
+                    activeUsers={activeUsers}
+                    />
                 </div>
             </div>
         </>

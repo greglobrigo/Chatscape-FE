@@ -1,6 +1,8 @@
+type LeftSideBarProps = {
+    activeUsers: React.ComponentProps<any>[];
+};
 
-
-export default function RightSideBar() {
+export default function RightSideBar({activeUsers} : LeftSideBarProps) {
     return (
         <div id="l-sidebar" className="hidden md:flex md:flex-col md:min-w-[100px] lg:w-2/6 bg-gray-300 h-[90vh]">
             <div className="w-2/5 border-l-2 px-5">
