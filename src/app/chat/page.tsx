@@ -31,6 +31,7 @@ export default function Page() {
     const router = useRouter();
     const [chats, setChats] = useState<Chat[]>([]);
     const [activeUsers, setActiveUsers] = useState<ActiveUser[]>([]);
+    const [user_id, setUserId] = useState<string>('');
 
     useEffect(() => {
         const id = localStorage.getItem('user_id');
@@ -39,6 +40,7 @@ export default function Page() {
         if (!id || !token || !tokenSecret) {
             router.push('/');
         }
+        setUserId(id||'');
         axios({
             method: 'post',
             url: 'http://localhost:3001/users/get-profile',
@@ -66,6 +68,7 @@ export default function Page() {
                 <div className="flex shadow-lg rounded-lg bg-white">
                     <LeftSideBar
                     chats={chats}
+                    user_id={user_id}
                     />
                     <MainChat />
                     <RightSideBar />

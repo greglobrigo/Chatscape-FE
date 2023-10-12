@@ -6,6 +6,7 @@ import Image from 'next/image'
 
 type LeftSideBarProps = {
     chats: React.ComponentProps<any>[];
+    user_id: string;
 };
 
 interface Messages {
@@ -19,7 +20,7 @@ interface Messages {
 
 
 
-export default function LeftSideBar({ chats }: LeftSideBarProps) {
+export default function LeftSideBar({ chats, user_id }: LeftSideBarProps) {
 
     const [messages, setMessages] = useState<Messages[]>([]);
 
@@ -37,26 +38,46 @@ export default function LeftSideBar({ chats }: LeftSideBarProps) {
             </div>
 
             {chats.length > 0 ? chats.map((chat) => (
-                <div key={chat.id} className="flex flex-row py-4 px-2 justify-center items-center border-b-2">
+                //add hover effect with popping translate
+                <div key={chat.id} className="flex flex-row py-4 px-2 justify-center items-center border-b-2 cursor-pointer hover:bg-gray-200 transition duration-300 ease-in-out">
                     <div className="w-1/4">
-                        <Image width={50} height={50}
-                            src="/2.png"
-                            className="object-fit rounded-full border-4 border-[#FFFFFF]"
-                            alt="avatar"
-                        />
+                        {
+                            chat.chat_type === 'direct' ?
+                                <Image width={50} height={50}
+                                    src={`/${chat.members.find((member: any) => member.user_id !== user_id)?.avatar}.png`}
+                                    className="object-fit rounded-full border-4 border-[#FFFFFF]"
+                                    alt="avatar"
+                                />
+                                : <div className="flex flex-row">
+                                    {chat.members.map((member: any, index: number) => (
+                                        <Image key={index} width={50} height={50}
+                                            src={`/${member.avatar}.png`}
+                                            className="object-fit rounded-full border-4 border-[#FFFFFF]" {...(index > 0 ? { style: { marginLeft: '-35px' } } : {}) }
+                                            alt="avatar"
+                                        />
+                                    ))}
+                                </div>
+                        }
                     </div>
                     <div className="w-full">
-                        <div className="text-lg font-semibold">{chat.messages.sender}</div>
+                        {
+                            chat.chat_type === 'direct' &&
+                            <div className="text-lg font-semibold">{chat.members.find((member: any) => member.id !== user_id)?.name}</div>
+                        }
+                        {
+                            chat.chat_type === 'group' || chat.chat_type === 'public' &&
+                            <div className="text-lg font-semibold">{chat.chat_name}</div>
+                        }
                         <span className="text-gray-500">{chat.messages.message_text}</span>
                     </div>
                 </div>
             ))
-            : <div className="flex flex-row py-4 px-2 justify-center items-center border-b-2">
-                <div className="w-full">
-                    <div className="text-lg font-semibold text-center">Empty</div>
+                : <div className="flex flex-row py-4 px-2 justify-center items-center border-b-2">
+                    <div className="w-full">
+                        <div className="text-lg font-semibold text-center">Empty</div>
+                    </div>
                 </div>
-            </div>
-        }
+            }
         </div>
     )
 }
