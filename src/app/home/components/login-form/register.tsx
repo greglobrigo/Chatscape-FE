@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { useState, useRef } from 'react';
+import Image from 'next/image'
+
 
 type RegisterProps = {
     emailRef: React.RefObject<HTMLInputElement>;
@@ -138,7 +140,7 @@ export default function Register({ emailRef, passwordRef, nameRef, handleRef, co
                                 avatarList.map((avatarNumber) => (
                                     <div key={avatarNumber} className="flex items-center justify-center w-full">
                                         <label className="flex flex-col items-center">
-                                            <img src={`/${avatarNumber}.png`} className="w-10 h-10 rounded-full mb-2" />
+                                            <Image width={50} height={50} src={`/${avatarNumber}.png`} className="border-4 border-[#FFFFFF] rounded-full mb-2" alt="avatar" />
                                             <input onClick={() => setAvatar(avatarNumber)} type="radio" className="form-radio" name="avatar" />
                                         </label>
                                     </div>
