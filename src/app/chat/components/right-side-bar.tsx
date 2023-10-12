@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import moment from 'moment-timezone';
 
 
 type LeftSideBarProps = {
@@ -17,29 +18,35 @@ export default function RightSideBar({ activeUsers }: LeftSideBarProps) {
                     />
                 </div>
                 <div className="border-b-2 py-4 px-2">
-                    <h1 className="text-lg font-semibold text-center">Active Users</h1>
+                    <h1 className="text-lg font-semibold text-center">Users</h1>
                 </div>
             </div>
             <div className='overflow-y-auto'>
                 {
                     activeUsers.length > 0 ? activeUsers.map((user) => (
                         <div key={user.id} className="flex flex-row py-4 px-2 justify-center items-center border-b-2 cursor-pointer hover:bg-gray-200 transition duration-300 ease-in-out">
-                            <div className="w-1/4">
+                            <div className="w-1/2 2xl:w-1/2 3xl:w-1/3 4xl:w-1/4 5xl:w-1/6">
                                 <Image width={50} height={50}
                                     src={`/${user.avatar}.png`}
                                     className="object-fit rounded-full border-4 border-[#FFFFFF]"
                                     alt="avatar"
                                 />
                             </div>
-                            <div className="w-full">
-                                <div className="text-lg font-semibold">{user.name}</div>
-                                <span className="text-gray-500">{user.handle}</span>
+                            <div className="w-full flex flex-col">
+                                <div className="flex flex-row justify-between items-end">
+                                    <span className="text-md font-semibold">{user.name}</span>
+                                    <span className="text-xs text-gray-500">Last seen</span>
+                                </div>
+                                <div className="flex flex-row justify-between items-end">
+                                    <span className="text-gray-500">{user.handle}</span>
+                                    <span className="text-xs text-gray-500">{moment(user.updated_at).fromNow()}</span>
+                                </div>
                             </div>
                         </div>
                     ))
                         : <div className="flex flex-row py-4 px-2 justify-center items-center border-b-2">
                             <div className="w-full">
-                                <h1 className="text-lg font-semibold">No Active Users</h1>
+                                <h1 className="text-md font-semibold">No Active Users</h1>
                             </div>
                         </div>
                 }

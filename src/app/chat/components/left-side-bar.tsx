@@ -1,5 +1,6 @@
 'use client'
 import axios from 'axios';
+import moment from 'moment-timezone';
 import { useState, useEffect } from 'react';
 import Image from 'next/image'
 
@@ -22,19 +23,21 @@ export default function LeftSideBar({ chats, user_id }: LeftSideBarProps) {
             </div>
             <div className='overflow-y-auto'>
                 {chats.length > 0 ? chats.map((chat) => (
-                    <div key={chat.id} className="flex flex-row py-4 px-2 justify-center items-center border-b-2 cursor-pointer hover:bg-gray-200 transition duration-300 ease-in-out">
-                        <div className="w-1/4">
+                    <div key={chat.id} className="flex flex-row py-4 px-2 justify-around items-center border-b-2 cursor-pointer hover:bg-gray-200 transition duration-300 ease-in-out">
+                            <div className="w-1/2 2xl:w-1/2 3xl:w-1/2.5 4xl:w-1/3 5xl:w-1/4">
                             {
                                 chat.chat_type === 'direct' &&
+                                <div className="pr-2">
                                 <Image width={50} height={50}
                                     src={`/${chat.members.find((member: any) => member.id !== user_id)?.avatar}.png`}
                                     className="object-fit rounded-full border-4 border-[#FFFFFF]"
                                     alt="avatar"
                                 />
+                                </div>
                             }
                             {
                                 chat.chat_type === 'group' || chat.chat_type === 'public' &&
-                                <div className="flex flex-row">
+                                <div className="flex flex-row pr-2">
                                     {chat.members.map((member: any, index: number) => (
                                         <Image key={index} width={50} height={50}
                                             src={`/${member.avatar}.png`}
@@ -48,13 +51,16 @@ export default function LeftSideBar({ chats, user_id }: LeftSideBarProps) {
                         <div className="w-full">
                             {
                                 chat.chat_type === 'direct' &&
-                                <div className="text-lg font-semibold">{chat.members.find((member: any) => member.id !== user_id)?.name}</div>
+                                <span className="text-md font-semibold">{chat.members.find((member: any) => member.id !== user_id)?.name}</span>
                             }
                             {
                                 chat.chat_type === 'group' || chat.chat_type === 'public' &&
-                                <div className="text-lg font-semibold">{chat.chat_name}</div>
+                                <span className="text-md font-semibold">{chat.chat_name}</span>
                             }
-                            <span className="text-gray-500">{chat.messages.message_text}</span>
+                            <div className="flex flex-row justify-between items-end">
+                            <span className="text-gray-500 text-md">{chat.messages.message_text}</span>
+                            <span className="text-xs text-gray-500">{moment(chat.messages.created_at).fromNow()}</span>
+                            </div>
                         </div>
                     </div>
                 ))
