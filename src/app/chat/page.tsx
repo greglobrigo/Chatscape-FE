@@ -28,10 +28,11 @@ interface ActiveUser {
 }
 
 export default function Page() {
+    const router = useRouter();
     const [chats, setChats] = useState<Chat[]>([]);
     const [activeUsers, setActiveUsers] = useState<ActiveUser[]>([]);
     const [user_id, setUserId] = useState<string>('');
-    const router = useRouter();
+    const [currentUser, setCurrentUser] = useState<ActiveUser>({} as ActiveUser);
 
     useEffect(() => {
         const id = localStorage.getItem('user_id');
@@ -54,6 +55,7 @@ export default function Page() {
             if (response.data.status === 'success') {
                 setChats(response.data.chats);
                 setActiveUsers(response.data.active_users);
+                setCurrentUser(response.data.user);
             }
         }).catch((error) => {
             console.log(error);
@@ -64,7 +66,9 @@ export default function Page() {
     return (
         <>
             <div className='flex flex-col'>
-                <Header />
+                <Header
+                currentUser={currentUser}
+                 />
                 <div className="flex shadow-lg rounded-lg bg-white">
                     <LeftSideBar
                     chats={chats}
