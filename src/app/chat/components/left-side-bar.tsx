@@ -24,15 +24,15 @@ export default function LeftSideBar({ chats, user_id }: LeftSideBarProps) {
             <div className='overflow-y-auto'>
                 {chats.length > 0 ? chats.map((chat) => (
                     <div key={chat.id} className="flex flex-row py-4 px-2 justify-around items-center border-b-2 cursor-pointer hover:bg-gray-200 transition duration-300 ease-in-out">
-                            <div className="w-1/2 2xl:w-1/2 3xl:w-1/2.5 4xl:w-1/3 5xl:w-1/4">
+                        <div className="w-1/2 2xl:w-1/2 3xl:w-1/2.5 4xl:w-1/3 5xl:w-1/4">
                             {
                                 chat.chat_type === 'direct' &&
                                 <div className="pr-2">
-                                <Image width={50} height={50}
-                                    src={`/${chat.members.find((member: any) => member.id !== user_id)?.avatar}.png`}
-                                    className="object-fit rounded-full border-4 border-[#FFFFFF]"
-                                    alt="avatar"
-                                />
+                                    <Image width={50} height={50}
+                                        src={`/${chat.members.find((member: any) => member.id !== user_id)?.avatar}.png`}
+                                        className="object-fit rounded-full border-4 border-[#FFFFFF]"
+                                        alt="avatar"
+                                    />
                                 </div>
                             }
                             {
@@ -58,8 +58,15 @@ export default function LeftSideBar({ chats, user_id }: LeftSideBarProps) {
                                 <span className="text-md font-semibold">{chat.chat_name}</span>
                             }
                             <div className="flex flex-row justify-between items-end">
-                            <span className="text-gray-500 text-md">{chat.messages.message_text}</span>
-                            <span className="text-xs text-gray-500">{moment(chat.messages.created_at).fromNow()}</span>
+                                {
+                                    chat.chat_type === 'direct' &&
+                                    <span className="text-gray-500 text-md">{chat.messages.user_id === user_id ? 'You: ' : null} {chat.messages.message_text}</span>
+                                }
+                                {
+                                    chat.chat_type === 'group' || chat.chat_type === 'public' &&
+                                    <span className="text-gray-500 text-md">{chat.messages.user_id === user_id ? 'You: ' : chat.messages.sender} {chat.messages.message_text}</span>
+                                }
+                                <span className="text-xs text-gray-500">{moment(chat.messages.created_at).fromNow()}</span>
                             </div>
                         </div>
                     </div>
