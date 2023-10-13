@@ -9,7 +9,7 @@ export default function Page() {
 
     return (
         <>
-            <div className="home__header section__padding gradient__bg" id="home">
+            <div className="home__header section__padding gradient__bg wrapper" id="home">
                 <Navbar />
                 <div className="home__header-content">
                     <div className="bg color-[black] text-center">

@@ -1,12 +1,24 @@
-
+import Image from 'next/image'
 
 export default function MainChat() {
     return (
         <div id="chat-main" className="w-full flex flex-col bg-gray-200 h-[90vh]">
             <div className="h-full px-5 flex flex-col justify-between">
                 <div>
+                    <div className="flex flex-col h-full w-full mt-5 justify-center items-center
+                    ">
+
+                        {/* Add default image first */}
+                        <Image width={500} height={500}
+                            src="/chat-default.svg"
+                            className="object-fit"
+                            alt="avatar"
+                        />
+                        <h1 className="text-2xl font-semibold text-center mt-5">Welcome back!</h1>
+                        <h1 className="text-2xl font-semibold text-center mt-5">Select a chat group or friend to start messaging!</h1>
+                    </div>
                     <div className="flex flex-col mt-5">
-                        <div className="flex justify-end mb-4">
+                        {/* <div className="flex justify-end mb-4">
                             <div
                                 className="mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white"
                             >
@@ -66,7 +78,7 @@ export default function MainChat() {
                             >
                                 happy holiday guys!
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className="justify-end">

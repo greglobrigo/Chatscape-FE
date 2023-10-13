@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --font-family: 'Manrope', sans-serif;
+  --font-family: 'Nunito', sans-serif;
   --gradient-text: linear-gradient(89.97deg, #19e8e2 1.84%, #3d71df 102.67%);
   --gradient-text2: linear-gradient(89.97deg, #81AFDD 1.84%, #60ec14 102.67%);
   --gradient-text3: linear-gradient(89.97deg, #AE67FA 1.84%, #F49867 102.67%);
@@ -16,6 +16,10 @@
   --color-subtext: #FF8A71;
   --card-height: auto;
   --card-width: calc(var(--card-height) / 1.2)
+}
+
+.wrapper {
+  font-family: var(--font-family);
 }
 
 @property --rotate {

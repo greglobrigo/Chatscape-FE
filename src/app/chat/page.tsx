@@ -65,7 +65,7 @@ export default function Page() {
 
     return (
         <>
-            <div className='flex flex-col'>
+            <div className='flex flex-col wrapper'>
                 <Header
                 currentUser={currentUser}
                  />
