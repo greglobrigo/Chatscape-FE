@@ -8,9 +8,11 @@ import Image from 'next/image'
 type LeftSideBarProps = {
     chats: React.ComponentProps<any>[];
     user_id: string;
+    messages: React.ComponentProps<any>[];
+    setMessages: React.Dispatch<React.SetStateAction<never[]>>;
 };
 
-export default function LeftSideBar({ chats, user_id }: LeftSideBarProps) {
+export default function LeftSideBar({ chats, user_id, messages, setMessages }: LeftSideBarProps) {
 
     return (
         <div id="r-sidebar" className="hidden sm:flex sm:flex-col sm:min-w-[100px] md:flex md:flex-col md:min-w-[300px] lg:w-2/6 bg-gray-300 h-[90vh]">

@@ -74,6 +74,8 @@ export default function Page() {
                     <LeftSideBar
                     chats={chats}
                     user_id={user_id}
+                    messages={messages}
+                    setMessages={setMessages}
                     />
                     <MainChat
                     messages={messages}
