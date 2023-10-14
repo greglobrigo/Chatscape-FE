@@ -8,11 +8,25 @@ import Image from 'next/image'
 type LeftSideBarProps = {
     chats: React.ComponentProps<any>[];
     user_id: string;
+    token: string;
+    tokenSecret: string;
     messages: React.ComponentProps<any>[];
     setMessages: React.Dispatch<React.SetStateAction<never[]>>;
 };
 
-export default function LeftSideBar({ chats, user_id, messages, setMessages }: LeftSideBarProps) {
+export default function LeftSideBar({ chats, user_id, token, tokenSecret, messages, setMessages }: LeftSideBarProps) {
+
+
+    const handleGetMessages = (chatID: any) => {
+        // axios({
+        //     method: 'get',
+        //     url: `http://localhost:3001/messages/get`,
+        //     data: {
+        //         chat_id: chatID,
+        //     },
+
+
+    }
 
     return (
         <div id="r-sidebar" className="hidden sm:flex sm:flex-col sm:min-w-[100px] md:flex md:flex-col md:min-w-[300px] lg:w-2/6 bg-gray-300 h-[90vh]">
@@ -25,7 +39,8 @@ export default function LeftSideBar({ chats, user_id, messages, setMessages }: L
             </div>
             <div className='overflow-y-auto'>
                 {chats.length > 0 ? chats.map((chat) => (
-                    <div key={chat.id} className="flex flex-row py-4 px-2 justify-around items-center border-b-2 cursor-pointer hover:bg-gray-200 transition duration-300 ease-in-out">
+                    <div key={chat.id} onClick={() => handleGetMessages(chat.id)}
+                    className="flex flex-row py-4 px-2 justify-around items-center border-b-2 cursor-pointer hover:bg-gray-200 transition duration-300 ease-in-out">
                         <div className="w-1/2 2xl:w-1/2 3xl:w-1/2.5 4xl:w-1/3 5xl:w-1/4">
                             {
                                 chat.chat_type === 'direct' &&

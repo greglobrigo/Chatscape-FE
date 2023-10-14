@@ -32,6 +32,8 @@ export default function Page() {
     const [chats, setChats] = useState<Chat[]>([]);
     const [activeUsers, setActiveUsers] = useState<ActiveUser[]>([]);
     const [user_id, setUserId] = useState<string>('');
+    const [token, setToken] = useState<string>('');
+    const [tokenSecret, setTokenSecret] = useState<string>('');
     const [currentUser, setCurrentUser] = useState<ActiveUser>({} as ActiveUser);
     const [messages, setMessages] = useState([])
 
@@ -43,6 +45,8 @@ export default function Page() {
             router.push('/');
         }
         setUserId(id||'');
+        setToken(token||'');
+        setTokenSecret(tokenSecret||'');
         axios({
             method: 'post',
             url: 'http://localhost:3001/users/get-profile',
@@ -74,6 +78,8 @@ export default function Page() {
                     <LeftSideBar
                     chats={chats}
                     user_id={user_id}
+                    token={token}
+                    tokenSecret={tokenSecret}
                     messages={messages}
                     setMessages={setMessages}
                     />
@@ -83,6 +89,9 @@ export default function Page() {
                     />
                     <RightSideBar
                     activeUsers={activeUsers}
+                    user_id={user_id}
+                    token={token}
+                    tokenSecret={tokenSecret}
                     messages={messages}
                     setMessages={setMessages}
                     />

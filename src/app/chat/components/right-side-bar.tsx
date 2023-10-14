@@ -5,11 +5,14 @@ import axios from 'axios';
 
 type LeftSideBarProps = {
     activeUsers: React.ComponentProps<any>[];
+    user_id: string;
+    token: string;
+    tokenSecret: string;
     messages: React.ComponentProps<any>[];
     setMessages: React.Dispatch<React.SetStateAction<never[]>>;
 };
 
-export default function RightSideBar({ activeUsers, messages, setMessages }: LeftSideBarProps) {
+export default function RightSideBar({ activeUsers, user_id, token, tokenSecret, messages, setMessages }: LeftSideBarProps) {
 
 
     const handleGetMessages = (user: any) => {
