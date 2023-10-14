@@ -43,11 +43,14 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
                                 }
                                 {
                                     message.event_message === true &&
-                                    <div className="flex justify-center items-center mb-2 flex-col">
-                                        <span className="py-3 px-4 bg-gray-400 rounded-3xl text-white mb-2">
+                                    <div className="flex flex-col mt-10 items-center
+                                    before:content-[''] before:h-[1px] before:w-[100%] before:bg-gray-400 before:top-6 before:relative before:z-10">
+                                        <div className="flex relative z-20">
+                                            <span className="py-3 px-4 bg-gray-400 rounded-3xl text-white mb-2">
                                             {message.message_text}
-                                        </span>
-                                        <span className="text-xs text-gray-500 text-right">{moment(message.created_at).fromNow()}</span>
+                                            </span>
+                                        </div>
+                                        <span className="text-xs text-gray-500">{moment(message.created_at).fromNow()}</span>
                                     </div>
                                 }
                                 {
@@ -89,8 +92,9 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
                 }
                 {
                     messages.length === 0 && !defaultHome &&
-                    <div className="flex flex-col h-full w-full mt-10 items-center">
-                        <div className="flex mb-2">
+                    <div className="flex flex-col h-full w-full mt-10 items-center
+                    before:content-[''] before:h-[1px] before:w-[100%] before:bg-gray-400 before:top-6 before:relative before:z-10">
+                        <div className="flex mb-2 relative z-20">
                             <span className="py-3 px-4 bg-gray-400 rounded-3xl text-white mb-2">
                                 This chat currently has no messages
                             </span>
