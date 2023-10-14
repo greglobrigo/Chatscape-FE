@@ -1,22 +1,66 @@
 import Image from 'next/image'
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import moment from 'moment-timezone';
+import axios from 'axios';
 
 type MainChatProps = {
     messages: React.ComponentProps<any>[];
-    setMessages: React.Dispatch<React.SetStateAction<never[]>>;
+    setMessages: React.Dispatch<React.SetStateAction<any[]>>;
     user_id: string;
     defaultHome: boolean;
     setDefaultHome: React.Dispatch<React.SetStateAction<boolean>>;
+    chatID: number;
+    token: string;
+    tokenSecret: string;
 };
 
 
 
-export default function MainChat({ messages, setMessages, user_id, defaultHome, setDefaultHome }: MainChatProps) {
+export default function MainChat({ messages, setMessages, user_id, defaultHome, setDefaultHome, chatID, token, tokenSecret }: MainChatProps) {
+
+    const inputRef = useRef<HTMLInputElement>(null);
+    const [errorMessage, setErrorMessage] = useState<string>('');
+
+    const handleSendMessage = async () => {
+        const message = inputRef.current?.value
+        if (!message) return
+        const chat_id = chatID
+        const sender = user_id
+        await axios({
+            method: 'post',
+            url: 'http://localhost:3001/messages/send',
+            data: {
+                chat_id: chat_id,
+                sender: sender,
+                message_text: message,
+            },
+            headers: {
+                Authorization: `Bearer ${token}|${tokenSecret}`,
+            }
+        }).then((response) => {
+            if (response.data.status === 'success') {
+                inputRef.current!.value = '';
+            } else {
+                setErrorMessage(response.data.error);
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
 
     return (
         <div id="chat-main" className="w-full flex flex-col bg-gray-200 h-[90vh]">
             <div className="h-full px-5 flex flex-col justify-between">
+                {
+                    errorMessage &&
+                    <div className="flex flex-col mt-5">
+                        <div className="flex justify-center items-center mb-2">
+                            <span className="py-3 px-4 bg-red-400 rounded-3xl text-white">
+                                {errorMessage}
+                            </span>
+                        </div>
+                    </div>
+                }
                 <div className="overflow-y-auto">
                     {
                         messages.length > 0 && messages.map((message) => (
@@ -33,7 +77,6 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
                                             <span className="ml-2 py-3 px-4 bg-blue-400 rounded-br-3xl rounded-tr-xl rounded-tl-xl text-white">
                                                 {message.message_text}
                                             </span>
-                                            {/* add message.sender */}
                                         </div>
                                         <div className="flex justify-start items-end">
                                             <span className="text-xs mr-2 text-gray-500 text-right">You</span>
@@ -47,7 +90,7 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
                                     before:content-[''] before:h-[1px] before:w-[100%] before:bg-gray-400 before:top-6 before:relative before:z-10">
                                         <div className="flex relative z-20">
                                             <span className="py-3 px-4 bg-gray-400 rounded-3xl text-white mb-2">
-                                            {message.message_text}
+                                                {message.message_text}
                                             </span>
                                         </div>
                                         <span className="text-xs text-gray-500">{moment(message.created_at).fromNow()}</span>
@@ -102,14 +145,15 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
                     </div>
                 }
                 <div className="justify-end">
-                    <div className="py-5">
-                        <input
+                    <div className="py-5 flex">
+                        <input ref={inputRef}
                             className="w-full bg-gray-300 py-5 px-3 rounded-xl"
                             type="text"
                             placeholder="type your message here..."
                         />
+                        <button onClick={handleSendMessage} disabled={defaultHome}
+                            className={`${defaultHome ? 'bg-gray-400 text-white' : 'bg-blue-400 text-white hover:bg-blue-500 transition duration-300 ease-in-out'} py-3 px-5 rounded-xl`}>Send</button>
                     </div>
-
                 </div>
             </div>
         </div>

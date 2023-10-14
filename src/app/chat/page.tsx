@@ -34,6 +34,15 @@ export default function Page() {
     ws.onopen = () => {
         console.log('connected')
     }
+
+    ws.onmessage = (e:any) => {
+        const data = JSON.parse(e.data);
+        if (data.type === 'ping') return
+        if (data.type === 'welcome') return
+        if (data.type === 'confirm_subscription') return
+        const message = data.message;
+        console.log(message)
+    }
     const router = useRouter();
     const [chats, setChats] = useState<Chat[]>([]);
     const [activeUsers, setActiveUsers] = useState<ActiveUser[]>([]);
@@ -41,8 +50,9 @@ export default function Page() {
     const [token, setToken] = useState<string>('');
     const [tokenSecret, setTokenSecret] = useState<string>('');
     const [currentUser, setCurrentUser] = useState<ActiveUser>({} as ActiveUser);
-    const [messages, setMessages] = useState([])
+    const [messages, setMessages] = useState<any[]>([]);
     const [defaultHome, setDefaultHome] = useState<boolean>(true);
+    const [chatID, setChatId] = useState<number>(0);
 
     useEffect(() => {
         const id = localStorage.getItem('user_id');
@@ -91,13 +101,17 @@ export default function Page() {
                     setMessages={setMessages}
                     defaultHome={defaultHome}
                     setDefaultHome={setDefaultHome}
+                    setChatId={setChatId}
                     />
                     <MainChat
+                    token={token}
+                    tokenSecret={tokenSecret}
                     messages={messages}
                     setMessages={setMessages}
                     user_id={user_id}
                     defaultHome={defaultHome}
                     setDefaultHome={setDefaultHome}
+                    chatID={chatID}
                     />
                     <RightSideBar
                     activeUsers={activeUsers}

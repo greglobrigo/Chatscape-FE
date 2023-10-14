@@ -9,7 +9,7 @@ type LeftSideBarProps = {
     token: string;
     tokenSecret: string;
     messages: React.ComponentProps<any>[];
-    setMessages: React.Dispatch<React.SetStateAction<never[]>>;
+    setMessages: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
 export default function RightSideBar({ activeUsers, user_id, token, tokenSecret, messages, setMessages }: LeftSideBarProps) {

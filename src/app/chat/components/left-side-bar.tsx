@@ -11,12 +11,13 @@ type LeftSideBarProps = {
     token: string;
     tokenSecret: string;
     messages: React.ComponentProps<any>[];
-    setMessages: React.Dispatch<React.SetStateAction<never[]>>;
+    setMessages: React.Dispatch<React.SetStateAction<any[]>>;
     defaultHome: boolean;
     setDefaultHome: React.Dispatch<React.SetStateAction<boolean>>;
+    setChatId: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export default function LeftSideBar({ chats, user_id, token, tokenSecret, messages, setMessages, defaultHome, setDefaultHome }: LeftSideBarProps) {
+export default function LeftSideBar({ chats, user_id, token, tokenSecret, messages, setMessages, defaultHome, setDefaultHome, setChatId }: LeftSideBarProps) {
 
 
     const handleGetMessages = async (chatID: any) => {
@@ -33,7 +34,7 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, messag
             }
         }).then((response) => {
             if (response.data.status === 'success') {
-                setMessages(response.data.messages);
+                setMessages(response.data.messages)
             }
         }).catch((error) => {
             console.log(error);
@@ -51,7 +52,7 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, messag
             </div>
             <div className='overflow-y-auto'>
                 {chats.length > 0 ? chats.map((chat) => (
-                    <div key={chat.id} onClick={() => handleGetMessages(chat.id)}
+                    <div key={chat.id} onClick={() => { handleGetMessages(chat.id); setChatId(chat.id) }}
                         className="flex flex-row py-4 px-2 justify-around items-center border-b-2 cursor-pointer hover:bg-gray-200 transition duration-300 ease-in-out">
                         <div className="w-1/2 2xl:w-1/2 3xl:w-1/2.5 4xl:w-1/3 5xl:w-1/4">
                             {
