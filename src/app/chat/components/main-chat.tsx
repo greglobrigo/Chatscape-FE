@@ -1,6 +1,21 @@
 import Image from 'next/image'
+import { useState } from 'react';
 
-export default function MainChat() {
+type MainChatProps = {
+    messages: React.ComponentProps<any>[];
+    setMessages: React.Dispatch<React.SetStateAction<never[]>>;
+};
+
+const ws = new WebSocket('ws://localhost:3001/cable');
+
+export default function MainChat({messages, setMessages} : MainChatProps) {
+
+
+    ws.onopen = () => {
+        console.log('connected')
+    }
+
+
     return (
         <div id="chat-main" className="w-full flex flex-col bg-gray-200 h-[90vh]">
             <div className="h-full px-5 flex flex-col justify-between">

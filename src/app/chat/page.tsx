@@ -33,6 +33,7 @@ export default function Page() {
     const [activeUsers, setActiveUsers] = useState<ActiveUser[]>([]);
     const [user_id, setUserId] = useState<string>('');
     const [currentUser, setCurrentUser] = useState<ActiveUser>({} as ActiveUser);
+    const [messages, setMessages] = useState([])
 
     useEffect(() => {
         const id = localStorage.getItem('user_id');
@@ -74,9 +75,14 @@ export default function Page() {
                     chats={chats}
                     user_id={user_id}
                     />
-                    <MainChat />
+                    <MainChat
+                    messages={messages}
+                    setMessages={setMessages}
+                    />
                     <RightSideBar
                     activeUsers={activeUsers}
+                    messages={messages}
+                    setMessages={setMessages}
                     />
                 </div>
             </div>

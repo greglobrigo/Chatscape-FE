@@ -1,12 +1,22 @@
 import Image from 'next/image'
 import moment from 'moment-timezone';
+import axios from 'axios';
 
 
 type LeftSideBarProps = {
     activeUsers: React.ComponentProps<any>[];
+    messages: React.ComponentProps<any>[];
+    setMessages: React.Dispatch<React.SetStateAction<never[]>>;
 };
 
-export default function RightSideBar({ activeUsers }: LeftSideBarProps) {
+export default function RightSideBar({ activeUsers, messages, setMessages }: LeftSideBarProps) {
+
+
+    const handleGetMessages = (user: any) => {
+
+    }
+
+
     return (
         <div id="l-sidebar" className="hidden md:flex md:flex-col md:min-w-[100px] lg:w-2/6 bg-gray-300 h-[90vh]">
             <div className="flex flex-col w-full border-r-2">
@@ -24,7 +34,8 @@ export default function RightSideBar({ activeUsers }: LeftSideBarProps) {
             <div className='overflow-y-auto'>
                 {
                     activeUsers.length > 0 ? activeUsers.map((user) => (
-                        <div key={user.id} className="flex flex-row py-4 px-2 justify-center items-center border-b-2 cursor-pointer hover:bg-gray-200 transition duration-300 ease-in-out">
+                        <div key={user.id} onClick={()=>handleGetMessages(user)}
+                        className="flex flex-row py-4 px-2 justify-center items-center border-b-2 cursor-pointer hover:bg-gray-200 transition duration-300 ease-in-out">
                             <div className="w-1/2 2xl:w-1/2 3xl:w-1/3 4xl:w-1/4 5xl:w-1/6">
                                 <Image width={50} height={50}
                                     src={`/${user.avatar}.png`}
