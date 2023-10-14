@@ -27,7 +27,13 @@ interface ActiveUser {
     user_name: string;
 }
 
+const ws = new WebSocket('ws://localhost:3001/cable');
+
 export default function Page() {
+
+    ws.onopen = () => {
+        console.log('connected')
+    }
     const router = useRouter();
     const [chats, setChats] = useState<Chat[]>([]);
     const [activeUsers, setActiveUsers] = useState<ActiveUser[]>([]);
@@ -86,6 +92,7 @@ export default function Page() {
                     <MainChat
                     messages={messages}
                     setMessages={setMessages}
+                    user_id={user_id}
                     />
                     <RightSideBar
                     activeUsers={activeUsers}

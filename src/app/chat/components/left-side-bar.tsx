@@ -17,15 +17,25 @@ type LeftSideBarProps = {
 export default function LeftSideBar({ chats, user_id, token, tokenSecret, messages, setMessages }: LeftSideBarProps) {
 
 
-    const handleGetMessages = (chatID: any) => {
-        // axios({
-        //     method: 'get',
-        //     url: `http://localhost:3001/messages/get`,
-        //     data: {
-        //         chat_id: chatID,
-        //     },
-
-
+    const handleGetMessages = async (chatID: any) => {
+     await axios({
+            method: 'post',
+            url: 'http://localhost:3001/messages/get',
+            data: {
+                chat_id: chatID,
+                user_id: user_id,
+            },
+            headers: {
+                Authorization: `Bearer ${token}|${tokenSecret}`,
+            }
+        }).then((response) => {
+            if (response.data.status === 'success') {
+                setMessages(response.data.messages);
+                console.log(response.data.messages)
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
     return (
@@ -40,7 +50,7 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, messag
             <div className='overflow-y-auto'>
                 {chats.length > 0 ? chats.map((chat) => (
                     <div key={chat.id} onClick={() => handleGetMessages(chat.id)}
-                    className="flex flex-row py-4 px-2 justify-around items-center border-b-2 cursor-pointer hover:bg-gray-200 transition duration-300 ease-in-out">
+                        className="flex flex-row py-4 px-2 justify-around items-center border-b-2 cursor-pointer hover:bg-gray-200 transition duration-300 ease-in-out">
                         <div className="w-1/2 2xl:w-1/2 3xl:w-1/2.5 4xl:w-1/3 5xl:w-1/4">
                             {
                                 chat.chat_type === 'direct' &&
