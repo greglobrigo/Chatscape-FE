@@ -42,6 +42,7 @@ export default function Page() {
     const [tokenSecret, setTokenSecret] = useState<string>('');
     const [currentUser, setCurrentUser] = useState<ActiveUser>({} as ActiveUser);
     const [messages, setMessages] = useState([])
+    const [defaultHome, setDefaultHome] = useState<boolean>(true);
 
     useEffect(() => {
         const id = localStorage.getItem('user_id');
@@ -88,11 +89,15 @@ export default function Page() {
                     tokenSecret={tokenSecret}
                     messages={messages}
                     setMessages={setMessages}
+                    defaultHome={defaultHome}
+                    setDefaultHome={setDefaultHome}
                     />
                     <MainChat
                     messages={messages}
                     setMessages={setMessages}
                     user_id={user_id}
+                    defaultHome={defaultHome}
+                    setDefaultHome={setDefaultHome}
                     />
                     <RightSideBar
                     activeUsers={activeUsers}

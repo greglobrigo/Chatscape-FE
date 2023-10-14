@@ -12,12 +12,15 @@ type LeftSideBarProps = {
     tokenSecret: string;
     messages: React.ComponentProps<any>[];
     setMessages: React.Dispatch<React.SetStateAction<never[]>>;
+    defaultHome: boolean;
+    setDefaultHome: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function LeftSideBar({ chats, user_id, token, tokenSecret, messages, setMessages }: LeftSideBarProps) {
+export default function LeftSideBar({ chats, user_id, token, tokenSecret, messages, setMessages, defaultHome, setDefaultHome }: LeftSideBarProps) {
 
 
     const handleGetMessages = async (chatID: any) => {
+    setDefaultHome(false);
      await axios({
             method: 'post',
             url: 'http://localhost:3001/messages/get',
@@ -31,7 +34,6 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, messag
         }).then((response) => {
             if (response.data.status === 'success') {
                 setMessages(response.data.messages);
-                console.log(response.data.messages)
             }
         }).catch((error) => {
             console.log(error);
@@ -86,14 +88,17 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, messag
                             }
                             <div className="flex flex-row justify-between items-end">
                                 {
-                                    chat.chat_type === 'direct' &&
+                                    chat.chat_type === 'direct' && chat.messages &&
                                     <span className="text-gray-500 text-md">{chat.messages.user_id === user_id ? 'You: ' : null} {chat.messages.message_text}</span>
                                 }
                                 {
-                                    chat.chat_type === 'group' || chat.chat_type === 'public' &&
+                                    chat.chat_type === 'group' || chat.chat_type === 'public' && chat.messages &&
                                     <span className="text-gray-500 text-md">{chat.messages.user_id === user_id ? 'You: ' : chat.messages.sender === 'System' ? null : chat.messages.sender} {chat.messages.message_text}</span>
                                 }
-                                <span className="text-xs text-gray-500">{moment(chat.messages.created_at).fromNow()}</span>
+                                {
+                                    chat.messages &&
+                                    <span className="text-xs text-gray-500">{moment(chat.messages.created_at).fromNow()}</span>
+                                }
                             </div>
                         </div>
                     </div>

@@ -6,11 +6,13 @@ type MainChatProps = {
     messages: React.ComponentProps<any>[];
     setMessages: React.Dispatch<React.SetStateAction<never[]>>;
     user_id: string;
+    defaultHome: boolean;
+    setDefaultHome: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 
 
-export default function MainChat({ messages, setMessages, user_id }: MainChatProps) {
+export default function MainChat({ messages, setMessages, user_id, defaultHome, setDefaultHome }: MainChatProps) {
 
     return (
         <div id="chat-main" className="w-full flex flex-col bg-gray-200 h-[90vh]">
@@ -49,8 +51,8 @@ export default function MainChat({ messages, setMessages, user_id }: MainChatPro
                                     </div>
                                 }
                                 {
-                                        message.user_id !== user_id && message.event_message === false &&
-                                        <>
+                                    message.user_id !== user_id && message.event_message === false &&
+                                    <>
                                         <div className="flex justify-end items center mb-2 mr-3">
                                             <span
                                                 className="mr-2 py-3 px-4 bg-gray-400 rounded-bl-3xl rounded-tr-xl rounded-tl-xl text-white"
@@ -74,7 +76,7 @@ export default function MainChat({ messages, setMessages, user_id }: MainChatPro
                     }
                 </div>
                 {
-                    messages.length === 0 &&
+                    defaultHome &&
                     <div className="flex flex-col h-full w-full mt-5 justify-center items-center">
                         <Image width={500} height={500} priority
                             src="/chat-default.svg"
@@ -83,6 +85,16 @@ export default function MainChat({ messages, setMessages, user_id }: MainChatPro
                         />
                         <h1 className="text-2xl font-semibold text-center mt-5">Welcome back!</h1>
                         <h1 className="text-2xl font-semibold text-center mt-5">Select a chat group or friend to start messaging!</h1>
+                    </div>
+                }
+                {
+                    messages.length === 0 && !defaultHome &&
+                    <div className="flex flex-col h-full w-full mt-10 items-center">
+                        <div className="flex mb-2">
+                            <span className="py-3 px-4 bg-gray-400 rounded-3xl text-white mb-2">
+                                This chat currently has no messages
+                            </span>
+                        </div>
                     </div>
                 }
                 <div className="justify-end">
