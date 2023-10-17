@@ -76,14 +76,14 @@ export default function Login({ emailRef, passwordRef, setAction }: LoginProps) 
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Username
             </label>
-            <input ref={emailRef} name="email"
+            <input ref={emailRef} name="email" onKeyDown={(e) => e.key === 'Enter' ? handleLogin() : null}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" />
           </div>
           <div className="mb-6">
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Password
             </label>
-            <input ref={passwordRef} name="password"
+            <input ref={passwordRef} name="password" onKeyDown={(e) => e.key === 'Enter' ? handleLogin() : null}
               className="shadow appearance-none borde rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************" />
           </div>
           <div className="flex flex-col items-center justify-center mb-4 cursor-pointer">
