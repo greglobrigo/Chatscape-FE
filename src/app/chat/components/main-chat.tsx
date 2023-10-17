@@ -144,7 +144,7 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
                 }
                 <div className="justify-end">
                     <div className="py-5 flex">
-                        <input ref={inputRef}
+                        <input ref={inputRef} onKeyDown={(e) => e.key === 'Enter' ? handleSendMessage() : null}
                             className="w-full bg-gray-300 py-5 px-3 rounded-xl"
                             type="text"
                             placeholder="type your message here..."

@@ -27,38 +27,7 @@ interface ActiveUser {
     user_name: string;
 }
 
-// const ws = new WebSocket('ws://localhost:3001/cable');
-
 export default function Page() {
-
-
-
-    // ws.onopen = () => {
-    //     console.log('Connected to Web Socket Server')
-    //     ws.send(
-    //         JSON.stringify({
-    //             command: 'subscribe',
-    //             identifier: JSON.stringify({
-    //                 channel: 'MessagesChannel',
-    //                 chat_id: chatID,
-    //             }),
-    //         })
-    //     )
-    // }
-    // const refreshMessages = (message: any) => {
-    //     console.log('triggered')
-    // }
-
-    // ws.onmessage = (e: any) => {
-    //     const data = JSON.parse(e.data);
-    //     if (data.type === 'ping') return
-    //     if (data.type === 'welcome') return
-    //     if (data.type === 'confirm_subscription') return
-    //     const message = data.message;
-    //     console.log(message)
-    //     setMessages([...messages, message]);
-    // }
-
 
     const router = useRouter();
     const [messages, setMessages] = useState<any[]>([]);
@@ -70,6 +39,8 @@ export default function Page() {
     const [tokenSecret, setTokenSecret] = useState<string>('');
     const [currentUser, setCurrentUser] = useState<ActiveUser>({} as ActiveUser);
     const [defaultHome, setDefaultHome] = useState<boolean>(true);
+
+    const [errormessage, setErrorMessage] = useState<string>('');
 
     useEffect(() => {
         const id = localStorage.getItem('user_id');
@@ -95,6 +66,8 @@ export default function Page() {
                 setChats(response.data.chats);
                 setActiveUsers(response.data.active_users);
                 setCurrentUser(response.data.user);
+            } else {
+                setErrorMessage(response.data.error);
             }
         }).catch((error) => {
             console.log(error);
@@ -121,6 +94,10 @@ export default function Page() {
                         setChatId={setChatId}
                         chatID={chatID}
                     />
+                    {errormessage && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                        <span className="block sm:inline">{errormessage}</span>
+                    </div>
+                    }
                     <MainChat
                         token={token}
                         tokenSecret={tokenSecret}
