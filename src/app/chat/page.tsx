@@ -1,6 +1,6 @@
 'use client'
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import RightSideBar from './components/right-side-bar';
 import Header from './components/header';
@@ -39,6 +39,7 @@ export default function Page() {
     const [tokenSecret, setTokenSecret] = useState<string>('');
     const [currentUser, setCurrentUser] = useState<ActiveUser>({} as ActiveUser);
     const [defaultHome, setDefaultHome] = useState<boolean>(true);
+    const lastMessageRef = useRef<HTMLDivElement>(null);
 
     const [errormessage, setErrorMessage] = useState<string>('');
 
@@ -93,6 +94,7 @@ export default function Page() {
                         setDefaultHome={setDefaultHome}
                         setChatId={setChatId}
                         chatID={chatID}
+                        lastMessageRef={lastMessageRef}
                     />
                     {errormessage && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
                         <span className="block sm:inline">{errormessage}</span>
@@ -107,6 +109,7 @@ export default function Page() {
                         defaultHome={defaultHome}
                         setDefaultHome={setDefaultHome}
                         chatID={chatID}
+                        lastMessageRef={lastMessageRef}
                     />
                     <RightSideBar
                         activeUsers={activeUsers}

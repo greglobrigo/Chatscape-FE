@@ -16,9 +16,10 @@ type LeftSideBarProps = {
     setDefaultHome: React.Dispatch<React.SetStateAction<boolean>>;
     setChatId: React.Dispatch<React.SetStateAction<number>>;
     chatID: number;
+    lastMessageRef: React.RefObject<HTMLDivElement>;
 };
 
-export default function LeftSideBar({ chats, user_id, token, tokenSecret, messages, setMessages, defaultHome, setDefaultHome, setChatId, chatID }: LeftSideBarProps) {
+export default function LeftSideBar({ chats, user_id, token, tokenSecret, messages, setMessages, defaultHome, setDefaultHome, setChatId, chatID, lastMessageRef }: LeftSideBarProps) {
 
     const handleGetMessages = async (chatID: any) => {
     setDefaultHome(false);
@@ -35,6 +36,10 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, messag
         }).then((response) => {
             if (response.data.status === 'success') {
                 setMessages(response.data.messages)
+                setTimeout(() => {
+                    //instantly scroll to the bottom of the chat
+                lastMessageRef.current?.scrollIntoView({ behavior: 'instant' });
+                }, 100)
             }
         }).catch((error) => {
             console.log(error);

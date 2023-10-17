@@ -12,9 +12,10 @@ type MainChatProps = {
     chatID: number;
     token: string;
     tokenSecret: string;
+    lastMessageRef: React.RefObject<HTMLDivElement>;
 };
 
-export default function MainChat({ messages, setMessages, user_id, defaultHome, setDefaultHome, chatID, token, tokenSecret }: MainChatProps) {
+export default function MainChat({ messages, setMessages, user_id, defaultHome, setDefaultHome, chatID, token, tokenSecret, lastMessageRef }: MainChatProps) {
 
     const inputRef = useRef<HTMLInputElement>(null);
     const [errorMessage, setErrorMessage] = useState<string>('');
@@ -66,7 +67,7 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
                                 {
                                     message.user_id === user_id && message.event_message === false &&
                                     <>
-                                        <div className="flex justify-start items center mb-2">
+                                        <div className="flex justify-start items center mb-2" ref={lastMessageRef}>
                                             <Image width={50} height={50}
                                                 src={`/${message.avatar}.png`}
                                                 className="object-fit rounded-full border-4 border-[#FFFFFF]"
@@ -97,7 +98,7 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
                                 {
                                     message.user_id !== user_id && message.event_message === false &&
                                     <>
-                                        <div className="flex justify-end items center mb-2 mr-3">
+                                        <div className="flex justify-end items center mb-2 mr-3" ref={lastMessageRef}>
                                             <span
                                                 className="mr-2 py-3 px-4 bg-gray-400 rounded-bl-3xl rounded-tr-xl rounded-tl-xl text-white"
                                             >
