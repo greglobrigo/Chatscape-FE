@@ -35,12 +35,19 @@ export default function Login({ emailRef, passwordRef, setAction }: LoginProps) 
         }
       }).then((response) => {
         if (response.data.status === 'success') {
-          setUserID(response.data.user);
-          setToken(response.data.token);
-          setSuccessMessage(response.data.message);
-          setTimeout(() => {
-            router.push('/chat');
-          }, 3000);
+          if (response.data.message.includes('Login Successful!')) {
+            setUserID(response.data.user);
+            setToken(response.data.token);
+            setSuccessMessage(response.data.message);
+            setTimeout(() => {
+              router.push('/chat');
+            }, 3000);
+          } else if (response.data.message.includes('For email validation')) {
+            setErrorMessage(response.data.message + ' redirecting...');
+            setTimeout(() => {
+              setAction({ login: false, register: false, forgotPassword: false, confirmEmail: true, confirmForgottenPassword: false });
+            }, 3000);
+          }
         } else {
           setErrorMessage(response.data.error);
         }

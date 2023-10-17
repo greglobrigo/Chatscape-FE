@@ -17,7 +17,7 @@ interface Chat {
         chat_id: number;
         user_id: UUID;
         message_text: string;
-        event_message:boolean;
+        event_message: boolean;
         sender: string;
     };
 }
@@ -27,32 +27,49 @@ interface ActiveUser {
     user_name: string;
 }
 
-const ws = new WebSocket('ws://localhost:3001/cable');
+// const ws = new WebSocket('ws://localhost:3001/cable');
 
 export default function Page() {
 
-    ws.onopen = () => {
-        console.log('connected')
-    }
 
-    ws.onmessage = (e:any) => {
-        const data = JSON.parse(e.data);
-        if (data.type === 'ping') return
-        if (data.type === 'welcome') return
-        if (data.type === 'confirm_subscription') return
-        const message = data.message;
-        console.log(message)
-    }
+
+    // ws.onopen = () => {
+    //     console.log('Connected to Web Socket Server')
+    //     ws.send(
+    //         JSON.stringify({
+    //             command: 'subscribe',
+    //             identifier: JSON.stringify({
+    //                 channel: 'MessagesChannel',
+    //                 chat_id: chatID,
+    //             }),
+    //         })
+    //     )
+    // }
+    // const refreshMessages = (message: any) => {
+    //     console.log('triggered')
+    // }
+
+    // ws.onmessage = (e: any) => {
+    //     const data = JSON.parse(e.data);
+    //     if (data.type === 'ping') return
+    //     if (data.type === 'welcome') return
+    //     if (data.type === 'confirm_subscription') return
+    //     const message = data.message;
+    //     console.log(message)
+    //     setMessages([...messages, message]);
+    // }
+
+
     const router = useRouter();
+    const [messages, setMessages] = useState<any[]>([]);
+    const [chatID, setChatId] = useState<number>(0);
     const [chats, setChats] = useState<Chat[]>([]);
     const [activeUsers, setActiveUsers] = useState<ActiveUser[]>([]);
     const [user_id, setUserId] = useState<string>('');
     const [token, setToken] = useState<string>('');
     const [tokenSecret, setTokenSecret] = useState<string>('');
     const [currentUser, setCurrentUser] = useState<ActiveUser>({} as ActiveUser);
-    const [messages, setMessages] = useState<any[]>([]);
     const [defaultHome, setDefaultHome] = useState<boolean>(true);
-    const [chatID, setChatId] = useState<number>(0);
 
     useEffect(() => {
         const id = localStorage.getItem('user_id');
@@ -61,9 +78,9 @@ export default function Page() {
         if (!id || !token || !tokenSecret) {
             router.push('/');
         }
-        setUserId(id||'');
-        setToken(token||'');
-        setTokenSecret(tokenSecret||'');
+        setUserId(id || '');
+        setToken(token || '');
+        setTokenSecret(tokenSecret || '');
         axios({
             method: 'post',
             url: 'http://localhost:3001/users/get-profile',
@@ -89,37 +106,38 @@ export default function Page() {
         <>
             <div className='flex flex-col wrapper'>
                 <Header
-                currentUser={currentUser}
-                 />
+                    currentUser={currentUser}
+                />
                 <div className="flex shadow-lg rounded-lg bg-white">
                     <LeftSideBar
-                    chats={chats}
-                    user_id={user_id}
-                    token={token}
-                    tokenSecret={tokenSecret}
-                    messages={messages}
-                    setMessages={setMessages}
-                    defaultHome={defaultHome}
-                    setDefaultHome={setDefaultHome}
-                    setChatId={setChatId}
+                        chats={chats}
+                        user_id={user_id}
+                        token={token}
+                        tokenSecret={tokenSecret}
+                        messages={messages}
+                        setMessages={setMessages}
+                        defaultHome={defaultHome}
+                        setDefaultHome={setDefaultHome}
+                        setChatId={setChatId}
+                        chatID={chatID}
                     />
                     <MainChat
-                    token={token}
-                    tokenSecret={tokenSecret}
-                    messages={messages}
-                    setMessages={setMessages}
-                    user_id={user_id}
-                    defaultHome={defaultHome}
-                    setDefaultHome={setDefaultHome}
-                    chatID={chatID}
+                        token={token}
+                        tokenSecret={tokenSecret}
+                        messages={messages}
+                        setMessages={setMessages}
+                        user_id={user_id}
+                        defaultHome={defaultHome}
+                        setDefaultHome={setDefaultHome}
+                        chatID={chatID}
                     />
                     <RightSideBar
-                    activeUsers={activeUsers}
-                    user_id={user_id}
-                    token={token}
-                    tokenSecret={tokenSecret}
-                    messages={messages}
-                    setMessages={setMessages}
+                        activeUsers={activeUsers}
+                        user_id={user_id}
+                        token={token}
+                        tokenSecret={tokenSecret}
+                        messages={messages}
+                        setMessages={setMessages}
                     />
                 </div>
             </div>

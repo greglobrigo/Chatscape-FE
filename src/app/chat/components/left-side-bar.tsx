@@ -15,12 +15,62 @@ type LeftSideBarProps = {
     defaultHome: boolean;
     setDefaultHome: React.Dispatch<React.SetStateAction<boolean>>;
     setChatId: React.Dispatch<React.SetStateAction<number>>;
+    chatID: number;
 };
 
-export default function LeftSideBar({ chats, user_id, token, tokenSecret, messages, setMessages, defaultHome, setDefaultHome, setChatId }: LeftSideBarProps) {
+//const ws = new WebSocket('ws://localhost:3001/cable');
+
+
+const refreshMessages = (message: any) => {
+    console.log('triggered')
+}
+
+// ws.onmessage = (e: any) => {
+//     const data = JSON.parse(e.data);
+//     if (data.type === 'ping') return
+//     if (data.type === 'welcome') return
+//     if (data.type === 'confirm_subscription') return
+//     const message = data.message;
+//     console.log(message)
+//     setMessages([...messages, message]);
+// }
+
+export default function LeftSideBar({ chats, user_id, token, tokenSecret, messages, setMessages, defaultHome, setDefaultHome, setChatId, chatID }: LeftSideBarProps) {
+
+
+    const connectToWebSocket = async () => {
+        const ws = new WebSocket('ws://localhost:3001/cable');
+        ws.onopen = () => {
+            console.log('Connected to Web Socket Server')
+            ws.send(
+                JSON.stringify({
+                    command: 'subscribe',
+                    identifier: JSON.stringify({
+                        channel: 'MessagesChannel',
+                        chat_id: chatID,
+                    }),
+                })
+            )
+        }
+
+        ws.onmessage = (e: any) => {
+            const data = JSON.parse(e.data);
+            if (data.type === 'ping') return
+            if (data.type === 'welcome') return
+            if (data.type === 'confirm_subscription') return
+            const message = data.message;
+            console.log(message)
+            setMessages([...messages, message]);
+        }
+
+        ws.onclose = () => {
+            console.log('Disconnected from Web Socket Server')
+        }
+    }
 
 
     const handleGetMessages = async (chatID: any) => {
+     await connectToWebSocket();
     setDefaultHome(false);
      await axios({
             method: 'post',

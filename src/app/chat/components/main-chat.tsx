@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import moment from 'moment-timezone';
 import axios from 'axios';
 
@@ -13,8 +13,6 @@ type MainChatProps = {
     token: string;
     tokenSecret: string;
 };
-
-
 
 export default function MainChat({ messages, setMessages, user_id, defaultHome, setDefaultHome, chatID, token, tokenSecret }: MainChatProps) {
 
@@ -44,7 +42,7 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
                 setErrorMessage(response.data.error);
             }
         }).catch((error) => {
-            console.log(error);
+            setErrorMessage(error.message);
         })
     }
 
