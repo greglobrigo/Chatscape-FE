@@ -16,10 +16,10 @@ type LeftSideBarProps = {
     setDefaultHome: React.Dispatch<React.SetStateAction<boolean>>;
     setChatId: React.Dispatch<React.SetStateAction<number>>;
     chatID: number;
-    lastMessageRef: React.RefObject<HTMLDivElement>;
+    messagesContainer: React.RefObject<HTMLDivElement>;
 };
 
-export default function LeftSideBar({ chats, user_id, token, tokenSecret, messages, setMessages, defaultHome, setDefaultHome, setChatId, chatID, lastMessageRef }: LeftSideBarProps) {
+export default function LeftSideBar({ chats, user_id, token, tokenSecret, messages, setMessages, defaultHome, setDefaultHome, setChatId, chatID, messagesContainer }: LeftSideBarProps) {
 
     const handleGetMessages = async (chatID: any) => {
     setDefaultHome(false);
@@ -37,8 +37,8 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, messag
             if (response.data.status === 'success') {
                 setMessages(response.data.messages)
                 setTimeout(() => {
-                    //instantly scroll to the bottom of the chat
-                lastMessageRef.current?.scrollIntoView({ behavior: 'instant' });
+                //@ts-ignore
+                messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
                 }, 100)
             }
         }).catch((error) => {
@@ -57,7 +57,7 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, messag
             </div>
             <div className='overflow-y-auto'>
                 {chats.length > 0 ? chats.map((chat) => (
-                    <div key={chat.id} onClick={() => { handleGetMessages(chat.id); setChatId(chat.id) }}
+                    <div key={chat.id} onClick={() => { setChatId(chat.id); handleGetMessages(chat.id); }}
                         className="flex flex-row py-4 px-2 justify-around items-center border-b-2 cursor-pointer hover:bg-gray-200 transition duration-300 ease-in-out">
                         <div className="w-1/2 2xl:w-1/2 3xl:w-1/2.5 4xl:w-1/3 5xl:w-1/4">
                             {
@@ -119,3 +119,8 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, messag
         </div>
     )
 }
+
+//kill pid command
+//sudo lsof -i :3000
+//kill -9 <PID> all
+//kill -9 12345

@@ -117,7 +117,7 @@ export default function ConfirmEmail({ emailRef, setAction }: ConfirmEmailProps)
                     </div>
                     <div onClick={handleResendEmail} className="flex items-center justify-center cursor-pointer">
                         <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
-                            Didn't receive an email? Resend
+                            Didn&apos;t receive an email? Resend
                         </a>
                     </div>
                 </form>

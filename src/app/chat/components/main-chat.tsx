@@ -1,3 +1,4 @@
+'use client'
 import Image from 'next/image'
 import { useState, useRef, useEffect } from 'react';
 import moment from 'moment-timezone';
@@ -12,10 +13,13 @@ type MainChatProps = {
     chatID: number;
     token: string;
     tokenSecret: string;
-    lastMessageRef: React.RefObject<HTMLDivElement>;
+    chats: React.ComponentProps<any>[];
+    setChats: React.Dispatch<React.SetStateAction<any[]>>;
+    messagesContainer: React.RefObject<HTMLDivElement>;
 };
 
-export default function MainChat({ messages, setMessages, user_id, defaultHome, setDefaultHome, chatID, token, tokenSecret, lastMessageRef }: MainChatProps) {
+
+export default function MainChat({ messages, setMessages, user_id, defaultHome, setDefaultHome, chatID, token, tokenSecret, chats, setChats, messagesContainer }: MainChatProps) {
 
     const inputRef = useRef<HTMLInputElement>(null);
     const [errorMessage, setErrorMessage] = useState<string>('');
@@ -60,14 +64,14 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
                         </div>
                     </div>
                 }
-                <div className="overflow-y-auto">
+                <div className="overflow-y-auto" id="messages-container" ref={messagesContainer}>
                     {
-                        messages.length > 0 && messages.map((message) => (
-                            <div key={message.id} className="flex flex-col mt-5">
+                        messages.length > 0 && messages.map((message, index) => (
+                            <div key={index} className="flex flex-col mt-5">
                                 {
                                     message.user_id === user_id && message.event_message === false &&
                                     <>
-                                        <div className="flex justify-start items center mb-2" ref={lastMessageRef}>
+                                        <div className="flex justify-start items center mb-2">
                                             <Image width={50} height={50}
                                                 src={`/${message.avatar}.png`}
                                                 className="object-fit rounded-full border-4 border-[#FFFFFF]"
@@ -98,7 +102,7 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
                                 {
                                     message.user_id !== user_id && message.event_message === false &&
                                     <>
-                                        <div className="flex justify-end items center mb-2 mr-3" ref={lastMessageRef}>
+                                        <div className="flex justify-end items center mb-2 mr-3">
                                             <span
                                                 className="mr-2 py-3 px-4 bg-gray-400 rounded-bl-3xl rounded-tr-xl rounded-tl-xl text-white"
                                             >
@@ -123,7 +127,7 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
                 {
                     defaultHome &&
                     <div className="flex flex-col h-full w-full mt-5 justify-center items-center">
-                        <Image width={500} height={500} priority
+                        <Image width={500} height={500} priority={true}
                             src="/chat-default.svg"
                             className="object-fit"
                             alt="avatar"

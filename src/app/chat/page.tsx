@@ -39,7 +39,7 @@ export default function Page() {
     const [tokenSecret, setTokenSecret] = useState<string>('');
     const [currentUser, setCurrentUser] = useState<ActiveUser>({} as ActiveUser);
     const [defaultHome, setDefaultHome] = useState<boolean>(true);
-    const lastMessageRef = useRef<HTMLDivElement>(null);
+    const messagesContainer = useRef<HTMLDivElement>(null);
 
     const [errormessage, setErrorMessage] = useState<string>('');
 
@@ -75,6 +75,55 @@ export default function Page() {
         })
     }, [router]);
 
+    useEffect(() => {
+        const ws = new WebSocket('ws://localhost:3001/cable');
+        let pingTimeout: NodeJS.Timeout;
+        console.log(chatID, 'chatID')
+        // if(chatID === 0) return
+        ws.onopen = () => {
+            ws.send(JSON.stringify({
+                command: 'subscribe',
+                identifier: JSON.stringify({
+                    channel: 'MessagesChannel',
+                    id: chatID,
+                }),
+            }))
+            ws.onmessage = (event) => {
+                console.log(event, 'event')
+                const data = JSON.parse(event.data);
+                const message = data.message
+                if (data.type === 'ping') {
+                    clearTimeout(pingTimeout);
+                    pingTimeout = setTimeout(() => {
+                        ws.close();
+                    }, 10 * 60 * 1000);
+                    return;
+                }
+                if (data.type === 'welcome') return
+                if (data.type === 'confirm_subscription') { console.log (data, 'data'); return }
+                if (data.type === 'reject_subscription') return
+                console.log(data, 'data')
+                if (data?.message?.chat_id === chatID) {
+                    setMessages((messages) => [...messages, message])
+                    setTimeout(() => {
+                        //@ts-ignore
+                        messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
+                    }, 100)
+                }
+            }
+
+            ws.onclose = () => {
+                ws.send(JSON.stringify({
+                    command: 'unsubscribe',
+                    identifier: JSON.stringify({
+                        channel: 'MessagesChannel',
+                        id: chatID,
+                    }),
+                }))
+            }
+        }
+    }, []);
+
 
     return (
         <>
@@ -94,7 +143,7 @@ export default function Page() {
                         setDefaultHome={setDefaultHome}
                         setChatId={setChatId}
                         chatID={chatID}
-                        lastMessageRef={lastMessageRef}
+                        messagesContainer={messagesContainer}
                     />
                     {errormessage && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
                         <span className="block sm:inline">{errormessage}</span>
@@ -109,7 +158,9 @@ export default function Page() {
                         defaultHome={defaultHome}
                         setDefaultHome={setDefaultHome}
                         chatID={chatID}
-                        lastMessageRef={lastMessageRef}
+                        chats={chats}
+                        setChats={setChats}
+                        messagesContainer={messagesContainer}
                     />
                     <RightSideBar
                         activeUsers={activeUsers}
@@ -118,6 +169,9 @@ export default function Page() {
                         tokenSecret={tokenSecret}
                         messages={messages}
                         setMessages={setMessages}
+                        defaultHome={defaultHome}
+                        setDefaultHome={setDefaultHome}
+                        messagesContainer={messagesContainer}
                     />
                 </div>
             </div>
