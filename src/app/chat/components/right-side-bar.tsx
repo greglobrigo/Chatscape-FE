@@ -14,9 +14,10 @@ type RightSideBarProps = {
     defaultHome: boolean;
     setDefaultHome: React.Dispatch<React.SetStateAction<boolean>>;
     messagesContainer: React.RefObject<HTMLDivElement>;
+    setChatId: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export default function RightSideBar({ activeUsers, user_id, token, tokenSecret, messages, setMessages, defaultHome, setDefaultHome, messagesContainer }: RightSideBarProps) {
+export default function RightSideBar({ activeUsers, user_id, token, tokenSecret, messages, setMessages, defaultHome, setDefaultHome, messagesContainer, setChatId }: RightSideBarProps) {
 
     const [errormessage, setErrorMessage] = useState<string>('');
 
@@ -36,6 +37,7 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
             }
         }).then((response) => {
             if (response.data.status === 'success') {
+                setChatId(response.data.chat_id);
                 setMessages(response.data.messages)
                 setTimeout(() => {
                     //@ts-ignore

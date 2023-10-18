@@ -183,6 +183,7 @@ export default function Page() {
                         defaultHome={defaultHome}
                         setDefaultHome={setDefaultHome}
                         messagesContainer={messagesContainer}
+                        setChatId={setChatId}
                     />
                 </div>
             </div>
