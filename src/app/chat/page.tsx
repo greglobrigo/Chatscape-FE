@@ -78,38 +78,32 @@ export default function Page() {
     useEffect(() => {
         const ws = new WebSocket('ws://localhost:3001/cable');
         let pingTimeout: NodeJS.Timeout;
-        console.log(chatID, 'chatID')
-        // if(chatID === 0) return
         ws.onopen = () => {
             ws.send(JSON.stringify({
                 command: 'subscribe',
                 identifier: JSON.stringify({
                     channel: 'MessagesChannel',
-                    id: chatID,
                 }),
             }))
             ws.onmessage = (event) => {
-                console.log(event, 'event')
                 const data = JSON.parse(event.data);
                 const message = data.message
-                if (data.type === 'ping') {
-                    clearTimeout(pingTimeout);
-                    pingTimeout = setTimeout(() => {
-                        ws.close();
-                    }, 10 * 60 * 1000);
-                    return;
-                }
-                if (data.type === 'welcome') return
-                if (data.type === 'confirm_subscription') { console.log (data, 'data'); return }
-                if (data.type === 'reject_subscription') return
-                console.log(data, 'data')
-                if (data?.message?.chat_id === chatID) {
+                if (data.type !== 'ping' && data.message.chat_id === chatID) {
                     setMessages((messages) => [...messages, message])
                     setTimeout(() => {
                         //@ts-ignore
                         messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
                     }, 100)
-                }
+                } else if (data.type === 'ping') {
+                    clearTimeout(pingTimeout);
+                    pingTimeout = setTimeout(() => {
+                        ws.close();
+                    }, 10 * 60 * 1000);
+                    return;
+                } else if (data.type === 'welcome') { return }
+                else if (data.type === 'confirm_subscription') { console.log(data, 'data'); return }
+                else if (data.type === 'reject_subscription') { return }
+                console.log(data, 'data')
             }
 
             ws.onclose = () => {
@@ -122,7 +116,10 @@ export default function Page() {
                 }))
             }
         }
-    }, []);
+        return () => {
+            ws.close();
+        }
+    }, [chatID]);
 
 
     return (
