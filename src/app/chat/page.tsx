@@ -83,43 +83,57 @@ export default function Page() {
                 command: 'subscribe',
                 identifier: JSON.stringify({
                     channel: 'MessagesChannel',
+                    id: chatID,
                 }),
             }))
             ws.onmessage = (event) => {
+                if (!chatID) return
                 const data = JSON.parse(event.data);
                 const message = data.message
-                if (data.type !== 'ping' && data.message.chat_id === chatID) {
-                    setMessages((messages) => [...messages, message])
-                    setTimeout(() => {
-                        //@ts-ignore
-                        messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
-                    }, 100)
-                } else if (data.type === 'ping') {
+                console.log(data, 'data')
+                if (data.type === 'ping') {
+                    handleGetMessagesAndChats(chatID);
                     clearTimeout(pingTimeout);
                     pingTimeout = setTimeout(() => {
                         ws.close();
-                    }, 10 * 60 * 1000);
+                    }, 60000 * 5);
                     return;
                 } else if (data.type === 'welcome') { return }
                 else if (data.type === 'confirm_subscription') { console.log(data, 'data'); return }
                 else if (data.type === 'reject_subscription') { return }
-                console.log(data, 'data')
-            }
 
-            ws.onclose = () => {
-                ws.send(JSON.stringify({
-                    command: 'unsubscribe',
-                    identifier: JSON.stringify({
-                        channel: 'MessagesChannel',
-                        id: chatID,
-                    }),
-                }))
             }
         }
         return () => {
             ws.close();
         }
     }, [chatID]);
+
+    const handleGetMessagesAndChats = async (chatID: any) => {
+        setDefaultHome(false);
+        await axios({
+            method: 'post',
+            url: 'http://localhost:3001/messages/chats-and-messages',
+            data: {
+                chat_id: chatID,
+                user_id: user_id,
+            },
+            headers: {
+                Authorization: `Bearer ${token}|${tokenSecret}`,
+            }
+        }).then((response) => {
+            if (response.data.status === 'success') {
+                setChats(response.data.chats);
+                setMessages(response.data.messages)
+                setTimeout(() => {
+                    //@ts-ignore
+                    messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
+                }, 100)
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
 
 
     return (
