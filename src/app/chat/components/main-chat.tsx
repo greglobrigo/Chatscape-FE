@@ -53,7 +53,7 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
     }
 
     return (
-        <div onWheel={() => {setScrollUp(true); console.log('scrolled up')}} id="chat-main" className="w-full flex flex-col bg-gray-200">
+        <div onWheel={() => {setScrollUp(true)}} id="chat-main" className="w-full flex flex-col bg-gray-200">
             <div className="h-full px-5 flex flex-col justify-between">
                 {
                     errorMessage &&
