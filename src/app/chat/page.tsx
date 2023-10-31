@@ -138,7 +138,6 @@ export default function Page() {
         })
     }
 
-
     return (
         <>
             {showModal && <Modal
@@ -147,11 +146,11 @@ export default function Page() {
                 tokenSecret={tokenSecret}
                 setShowModal={setShowModal}
             />}
-            <div className='flex flex-col wrapper max-h-[12vh]'>
+            <div className='flex flex-col wrapper min-h-[10vh] max-h-[10vh]'>
                 <Header
                     currentUser={currentUser}
                 />
-                <div className="flex bg-white max-h-[88vh]">
+                <div className="flex bg-white min-h-[90vh]">
                     <LeftSideBar
                         chats={chats}
                         user_id={user_id}
