@@ -21,12 +21,12 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
      const [loading, setLoading] = useState<boolean>(false);
      const [timer, setTimer] = useState<any>(null);
      const grouNameRef = useRef<HTMLInputElement>(null);
-     const [groupMembers, setGroupMembers] = useState<string[]>([]);
+     const [groupMembers, setGroupMembers] = useState<any[]>([]);
 
      const handleSearchUsers = async (searchString: string) => {
           setSearchTerm(searchString);
           setSearchResults([]);
-          if (!searchString) return setSearchResults([]);
+          if (!searchString) return;
           setLoading(true);
           clearTimeout(timer);
           const newTimer = setTimeout(async () => {
@@ -43,8 +43,16 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
                }).then((response) => {
                     if (response.data.status === 'success') {
                          setLoading(false);
-                         console
-                         setSearchResults(response.data.users.splice(0, 5));
+                         if (groupMembers.length > 0) {
+                              const filteredUsers = response.data.users.filter((user: any) => {
+                                   return !groupMembers.some((member) => member.id === user.id)
+                              })
+                              setSearchResults(filteredUsers.splice(0, 1));
+                         } else if( response.data.users.length === 0) {
+                              setSearchResults([]);
+                         } else {
+                              setSearchResults(response.data.users.splice(0, 1));
+                         }
                     } else {
                          setLoading(false);
                          setErrorMessage(response.data.error);
@@ -59,35 +67,63 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
 
      return (
           <div className="fixed z-10 inset-0 overflow-y-auto h-screen w-screen bg-black bg-opacity-50 flex justify-center items-center">
-               <div className="bg-white rounded-lg w-1/4 h-1/2">
+               <div className="bg-white rounded-lg min-w-[350px] min-h-[450px]">
                     <form className="flex flex-col justify-center items-center">
                          <h1 className="text-2xl font-semibold my-8 text-center">Create New Group Chat</h1>
-                         <div className="mb-4">
+                         {errormessage && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                              <span className="block sm:inline text-center text-sm">{errormessage}</span>
+                         </div>
+                         }
+                         <div className="mb-4 mt-4">
                               <label className="block text-gray-700 text-sm font-bold mb-2">
                                    Group Name
                               </label>
-                              <input name="email" onKeyDown={(e) => e.key === 'Enter' ? null : null}
+                              <input name="email" onKeyDown={(e) => e.key === 'Enter' ? null : null} ref={grouNameRef}
                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Group Name" />
                          </div>
+                         {
+                              groupMembers.length > 0 &&
+                              <span className="text-blue-500">Members:</span>
+                         }
+                         {
+                              groupMembers.length > 0 &&
+                              <div className="flex flex-row justify-start items-center gap-[10px] mb-4">
+                                   {
+                                        groupMembers.map((member) => (
+                                             <div key={member.id} className="flex flex-row justify-start items-center gap-[10px]">
+                                                  <span className="text-blue-500">
+                                                       {groupMembers.length === 1 ? `${member.name}` : groupMembers.length > 1 && groupMembers[groupMembers.length - 1].id === member.id ? `${member.name}` : `${member.name},`}
+                                                  </span>
+                                             </div>
+                                        ))
+                                   }
+
+                              </div>
+                         }
                          <div>
                               <label className="block text-gray-700 text-sm font-bold mb-2">
                                    Group Members
                               </label>
                               <input onChange={(e) => handleSearchUsers(e.target.value)} name="text" onKeyDown={(e) => e.key === 'Enter' ? null : null} value={searchTerm}
-                                   className="shadow appearance-none borde rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Members" />
+                                   className="shadow appearance-none borde rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Search members" />
                          </div>
                          <div className='relative w-full flex justify-center items-center'>
                               <div className='overflow-y-auto z-10 relative'>
                                    {
                                         searchTerm && searchResults && searchResults.length > 0 &&
-                                        <div onClick={() => {setSearchTerm(''); setSearchResults([])}} className="flex flex-row py-2 justify-center items-center cursor-pointer bg-blue-500">
-                                            <h1 className="text-md text-center font-semibold">Clear <FaTimes className="inline-block" />
-                                            </h1>
+                                        <div onClick={() => { setSearchTerm(''); setSearchResults([]) }} className="flex flex-row py-2 justify-center items-center cursor-pointer bg-blue-500">
+                                             <h1 className="text-md text-center font-semibold">Clear <FaTimes className="inline-block" />
+                                             </h1>
                                         </div>
                                    }
                                    {
                                         searchTerm && searchResults && searchResults.length > 0 && searchResults.map((user) => (
-                                             <div key={user.id} onClick={() => setGroupMembers([...groupMembers, user.id])}
+                                             <div key={user.id} onClick={() => { groupMembers.some((member) => member.id === user.id) ? null :
+                                                  groupMembers.length >= 3 ? setErrorMessage('Max of 3 members reached, you can add more members after creating the group') :
+                                                  setGroupMembers([...groupMembers, user]);
+                                                  setSearchTerm('');
+                                                  setSearchResults([])
+                                             }}
                                                   className="w-[320px] flex flex-row py-4 px-2 items-start bg-gray-100 border-b-2 cursor-pointer hover:bg-gray-200 transition duration-300 ease-in-out">
                                                   <div className='pr-2 pt-4'>
                                                        <Image width={50} height={50}
@@ -97,9 +133,9 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
                                                        />
                                                   </div>
                                                   <div className="flex flex-col">
-                                                            <span className="text-md font-semibold">{user.name}</span>
-                                                            <span className="text-gray-500">{user.handle}</span>
-                                                            <span className="text-gray-500">{user.email}</span>
+                                                       <span className="text-md font-semibold">{user.name}</span>
+                                                       <span className="text-gray-500">{user.handle}</span>
+                                                       <span className="text-gray-500">{user.email}</span>
 
                                                   </div>
                                              </div>

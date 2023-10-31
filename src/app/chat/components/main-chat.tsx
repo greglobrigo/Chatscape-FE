@@ -156,7 +156,7 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
                             placeholder="type your message here..."
                         />
                         <button onClick={handleSendMessage} disabled={defaultHome}
-                            className={`${defaultHome ? 'bg-gray-400 text-white' : 'bg-blue-400 text-white hover:bg-blue-500 transition duration-300 ease-in-out'} pt-3 px-5 rounded-xl`}>Send</button>
+                            className={`${defaultHome ? 'bg-gray-400 text-white' : 'bg-blue-400 text-white hover:bg-blue-500 transition duration-300 ease-in-out'} py-3 px-5 rounded-xl`}>Send</button>
                     </div>
                 </div>
             </div>
