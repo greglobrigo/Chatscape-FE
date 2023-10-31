@@ -57,6 +57,7 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
 
     const handleSearchUsers = async (searchString: string) => {
         setSearchTerm(searchString);
+        setSearchResults([]);
         if (!searchString) return setSearchResults([]);
         setLoading(true);
         clearTimeout(timer);
