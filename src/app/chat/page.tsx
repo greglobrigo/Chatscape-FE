@@ -7,6 +7,7 @@ import Header from './components/header';
 import MainChat from './components/main-chat';
 import LeftSideBar from './components/left-side-bar';
 import { UUID } from 'crypto';
+import Modal from './components/create-group-modal';
 
 interface Chat {
     id: number;
@@ -41,8 +42,8 @@ export default function Page() {
     const [defaultHome, setDefaultHome] = useState<boolean>(true);
     const messagesContainer = useRef<HTMLDivElement>(null);
     const [scrollUp, setScrollUp] = useState<boolean>(false);
-
     const [errormessage, setErrorMessage] = useState<string>('');
+    const [showModal, setShowModal] = useState<boolean>(false);
 
     useEffect(() => {
         const id = localStorage.getItem('user_id');
@@ -140,6 +141,12 @@ export default function Page() {
 
     return (
         <>
+        {showModal && <Modal
+        user_id={user_id}
+        token={token}
+        tokenSecret={tokenSecret}
+        setShowModal={setShowModal}
+        />}
             <div className='flex flex-col wrapper'>
                 <Header
                     currentUser={currentUser}
@@ -157,6 +164,7 @@ export default function Page() {
                         setChatId={setChatId}
                         chatID={chatID}
                         messagesContainer={messagesContainer}
+                        setShowModal={setShowModal}
                     />
                     {errormessage && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
                         <span className="block sm:inline">{errormessage}</span>

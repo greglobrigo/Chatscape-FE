@@ -3,6 +3,7 @@ import axios from 'axios';
 import moment from 'moment-timezone';
 import { useState, useEffect } from 'react';
 import Image from 'next/image'
+import { FaPlus } from 'react-icons/fa'
 
 
 type LeftSideBarProps = {
@@ -17,13 +18,14 @@ type LeftSideBarProps = {
     setChatId: React.Dispatch<React.SetStateAction<number>>;
     chatID: number;
     messagesContainer: React.RefObject<HTMLDivElement>;
+    setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function LeftSideBar({ chats, user_id, token, tokenSecret, messages, setMessages, defaultHome, setDefaultHome, setChatId, chatID, messagesContainer }: LeftSideBarProps) {
+export default function LeftSideBar({ chats, user_id, token, tokenSecret, messages, setMessages, defaultHome, setDefaultHome, setChatId, chatID, messagesContainer, setShowModal }: LeftSideBarProps) {
 
     const handleGetMessages = async (chatID: any) => {
-    setDefaultHome(false);
-     await axios({
+        setDefaultHome(false);
+        await axios({
             method: 'post',
             url: 'http://localhost:3001/messages/get',
             data: {
@@ -37,8 +39,8 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, messag
             if (response.data.status === 'success') {
                 setMessages(response.data.messages)
                 setTimeout(() => {
-                //@ts-ignore
-                messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
+                    //@ts-ignore
+                    messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
                 }, 100)
             }
         }).catch((error) => {
@@ -48,11 +50,15 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, messag
 
     return (
         <div id="r-sidebar" className="hidden sm:flex sm:flex-col sm:min-w-[100px] md:flex md:flex-col md:min-w-[300px] lg:w-2/6 bg-gray-300 h-[90vh]">
-
             <div className="flex flex-col w-full border-r-2">
-
-                <div className="border-b-2 py-4 px-2">
+                <div className="flex flex-row justify-between items-center
+                border-b-2 py-4 px-2">
                     <h1 className="text-lg font-semibold text-center">Chats</h1>
+                    <div>
+                        <button onClick={() => setShowModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold py-2 px-4 rounded-full">
+                            New Group <FaPlus className="inline-block" />
+                        </button>
+                    </div>
                 </div>
             </div>
             <div className='overflow-y-auto'>
@@ -119,8 +125,3 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, messag
         </div>
     )
 }
-
-//kill pid command
-//sudo lsof -i :3000
-//kill -9 <PID> all
-//kill -9 12345

@@ -23,6 +23,7 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [searchResults, setSearchResults] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const [timer, setTimer] = useState<any>(null);
 
     const handleCreateOrRetrieveMessages = async (userID: any) => {
         setDefaultHome(false);
@@ -54,16 +55,19 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
         })
     }
 
-    useEffect(() => {
-        if (!searchTerm) return setSearchResults([]);
+    const handleSearchUsers = async (searchString: string) => {
+        setSearchTerm(searchString);
+        if (!searchString) return setSearchResults([]);
         setLoading(true);
-        const delayDebounceFn = setTimeout(() => {
-            axios({
+        clearTimeout(timer);
+
+        const newTimer = setTimeout(async () => {
+            await axios({
                 method: 'post',
                 url: 'http://localhost:3001/users/search-users-all-or-direct',
                 data: {
                     user_id: user_id,
-                    search_string: searchTerm,
+                    search_string: searchString,
                 },
                 headers: {
                     Authorization: `Bearer ${token}|${tokenSecret}`,
@@ -73,14 +77,16 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
                     setLoading(false);
                     setSearchResults(response.data.users);
                 } else {
+                    setLoading(false);
                     setErrorMessage(response.data.error);
                 }
             }).catch((error) => {
-                console.log(error);
+                setLoading(false);
+                setErrorMessage(error.message);
             })
-        }, 1000)
-        return () => clearTimeout(delayDebounceFn)
-    }, [searchTerm])
+        }, 1000);
+        setTimer(newTimer);
+    }
 
     return (
         <>
@@ -94,15 +100,14 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
             <div id="l-sidebar" className="hidden md:flex md:flex-col md:min-w-[100px] lg:w-2/6 bg-gray-300 h-[90vh]">
                 <div className="flex flex-col w-full border-r-2">
                     <div className="border-b-2 py-4 px-2">
-                        <input onChange={(e) => setSearchTerm(e.target.value)}
+                        <input onChange={(e) => handleSearchUsers(e.target.value)}
                             type="text"
                             placeholder=" Search Users"
                             className="py-2 px-2 border-2 border-gray-200 rounded-2xl w-full"
                         />
                     </div>
-                    {/* move down a few lines */}
                     <div className='relative'>
-                        <div className='overflow-y-auto z-10 w-full absolute'>
+                        <div className='overflow-y-auto z-10 absolute w-full'>
                             {
                                 searchTerm && searchResults && searchResults.length > 0 && searchResults.map((user) => (
                                     <div key={user.id} onClick={() => handleCreateOrRetrieveMessages(user.id)}
@@ -141,7 +146,6 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
                                         </div>
                                     </div>
                             }
-
                         </div>
                     </div>
                     <div className="border-b-2 py-4 px-2">
