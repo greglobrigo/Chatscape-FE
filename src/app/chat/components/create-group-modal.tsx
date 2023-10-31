@@ -1,7 +1,8 @@
 import { useState, useRef } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
-import { FaTimes } from 'react-icons/fa';
+//import trash bin icon
+import { BsFillTrashFill } from 'react-icons/bs';
 
 
 type ModalProps = {
@@ -21,6 +22,7 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
      const [loading, setLoading] = useState<boolean>(false);
      const [timer, setTimer] = useState<any>(null);
      const grouNameRef = useRef<HTMLInputElement>(null);
+     const [groupType, setGroupType] = useState<string>('');
      const [groupMembers, setGroupMembers] = useState<any[]>([]);
 
      const handleSearchUsers = async (searchString: string) => {
@@ -48,7 +50,7 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
                                    return !groupMembers.some((member) => member.id === user.id)
                               })
                               setSearchResults(filteredUsers.splice(0, 1));
-                         } else if( response.data.users.length === 0) {
+                         } else if (response.data.users.length === 0) {
                               setSearchResults([]);
                          } else {
                               setSearchResults(response.data.users.splice(0, 1));
@@ -69,12 +71,23 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
           <div className="fixed z-10 inset-0 overflow-y-auto h-screen w-screen bg-black bg-opacity-50 flex justify-center items-center">
                <div className="bg-white rounded-lg min-w-[350px] min-h-[450px]">
                     <form className="flex flex-col justify-center items-center">
-                         <h1 className="text-2xl font-semibold my-8 text-center">Create New Group Chat</h1>
-                         {errormessage && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                         <h1 className="text-2xl font-semibold mt-4 text-center">Create New Group Chat</h1>
+                         {errormessage && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-4 mt-2 rounded relative" role="alert">
                               <span className="block sm:inline text-center text-sm">{errormessage}</span>
                          </div>
                          }
                          <div className="mb-4 mt-4">
+                              <label className="block text-gray-700 text-sm font-bold mb-2 text-center">
+                                   Group Type
+                              </label>
+                              <div className="flex flex-row justify-start items-center gap-[10px]">
+                                   <input onClick={() => setGroupType('group')} type="radio" name="groupType" value="group"/>
+                                   <label htmlFor="group">Public</label>
+                                   <input onClick={() => setGroupType('private')} type="radio" name="groupType" value="public"/>
+                                   <label htmlFor="public">Private</label>
+                              </div>
+                         </div>
+                         <div className="mb-4">
                               <label className="block text-gray-700 text-sm font-bold mb-2">
                                    Group Name
                               </label>
@@ -111,16 +124,17 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
                               <div className='overflow-y-auto z-10 relative'>
                                    {
                                         searchTerm && searchResults && searchResults.length > 0 &&
-                                        <div onClick={() => { setSearchTerm(''); setSearchResults([]) }} className="flex flex-row py-2 justify-center items-center cursor-pointer bg-blue-500">
-                                             <h1 className="text-md text-center font-semibold">Clear <FaTimes className="inline-block" />
-                                             </h1>
+                                        <div onClick={() => { setSearchTerm(''); setSearchResults([]) }} className="flex flex-row py-2 justify-center items-center cursor-pointer bg-blue-500 gap-2">
+                                             <h1 className="text-md text-center font-semibold">Clear</h1>
+                                             <BsFillTrashFill className="inline-block" />
                                         </div>
                                    }
                                    {
                                         searchTerm && searchResults && searchResults.length > 0 && searchResults.map((user) => (
-                                             <div key={user.id} onClick={() => { groupMembers.some((member) => member.id === user.id) ? null :
-                                                  groupMembers.length >= 3 ? setErrorMessage('Max of 3 members reached, you can add more members after creating the group') :
-                                                  setGroupMembers([...groupMembers, user]);
+                                             <div key={user.id} onClick={() => {
+                                                  groupMembers.some((member) => member.id === user.id) ? null :
+                                                       groupMembers.length >= 3 ? setErrorMessage('Max of 3 members reached, you can add more members after creating the group') :
+                                                            setGroupMembers([...groupMembers, user]);
                                                   setSearchTerm('');
                                                   setSearchResults([])
                                              }}
