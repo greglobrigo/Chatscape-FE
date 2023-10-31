@@ -40,6 +40,7 @@ export default function Page() {
     const [currentUser, setCurrentUser] = useState<ActiveUser>({} as ActiveUser);
     const [defaultHome, setDefaultHome] = useState<boolean>(true);
     const messagesContainer = useRef<HTMLDivElement>(null);
+    const [scrollUp, setScrollUp] = useState<boolean>(false);
 
     const [errormessage, setErrorMessage] = useState<string>('');
 
@@ -101,7 +102,6 @@ export default function Page() {
                 } else if (data.type === 'welcome') { return }
                 else if (data.type === 'confirm_subscription') { console.log(data, 'data'); return }
                 else if (data.type === 'reject_subscription') { return }
-
             }
         }
         return () => {
@@ -126,8 +126,10 @@ export default function Page() {
                 setChats(response.data.chats);
                 setMessages(response.data.messages)
                 setTimeout(() => {
-                    //@ts-ignore
-                    messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
+                    if(!scrollUp) {
+                         //@ts-ignore
+                        messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
+                    }
                 }, 100)
             }
         }).catch((error) => {
@@ -172,6 +174,7 @@ export default function Page() {
                         chats={chats}
                         setChats={setChats}
                         messagesContainer={messagesContainer}
+                        setScrollUp={setScrollUp}
                     />
                     <RightSideBar
                         activeUsers={activeUsers}

@@ -16,10 +16,11 @@ type MainChatProps = {
     chats: React.ComponentProps<any>[];
     setChats: React.Dispatch<React.SetStateAction<any[]>>;
     messagesContainer: React.RefObject<HTMLDivElement>;
+    setScrollUp: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 
-export default function MainChat({ messages, setMessages, user_id, defaultHome, setDefaultHome, chatID, token, tokenSecret, chats, setChats, messagesContainer }: MainChatProps) {
+export default function MainChat({ messages, setMessages, user_id, defaultHome, setDefaultHome, chatID, token, tokenSecret, chats, setChats, messagesContainer, setScrollUp }: MainChatProps) {
 
     const inputRef = useRef<HTMLInputElement>(null);
     const [errorMessage, setErrorMessage] = useState<string>('');
@@ -52,7 +53,7 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
     }
 
     return (
-        <div id="chat-main" className="w-full flex flex-col bg-gray-200 h-[90vh]">
+        <div onWheel={() => {setScrollUp(true); console.log('scrolled up')}} id="chat-main" className="w-full flex flex-col bg-gray-200 h-[90vh]">
             <div className="h-full px-5 flex flex-col justify-between">
                 {
                     errorMessage &&
