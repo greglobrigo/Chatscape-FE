@@ -61,7 +61,7 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
           <div className="fixed z-10 inset-0 overflow-y-auto h-screen w-screen bg-black bg-opacity-50 flex justify-center items-center">
                <div className="bg-white rounded-lg w-1/4 h-1/2">
                     <form className="flex flex-col justify-center items-center">
-                         <h1 className="text-2xl font-semibold my-8">Create New Group Chat</h1>
+                         <h1 className="text-2xl font-semibold my-8 text-center">Create New Group Chat</h1>
                          <div className="mb-4">
                               <label className="block text-gray-700 text-sm font-bold mb-2">
                                    Group Name
@@ -76,8 +76,8 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
                               <input onChange={(e) => handleSearchUsers(e.target.value)} name="text" onKeyDown={(e) => e.key === 'Enter' ? null : null} value={searchTerm}
                                    className="shadow appearance-none borde rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Members" />
                          </div>
-                         <div className='relative'>
-                              <div className='overflow-y-auto z-10 w-full relative'>
+                         <div className='relative w-full flex justify-center items-center'>
+                              <div className='overflow-y-auto z-10 relative'>
                                    {
                                         searchTerm && searchResults && searchResults.length > 0 &&
                                         <div onClick={() => {setSearchTerm(''); setSearchResults([])}} className="flex flex-row py-2 justify-center items-center cursor-pointer bg-blue-500">

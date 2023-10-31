@@ -53,7 +53,7 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
     }
 
     return (
-        <div onWheel={() => {setScrollUp(true); console.log('scrolled up')}} id="chat-main" className="w-full flex flex-col bg-gray-200 h-[90vh]">
+        <div onWheel={() => {setScrollUp(true); console.log('scrolled up')}} id="chat-main" className="w-full flex flex-col bg-gray-200">
             <div className="h-full px-5 flex flex-col justify-between">
                 {
                     errorMessage &&
@@ -127,8 +127,8 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
                 </div>
                 {
                     defaultHome &&
-                    <div className="flex flex-col h-full w-full mt-5 justify-center items-center">
-                        <Image width={500} height={500} priority={true}
+                    <div className="flex flex-col w-full mt-5 justify-center items-center">
+                        <Image width={400} height={400} priority={true}
                             src="/chat-default.svg"
                             className="object-fit"
                             alt="avatar"
@@ -156,7 +156,7 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
                             placeholder="type your message here..."
                         />
                         <button onClick={handleSendMessage} disabled={defaultHome}
-                            className={`${defaultHome ? 'bg-gray-400 text-white' : 'bg-blue-400 text-white hover:bg-blue-500 transition duration-300 ease-in-out'} py-3 px-5 rounded-xl`}>Send</button>
+                            className={`${defaultHome ? 'bg-gray-400 text-white' : 'bg-blue-400 text-white hover:bg-blue-500 transition duration-300 ease-in-out'} pt-3 px-5 rounded-xl`}>Send</button>
                     </div>
                 </div>
             </div>

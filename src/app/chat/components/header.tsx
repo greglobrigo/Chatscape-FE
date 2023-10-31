@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 export default function Header({ currentUser }: any) {
     return (
-        <div id="header" className='h-[10vh] px-5 py-5 flex justify-between items-center bg-white border-b-2 shadow-lg rounded-lg'>
+        <div id="header" className='px-5 py-5 flex justify-between items-center bg-white border-b-2 shadow-lg rounded-lg'>
             <div className="font-semibold text-2xl">Chatscape</div>
             <div className="w-1/2">
                 <input

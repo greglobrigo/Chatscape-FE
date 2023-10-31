@@ -49,7 +49,7 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, messag
     }
 
     return (
-        <div id="r-sidebar" className="hidden sm:flex sm:flex-col sm:min-w-[100px] md:flex md:flex-col md:min-w-[300px] lg:w-2/6 bg-gray-300 h-[90vh]">
+        <div id="r-sidebar" className="hidden sm:flex sm:flex-col sm:min-w-[100px] md:flex md:flex-col md:min-w-[300px] lg:w-2/6 bg-gray-300">
             <div className="flex flex-col w-full border-r-2">
                 <div className="flex flex-row justify-between items-center
                 border-b-2 py-4 px-2">

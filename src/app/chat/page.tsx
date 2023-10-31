@@ -127,8 +127,8 @@ export default function Page() {
                 setChats(response.data.chats);
                 setMessages(response.data.messages)
                 setTimeout(() => {
-                    if(!scrollUp) {
-                         //@ts-ignore
+                    if (!scrollUp) {
+                        //@ts-ignore
                         messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
                     }
                 }, 100)
@@ -141,17 +141,17 @@ export default function Page() {
 
     return (
         <>
-        {showModal && <Modal
-        user_id={user_id}
-        token={token}
-        tokenSecret={tokenSecret}
-        setShowModal={setShowModal}
-        />}
-            <div className='flex flex-col wrapper'>
+            {showModal && <Modal
+                user_id={user_id}
+                token={token}
+                tokenSecret={tokenSecret}
+                setShowModal={setShowModal}
+            />}
+            <div className='flex flex-col wrapper max-h-[12vh]'>
                 <Header
                     currentUser={currentUser}
                 />
-                <div className="flex shadow-lg rounded-lg bg-white">
+                <div className="flex bg-white max-h-[88vh]">
                     <LeftSideBar
                         chats={chats}
                         user_id={user_id}

@@ -98,7 +98,7 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
                     </div>
                 </div>
             }
-            <div id="l-sidebar" className="hidden md:flex md:flex-col md:min-w-[100px] lg:w-2/6 bg-gray-300 h-[90vh]">
+            <div id="l-sidebar" className="hidden md:flex md:flex-col md:min-w-[100px] lg:w-2/6 bg-gray-300">
                 <div className="flex flex-col w-full border-r-2">
                     <div className="border-b-2 py-4 px-2">
                         <input onChange={(e) => handleSearchUsers(e.target.value)}
