@@ -77,7 +77,7 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, messag
                                 </div>
                             }
                             {
-                                chat.chat_type === 'group' || chat.chat_type === 'public' &&
+                                (chat.chat_type === 'group' || chat.chat_type === 'public') &&
                                 <div className="flex flex-row pr-2">
                                     {chat.members.map((member: any, index: number) => (
                                         <Image key={index} width={50} height={50}
@@ -95,7 +95,7 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, messag
                                 <span className="text-md font-semibold">{chat.members.find((member: any) => member.id !== user_id)?.name}</span>
                             }
                             {
-                                chat.chat_type === 'group' || chat.chat_type === 'public' &&
+                                (chat.chat_type === 'group' || chat.chat_type === 'public') &&
                                 <span className="text-md font-semibold">{chat.chat_name}</span>
                             }
                             <div className="flex flex-row justify-between items-end">
@@ -104,7 +104,7 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, messag
                                     <span className="text-gray-500 text-md">{chat.messages.user_id === user_id ? 'You: ' : null} {chat.messages.message_text}</span>
                                 }
                                 {
-                                    chat.chat_type === 'group' || chat.chat_type === 'public' && chat.messages &&
+                                    (chat.chat_type === 'group' || chat.chat_type === 'public') && chat.messages &&
                                     <span className="text-gray-500 text-md">{chat.messages.user_id === user_id ? 'You: ' : chat.messages.sender === 'System' ? null : chat.messages.sender} {chat.messages.message_text}</span>
                                 }
                                 {
