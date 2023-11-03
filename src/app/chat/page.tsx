@@ -8,6 +8,7 @@ import MainChat from './components/main-chat';
 import LeftSideBar from './components/left-side-bar';
 import { UUID } from 'crypto';
 import Modal from './components/create-group-modal';
+import JoinPublicChatModal from './components/join-public-chat-modal';
 
 interface Chat {
     id: number;
@@ -44,6 +45,8 @@ export default function Page() {
     const [scrollUp, setScrollUp] = useState<boolean>(false);
     const [errormessage, setErrorMessage] = useState<string>('');
     const [showModal, setShowModal] = useState<boolean>(false);
+    // const [setJoinPublicChatModal]
+    const [joinPublicChatModal, setJoinPublicChatModal] = useState<boolean>(false);
 
     useEffect(() => {
         const id = localStorage.getItem('user_id');
@@ -146,18 +149,27 @@ export default function Page() {
 
     return (
         <>
-            {showModal && <Modal
+            {
+                showModal && <Modal
+                    user_id={user_id}
+                    token={token}
+                    tokenSecret={tokenSecret}
+                    setShowModal={setShowModal} />
+            }
+            { joinPublicChatModal && <JoinPublicChatModal
                 user_id={user_id}
                 token={token}
                 tokenSecret={tokenSecret}
-                setShowModal={setShowModal}
-            />}
+                setJoinPublicChatModal={setJoinPublicChatModal}
+            />
+            }
             <div className='flex flex-col wrapper min-h-[10vh] max-h-[10vh]'>
                 <Header
                     currentUser={currentUser}
                     user_id={user_id}
                     token={token}
                     tokenSecret={tokenSecret}
+                    setJoinPublicChatModal={setJoinPublicChatModal}
                 />
                 <div className="flex bg-white min-h-[90vh]">
                     <LeftSideBar
