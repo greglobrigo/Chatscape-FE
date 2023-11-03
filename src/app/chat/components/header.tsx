@@ -25,7 +25,7 @@ export default function Header({ currentUser, token, tokenSecret, user_id }: any
                 url: 'http://localhost:3001/chats/search-public',
                 data: {
                     user_id: user_id,
-                    search_string: searchString,
+                    searchTerm: searchString,
                 },
                 headers: {
                     Authorization: `Bearer ${token}|${tokenSecret}`,
@@ -73,9 +73,9 @@ export default function Header({ currentUser, token, tokenSecret, user_id }: any
                         className="rounded-2xl bg-gray-100 py-3 px-5 w-full"
                     />
                     <div className='relative'>
-                        <div className='overflow-y-auto z-10 flex flex-col w-full absolute'>
+                        <div className='overflow-y-auto z-30 flex flex-col w-full absolute'>
                             {
-                                searchResults && searchResults.map((chat: any, index) => {
+                                searchTerm && searchResults && searchResults.map((chat: any) => {
                                     return (
                                         <div key={chat.id} className="flex items-center justify-between px-5 py-3 bg-white hover:bg-gray-100 cursor-pointer">
                                             <div className="flex items-center">
@@ -95,6 +95,20 @@ export default function Header({ currentUser, token, tokenSecret, user_id }: any
                                         </div>
                                     )
                                 })
+                            }
+                            {
+                                searchTerm && loading ?
+                                    <div className="flex flex-row py-4 px-2 justify-center items-center bg-white border-b-2">
+                                        <div className="w-full">
+                                            <h1 className="text-md font-semibold">Loading...</h1>
+                                        </div>
+                                    </div>
+                                    : searchTerm && searchResults.length === 0 &&
+                                    <div className="flex flex-row py-4 px-2 justify-center items-center bg-white border-b-2">
+                                        <div className="w-full">
+                                            <h1 className="text-md font-semibold">No Results</h1>
+                                        </div>
+                                    </div>
                             }
                         </div>
                     </div>
