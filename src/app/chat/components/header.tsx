@@ -1,26 +1,107 @@
 import Image from 'next/image'
+import { useState, useRef } from 'react'
+import axios from 'axios'
 
-export default function Header({ currentUser }: any) {
+export default function Header({ currentUser, token, tokenSecret, user_id }: any) {
 
-    const handleSearchPublicChats = (e: any) => {
-        console.log(e);
+    const [errormessage, setErrorMessage] = useState<string>('');
+    const [searchTerm, setSearchTerm] = useState<string>('');
+    const [searchResults, setSearchResults] = useState<any[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [timer, setTimer] = useState<any>(null);
+    const searchInputRef = useRef<HTMLInputElement>(null);
+
+
+    const handleSearchPublicChats = (searchString: any) => {
+        setSearchTerm(searchString);
+        setSearchResults([]);
+        if (!searchString) return setSearchResults([]);
+        setLoading(true);
+        clearTimeout(timer);
+
+        const newTimer = setTimeout(async () => {
+            await axios({
+                method: 'post',
+                url: 'http://localhost:3001/chats/search-public',
+                data: {
+                    user_id: user_id,
+                    search_string: searchString,
+                },
+                headers: {
+                    Authorization: `Bearer ${token}|${tokenSecret}`,
+                }
+            }).then((response) => {
+                if (response.data.status === 'success') {
+                    setLoading(false);
+                    setSearchResults(response.data.chats);
+                    console.log(response.data.chats);
+                } else {
+                    setLoading(false);
+                    setErrorMessage(response.data.error);
+                    setTimeout(() => {
+                        setErrorMessage('');
+                    }, 3000)
+                }
+            }).catch((error) => {
+                setLoading(false);
+                setErrorMessage(error.message);
+                setTimeout(() => {
+                    setErrorMessage('');
+                }, 3000)
+            })
+        }, 1000);
+        setTimer(newTimer);
     }
 
 
+
     return (
-        <div id="header" className='px-5 py-5 flex justify-between items-center bg-white border-b-2 shadow-lg rounded-lg'>
-            <div className="font-semibold text-2xl">Chatscape</div>
-            <div className="w-1/2">
-                <input onChange={(e) => handleSearchPublicChats(e.target.value)}
-                    type="text"
-                    name=""
-                    id=""
-                    placeholder="search public chats"
-                    className="rounded-2xl bg-gray-100 py-3 px-5 w-full"
-                />
-            </div>
-            <div className="flex">
-                <div className="flex flex-col items-center">
+        <>
+            {
+                errormessage && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-center w-screen fixed top-0 z-10" role="alert">
+                    <p>{errormessage}</p>
+                </div>
+            }
+            <div id="header" className='px-5 py-5 flex justify-between items-center bg-white border-b-2 shadow-lg rounded-lg'>
+                <div className="font-semibold text-2xl">Chatscape</div>
+                <div className="w-1/2">
+                    <input onChange={(e) => handleSearchPublicChats(e.target.value)} ref={searchInputRef}
+                        type="text"
+                        name=""
+                        id=""
+                        placeholder="search public chats"
+                        className="rounded-2xl bg-gray-100 py-3 px-5 w-full"
+                    />
+                    <div className='relative'>
+                        <div className='overflow-y-auto z-10 flex flex-col w-full absolute'>
+                            {
+                                searchResults && searchResults.map((chat: any, index) => {
+                                    return (
+                                        <div key={chat.id} className="flex items-center justify-between px-5 py-3 bg-white hover:bg-gray-100 cursor-pointer">
+                                            <div className="flex items-center">
+                                                <div className="flex flex-row pr-2">
+                                                    {chat.members.map((member: any, index: number) => (
+                                                        <Image key={index} width={50} height={50}
+                                                            src={`/${member.avatar}.png`}
+                                                            className="object-fit rounded-full border-4 border-[#FFFFFF]" {...(index > 0 ? { style: { marginLeft: '-35px' } } : {})}
+                                                            alt="avatar"
+                                                        />
+                                                    ))}
+                                                </div>
+                                                <div className='flex flex-col'>
+                                                    <span className="text-sm font-semibold">{chat.chat_name}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div className="flex">
+                    <div className="flex flex-col items-center">
                         <div className="border-2 rounded-full border-[#1d2bcd95] w-max">
                             <Image width={50} height={50}
                                 src={`/${currentUser.avatar}.png`}
@@ -28,12 +109,12 @@ export default function Header({ currentUser }: any) {
                                 alt="avatar"
                             />
                         </div>
-                    <div className='flex flex-col'>
-                        <span className="text-sm font-semibold text-center">{currentUser.name}</span>
-                        <span className="text-xs text-gray-500 text-center">{currentUser.handle}</span>
+                        <div className='flex flex-col'>
+                            <span className="text-sm font-semibold text-center">{currentUser.name}</span>
+                            <span className="text-xs text-gray-500 text-center">{currentUser.handle}</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    )
+        </>)
 }

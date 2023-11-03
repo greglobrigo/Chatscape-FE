@@ -155,6 +155,9 @@ export default function Page() {
             <div className='flex flex-col wrapper min-h-[10vh] max-h-[10vh]'>
                 <Header
                     currentUser={currentUser}
+                    user_id={user_id}
+                    token={token}
+                    tokenSecret={tokenSecret}
                 />
                 <div className="flex bg-white min-h-[90vh]">
                     <LeftSideBar
