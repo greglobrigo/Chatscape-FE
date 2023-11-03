@@ -132,7 +132,7 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
                               <div className="flex flex-row justify-start items-center gap-[10px]">
                                    <input onClick={() => setGroupType('group')} type="radio" name="groupType" value="group" />
                                    <label htmlFor="group">Group</label>
-                                   <input onClick={() => setGroupType('private')} type="radio" name="groupType" value="public" />
+                                   <input onClick={() => setGroupType('public')} type="radio" name="groupType" value="public" />
                                    <label htmlFor="public">Public</label>
                               </div>
                          </div>
