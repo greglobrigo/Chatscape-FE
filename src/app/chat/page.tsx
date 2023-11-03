@@ -126,15 +126,21 @@ export default function Page() {
             if (response.data.status === 'success') {
                 setChats(response.data.chats);
                 setMessages(response.data.messages)
+                if (!scrollUp) {
+                    //@ts-ignore
+                    messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
+                }
+            } else {
+                setErrorMessage(response.data.error);
                 setTimeout(() => {
-                    if (!scrollUp) {
-                        //@ts-ignore
-                        messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
-                    }
-                }, 100)
+                    setErrorMessage('')
+                }, 3000)
             }
         }).catch((error) => {
-            console.log(error);
+            setErrorMessage(error.message);
+            setTimeout(() => {
+                setErrorMessage('')
+            }, 3000)
         })
     }
 
@@ -165,8 +171,8 @@ export default function Page() {
                         messagesContainer={messagesContainer}
                         setShowModal={setShowModal}
                     />
-                    {errormessage && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-                        <span className="block sm:inline">{errormessage}</span>
+                    {errormessage && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-center w-screen fixed top-0 z-10" role="alert">
+                        <p>{errormessage}</p>
                     </div>
                     }
                     <MainChat

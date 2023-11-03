@@ -46,23 +46,25 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
                 inputRef.current!.value = '';
             } else {
                 setErrorMessage(response.data.error);
+                setTimeout(() => {
+                    setErrorMessage('');
+                }, 3000)
             }
         }).catch((error) => {
             setErrorMessage(error.message);
+            setTimeout(() => {
+                setErrorMessage('');
+            }, 3000)
         })
     }
 
     return (
-        <div onWheel={() => {setScrollUp(true)}} id="chat-main" className="w-full flex flex-col bg-gray-200">
+        <div onWheel={() => { setScrollUp(true) }} id="chat-main" className="w-full flex flex-col bg-gray-200">
             <div className="h-full px-5 flex flex-col justify-between">
                 {
                     errorMessage &&
-                    <div className="flex flex-col mt-5">
-                        <div className="flex justify-center items-center mb-2">
-                            <span className="py-3 px-4 bg-red-400 rounded-3xl text-white">
-                                {errorMessage}
-                            </span>
-                        </div>
+                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-center w-screen fixed top-0 z-10" role="alert">
+                        <p>{errorMessage}</p>
                     </div>
                 }
                 <div className="overflow-y-auto" id="messages-container" ref={messagesContainer}>

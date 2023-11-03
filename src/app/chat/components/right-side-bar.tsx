@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import moment from 'moment-timezone';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
 
 
 type RightSideBarProps = {
@@ -24,6 +24,7 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
     const [searchResults, setSearchResults] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [timer, setTimer] = useState<any>(null);
+    const searchInputRef = useRef<HTMLInputElement>(null);
 
     const handleCreateOrRetrieveMessages = async (userID: any) => {
         setDefaultHome(false);
@@ -80,10 +81,16 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
                 } else {
                     setLoading(false);
                     setErrorMessage(response.data.error);
+                    setTimeout(() => {
+                        setErrorMessage('');
+                    }, 3000)
                 }
             }).catch((error) => {
                 setLoading(false);
                 setErrorMessage(error.message);
+                setTimeout(() => {
+                    setErrorMessage('');
+                }, 3000)
             })
         }, 1000);
         setTimer(newTimer);
@@ -92,16 +99,14 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
     return (
         <>
             {
-                errormessage && <div className="flex flex-row justify-center items-center">
-                    <div className="w-full">
-                        <h1 className="text-md font-semibold text-center text-red-500">{errormessage}</h1>
-                    </div>
+                errormessage && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-center w-screen fixed top-0 z-10" role="alert">
+                    <p>{errormessage}</p>
                 </div>
             }
             <div id="l-sidebar" className="hidden md:flex md:flex-col md:min-w-[100px] lg:w-2/6 bg-gray-300">
                 <div className="flex flex-col w-full border-r-2">
                     <div className="border-b-2 py-4 px-2">
-                        <input onChange={(e) => handleSearchUsers(e.target.value)}
+                        <input onChange={(e) => handleSearchUsers(e.target.value)} ref={searchInputRef}
                             type="text"
                             placeholder=" Search Users"
                             className="py-2 px-2 border-2 border-gray-200 rounded-2xl w-full"
@@ -111,7 +116,7 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
                         <div className='overflow-y-auto z-10 absolute w-full'>
                             {
                                 searchTerm && searchResults && searchResults.length > 0 && searchResults.map((user) => (
-                                    <div key={user.id} onClick={() => handleCreateOrRetrieveMessages(user.id)}
+                                    <div key={user.id} onClick={() => {handleCreateOrRetrieveMessages(user.id); setSearchTerm(''); setSearchResults([]); searchInputRef.current!.value = '';}}
                                         className="flex flex-row py-4 px-2 justify-center items-center bg-white border-b-2 cursor-pointer hover:bg-gray-200 transition duration-300 ease-in-out">
                                         <div className="w-1/2 2xl:w-1/2 3xl:w-1/3 4xl:w-1/4 5xl:w-1/6">
                                             <Image width={50} height={50}
@@ -140,7 +145,7 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
                                             <h1 className="text-md font-semibold">Loading...</h1>
                                         </div>
                                     </div>
-                                    : searchTerm && !searchResults &&
+                                    : searchTerm && searchResults.length === 0 &&
                                     <div className="flex flex-row py-4 px-2 justify-center items-center bg-white border-b-2">
                                         <div className="w-full">
                                             <h1 className="text-md font-semibold">No Results</h1>
