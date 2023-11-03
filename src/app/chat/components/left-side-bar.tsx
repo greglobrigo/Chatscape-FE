@@ -105,7 +105,7 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, messag
                                 }
                                 {
                                     (chat.chat_type === 'group' || chat.chat_type === 'public') && chat.messages &&
-                                    <span className="text-gray-500 text-md">{chat.messages.user_id === user_id ? 'You: ' : chat.messages.sender === 'System' ? null : chat.messages.sender} {chat.messages.message_text}</span>
+                                    <span className="text-gray-500 text-md">{chat.messages.sender === 'System' ? null : chat.messages.user_id === user_id ? 'You: ' : chat.messages.sender} {chat.messages.message_text}</span>
                                 }
                                 {
                                     chat.messages &&
