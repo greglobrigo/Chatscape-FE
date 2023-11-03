@@ -2,6 +2,7 @@ import Image from 'next/image'
 import moment from 'moment-timezone';
 import axios from 'axios';
 import { useState, useRef } from 'react';
+import { BsFillTrashFill } from 'react-icons/bs';
 
 
 type RightSideBarProps = {
@@ -115,8 +116,15 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
                     <div className='relative'>
                         <div className='overflow-y-auto z-10 absolute w-full'>
                             {
+                                searchTerm && searchResults && searchResults.length > 0 &&
+                                <div onClick={() => { setSearchTerm(''); setSearchResults([]); searchInputRef.current!.value = ''}} className="flex flex-row py-2 justify-center items-center cursor-pointer bg-red-500 gap-2">
+                                    <h1 className="text-md text-center font-semibold">Clear</h1>
+                                    <BsFillTrashFill className="inline-block" />
+                                </div>
+                            }
+                            {
                                 searchTerm && searchResults && searchResults.length > 0 && searchResults.map((user) => (
-                                    <div key={user.id} onClick={() => {handleCreateOrRetrieveMessages(user.id); setSearchTerm(''); setSearchResults([]); searchInputRef.current!.value = '';}}
+                                    <div key={user.id} onClick={() => { handleCreateOrRetrieveMessages(user.id); setSearchTerm(''); setSearchResults([]); searchInputRef.current!.value = ''; }}
                                         className="flex flex-row py-4 px-2 justify-center items-center bg-white border-b-2 cursor-pointer hover:bg-gray-200 transition duration-300 ease-in-out">
                                         <div className="w-1/2 2xl:w-1/2 3xl:w-1/3 4xl:w-1/4 5xl:w-1/6">
                                             <Image width={50} height={50}

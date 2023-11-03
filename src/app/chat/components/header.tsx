@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { useState, useRef } from 'react'
 import axios from 'axios'
+import { BsFillTrashFill } from 'react-icons/bs';
 
 export default function Header({ currentUser, token, tokenSecret, user_id }: any) {
 
@@ -75,6 +76,13 @@ export default function Header({ currentUser, token, tokenSecret, user_id }: any
                     <div className='relative'>
                         <div className='overflow-y-auto z-30 flex flex-col w-full absolute'>
                             {
+                                searchTerm && searchResults && searchResults.length > 0 &&
+                                <div onClick={() => { setSearchTerm(''); setSearchResults([]); searchInputRef.current!.value = '' }} className="flex flex-row py-2 justify-center items-center cursor-pointer bg-red-500 gap-2">
+                                    <h1 className="text-md text-center font-semibold">Clear</h1>
+                                    <BsFillTrashFill className="inline-block" />
+                                </div>
+                            }
+                            {
                                 searchTerm && searchResults && searchResults.map((chat: any) => {
                                     return (
                                         <div key={chat.id} className="flex items-center justify-between px-5 py-3 bg-white hover:bg-gray-100 cursor-pointer">
@@ -90,9 +98,7 @@ export default function Header({ currentUser, token, tokenSecret, user_id }: any
                                                 </div>
                                                 <div className='flex flex-col'>
                                                     <span className="text-sm font-semibold">{chat.chat_name}</span>
-                                                        {
-                                                            chat.isMember && <span className="text-xs text-green-500">Already a member</span>
-                                                        }
+                                                    <span className="text-xs text-green-500">{chat.isMember ? 'Already a member' : 'Join'}</span>
                                                 </div>
                                             </div>
                                         </div>

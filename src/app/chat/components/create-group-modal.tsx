@@ -1,7 +1,6 @@
 import { useState, useRef } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
-//import trash bin icon
 import { BsFillTrashFill } from 'react-icons/bs';
 
 
@@ -173,7 +172,7 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
                               <div className='overflow-y-auto z-10 relative'>
                                    {
                                         searchTerm && searchResults && searchResults.length > 0 &&
-                                        <div onClick={() => { setSearchTerm(''); setSearchResults([]) }} className="flex flex-row py-2 justify-center items-center cursor-pointer bg-blue-500 gap-2">
+                                        <div onClick={() => { setSearchTerm(''); setSearchResults([]) }} className="flex flex-row py-2 justify-center items-center cursor-pointer bg-red-500 gap-2">
                                              <h1 className="text-md text-center font-semibold">Clear</h1>
                                              <BsFillTrashFill className="inline-block" />
                                         </div>
