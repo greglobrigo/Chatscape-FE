@@ -90,6 +90,9 @@ export default function Header({ currentUser, token, tokenSecret, user_id }: any
                                                 </div>
                                                 <div className='flex flex-col'>
                                                     <span className="text-sm font-semibold">{chat.chat_name}</span>
+                                                        {
+                                                            chat.isMember && <span className="text-xs text-green-500">Already a member</span>
+                                                        }
                                                 </div>
                                             </div>
                                         </div>

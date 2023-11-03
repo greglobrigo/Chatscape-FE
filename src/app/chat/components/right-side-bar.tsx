@@ -99,7 +99,7 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
     return (
         <>
             {
-                errormessage && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-center w-screen fixed top-0 z-10" role="alert">
+                errormessage && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-center w-screen fixed top-0 z-30" role="alert">
                     <p>{errormessage}</p>
                 </div>
             }
