@@ -44,6 +44,7 @@ export default function Page() {
     const messagesContainer = useRef<HTMLDivElement>(null);
     const [scrollUp, setScrollUp] = useState<boolean>(false);
     const [errormessage, setErrorMessage] = useState<string>('');
+    const [successmessage, setSuccessmessage] = useState<string>('');
     const [showModal, setShowModal] = useState<boolean>(false);
     const [joinPublicChatModal, setJoinPublicChatModal] = useState<boolean>(false);
     const [publicChat, setPublicChat] = useState<any[]>([]);
@@ -75,9 +76,15 @@ export default function Page() {
                 setCurrentUser(response.data.user);
             } else {
                 setErrorMessage(response.data.error);
+                setTimeout(() => {
+                    setErrorMessage('');
+                }, 3000)
             }
         }).catch((error) => {
-            console.log(error);
+            setErrorMessage(error.message);
+            setTimeout(() => {
+                setErrorMessage('');
+            }, 3000)
         })
     }, [router]);
 
@@ -156,13 +163,26 @@ export default function Page() {
                     tokenSecret={tokenSecret}
                     setShowModal={setShowModal} />
             }
-            { joinPublicChatModal && <JoinPublicChatModal
-                user_id={user_id}
-                token={token}
-                tokenSecret={tokenSecret}
-                setJoinPublicChatModal={setJoinPublicChatModal}
-                publicChat={publicChat}
-            />
+            {
+                joinPublicChatModal && <JoinPublicChatModal
+                    user_id={user_id}
+                    token={token}
+                    tokenSecret={tokenSecret}
+                    setJoinPublicChatModal={setJoinPublicChatModal}
+                    publicChat={publicChat}
+                    setSuccessmessage={setSuccessmessage}
+                    setErrorMessage={setErrorMessage}
+                />
+            }
+            {
+                errormessage && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-center w-screen fixed top-0 z-10" role="alert">
+                    <p>{errormessage}</p>
+                </div>
+            }
+            {
+                successmessage && <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded text-center w-screen fixed top-0 z-10" role="alert">
+                    <p>{successmessage}</p>
+                </div>
             }
             <div className='flex flex-col wrapper min-h-[10vh] max-h-[10vh]'>
                 <Header
@@ -188,10 +208,6 @@ export default function Page() {
                         messagesContainer={messagesContainer}
                         setShowModal={setShowModal}
                     />
-                    {errormessage && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-center w-screen fixed top-0 z-10" role="alert">
-                        <p>{errormessage}</p>
-                    </div>
-                    }
                     <MainChat
                         token={token}
                         tokenSecret={tokenSecret}

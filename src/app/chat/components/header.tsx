@@ -35,7 +35,6 @@ export default function Header({ currentUser, token, tokenSecret, user_id, setJo
                 if (response.data.status === 'success') {
                     setLoading(false);
                     setSearchResults(response.data.chats);
-                    console.log(response.data.chats);
                 } else {
                     setLoading(false);
                     setErrorMessage(response.data.error);
