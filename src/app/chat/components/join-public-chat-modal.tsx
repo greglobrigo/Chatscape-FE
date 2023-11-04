@@ -88,7 +88,7 @@ export default function JoinPublicChatModal({ setJoinPublicChatModal, user_id, t
                 setErrorMessage('');
             }, 3000)
         })
-
+        handleGetMessagesAndChats(publicChat.id);
     }
 
     const handleLeavePublicChat = () => {
@@ -124,7 +124,7 @@ export default function JoinPublicChatModal({ setJoinPublicChatModal, user_id, t
     }
 
     return (
-            <div className="fixed z-10 inset-0 overflow-y-auto h-screen w-screen bg-black bg-opacity-50 flex justify-center items-center">
+            <div className="fixed z-40 inset-0 overflow-y-auto h-screen w-screen bg-black bg-opacity-50 flex justify-center items-center">
                 <div className="bg-white rounded-lg min-w-[350px] min-h-[250px]">
                     <div className="flex justify-end p-5 border-b">
                         <AiOutlineClose className="cursor-pointer" onClick={() => setJoinPublicChatModal(false)} />
@@ -149,6 +149,18 @@ export default function JoinPublicChatModal({ setJoinPublicChatModal, user_id, t
                                 <div className="flex w-full items-center justify-around py-2">
                                     <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleLeavePublicChat()}>Leave</button>
                                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleGetMessagesAndChats(publicChat.id)}>Open</button>
+                                </div>
+                            </div>
+                        }
+                        {
+                            !publicChat.isMember &&
+                            <div className="flex flex-col justify-center items-center">
+                                <h1 className="text-md text-center py-2">
+                                    Would you like to join this chat?
+                                </h1>
+                                <div className="flex w-full items-center justify-around py-2">
+                                    <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={() => setJoinPublicChatModal(false)}>Cancel</button>
+                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleJoinPublicChat()}>Join</button>
                                 </div>
                             </div>
                         }

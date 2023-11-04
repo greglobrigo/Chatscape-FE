@@ -114,7 +114,7 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
      }
 
      return (
-          <div className="fixed z-10 inset-0 overflow-y-auto h-screen w-screen bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="fixed z-40 inset-0 overflow-y-auto h-screen w-screen bg-black bg-opacity-50 flex justify-center items-center">
                <div className="bg-white rounded-lg min-w-[350px] min-h-[450px]">
                     <form className="flex flex-col justify-center items-center">
                          <h1 className="text-2xl font-semibold mt-4 text-center">Create New Group Chat</h1>
