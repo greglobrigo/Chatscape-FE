@@ -42,7 +42,6 @@ export default function Page() {
     const [currentUser, setCurrentUser] = useState<ActiveUser>({} as ActiveUser);
     const [defaultHome, setDefaultHome] = useState<boolean>(true);
     const messagesContainer = useRef<HTMLDivElement>(null);
-    const [scrollUp, setScrollUp] = useState<boolean>(false);
     const [errormessage, setErrorMessage] = useState<string>('');
     const [successmessage, setSuccessmessage] = useState<string>('');
     const [showModal, setShowModal] = useState<boolean>(false);
@@ -136,10 +135,6 @@ export default function Page() {
             if (response.data.status === 'success') {
                 setChats(response.data.chats);
                 setMessages(response.data.messages)
-                if (!scrollUp) {
-                    //@ts-ignore
-                    messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
-                }
             } else {
                 setErrorMessage(response.data.error);
                 setTimeout(() => {
@@ -172,6 +167,11 @@ export default function Page() {
                     publicChat={publicChat}
                     setSuccessmessage={setSuccessmessage}
                     setErrorMessage={setErrorMessage}
+                    setChats={setChats}
+                    setMessages={setMessages}
+                    setChatId={setChatId}
+                    messagesContainer={messagesContainer}
+                    setDefaultHome={setDefaultHome}
                 />
             }
             {
@@ -215,12 +215,10 @@ export default function Page() {
                         setMessages={setMessages}
                         user_id={user_id}
                         defaultHome={defaultHome}
-                        setDefaultHome={setDefaultHome}
                         chatID={chatID}
                         chats={chats}
                         setChats={setChats}
                         messagesContainer={messagesContainer}
-                        setScrollUp={setScrollUp}
                     />
                     <RightSideBar
                         activeUsers={activeUsers}

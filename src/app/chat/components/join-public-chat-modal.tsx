@@ -12,19 +12,50 @@ type ModalProps = {
     publicChat: any;
     setSuccessmessage: React.Dispatch<React.SetStateAction<string>>;
     setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
+    setChats: React.Dispatch<React.SetStateAction<any[]>>;
+    setMessages: React.Dispatch<React.SetStateAction<any[]>>;
+    setChatId: React.Dispatch<React.SetStateAction<number>>;
+    messagesContainer: React.RefObject<HTMLDivElement>;
+    setDefaultHome: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 
 
-export default function JoinPublicChatModal({ setJoinPublicChatModal, user_id, token, tokenSecret, publicChat, setErrorMessage, setSuccessmessage }: ModalProps) {
+export default function JoinPublicChatModal({ setJoinPublicChatModal, user_id, token, tokenSecret, publicChat, setErrorMessage, setSuccessmessage, setChats, setMessages, setChatId, messagesContainer, setDefaultHome }: ModalProps) {
 
-    const [searchTerm, setSearchTerm] = useState<string>('');
-    const [searchResults, setSearchResults] = useState<any[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [timer, setTimer] = useState<any>(null);
-    const grouNameRef = useRef<HTMLInputElement>(null);
-    const [groupType, setGroupType] = useState<string>('');
-    const [groupMembers, setGroupMembers] = useState<any[]>([]);
+    const handleGetMessagesAndChats = async (chatID: any) => {
+        setDefaultHome(false);
+        setChatId(chatID);
+        await axios({
+            method: 'post',
+            url: 'http://localhost:3001/messages/chats-and-messages',
+            data: {
+                chat_id: chatID,
+                user_id: user_id,
+            },
+            headers: {
+                Authorization: `Bearer ${token}|${tokenSecret}`,
+            }
+        }).then((response) => {
+            if (response.data.status === 'success') {
+                setChats(response.data.chats);
+                setMessages(response.data.messages)
+                setJoinPublicChatModal(false);
+                //@ts-ignore
+                setTimeout(() => messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight, 100);
+            } else {
+                setErrorMessage(response.data.error);
+                setTimeout(() => {
+                    setErrorMessage('')
+                }, 3000)
+            }
+        }).catch((error) => {
+            setErrorMessage(error.message);
+            setTimeout(() => {
+                setErrorMessage('')
+            }, 3000)
+        })
+    }
 
 
     const handleJoinPublicChat = () => {
@@ -117,7 +148,7 @@ export default function JoinPublicChatModal({ setJoinPublicChatModal, user_id, t
                                 </h1>
                                 <div className="flex w-full items-center justify-around py-2">
                                     <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleLeavePublicChat()}>Leave</button>
-                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => null}>Open</button>
+                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleGetMessagesAndChats(publicChat.id)}>Open</button>
                                 </div>
                             </div>
                         }
