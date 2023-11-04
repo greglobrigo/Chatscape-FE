@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
 import { BsFillTrashFill } from 'react-icons/bs';
+import { AiFillCloseCircle } from 'react-icons/ai';
 
 
 type ModalProps = {
@@ -151,10 +152,11 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
                               <div className="flex flex-row justify-start items-center gap-[10px] mb-4">
                                    {
                                         groupMembers.map((member) => (
-                                             <div key={member.id} className="flex flex-row justify-start items-center gap-[10px]">
-                                                  <span className="text-blue-500">
+                                             <div key={member.id} onClick={() => setGroupMembers(groupMembers.filter((groupMember) => groupMember.id !== member.id))} className="flex flex-row justify-start items-center gap-[10px] bg-blue-500 px-2 cursor-pointer hover:bg-red-500 transition duration-100 ease-in-out">
+                                                  <span className="text-white">
                                                        {groupMembers.length === 1 ? `${member.name}` : groupMembers.length > 1 && groupMembers[groupMembers.length - 1].id === member.id ? `${member.name}` : `${member.name},`}
                                                   </span>
+                                                  <AiFillCloseCircle className="text-white" />
                                              </div>
                                         ))
                                    }
