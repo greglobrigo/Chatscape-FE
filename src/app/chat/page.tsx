@@ -45,8 +45,9 @@ export default function Page() {
     const [scrollUp, setScrollUp] = useState<boolean>(false);
     const [errormessage, setErrorMessage] = useState<string>('');
     const [showModal, setShowModal] = useState<boolean>(false);
-    // const [setJoinPublicChatModal]
     const [joinPublicChatModal, setJoinPublicChatModal] = useState<boolean>(false);
+    const [publicChat, setPublicChat] = useState<any[]>([]);
+    const [autoFetch, setAutoFetch] = useState<boolean>(true);
 
     useEffect(() => {
         const id = localStorage.getItem('user_id');
@@ -82,7 +83,6 @@ export default function Page() {
 
     useEffect(() => {
         const ws = new WebSocket('ws://localhost:3001/cable');
-        let pingTimeout: NodeJS.Timeout;
         ws.onopen = () => {
             ws.send(JSON.stringify({
                 command: 'subscribe',
@@ -98,16 +98,16 @@ export default function Page() {
                 console.log(data, 'data')
                 if (data.type === 'ping') {
                     handleGetMessagesAndChats(chatID);
-                    clearTimeout(pingTimeout);
-                    pingTimeout = setTimeout(() => {
-                        ws.close();
-                    }, 60000 * 5);
                     return;
                 } else if (data.type === 'welcome') { return }
                 else if (data.type === 'confirm_subscription') { console.log(data, 'data'); return }
                 else if (data.type === 'reject_subscription') { return }
             }
         }
+        setTimeout(() => {
+            ws.close();
+            setAutoFetch(false);
+        }, 60000 * 5);
         return () => {
             ws.close();
         }
@@ -161,6 +161,7 @@ export default function Page() {
                 token={token}
                 tokenSecret={tokenSecret}
                 setJoinPublicChatModal={setJoinPublicChatModal}
+                publicChat={publicChat}
             />
             }
             <div className='flex flex-col wrapper min-h-[10vh] max-h-[10vh]'>
@@ -170,6 +171,7 @@ export default function Page() {
                     token={token}
                     tokenSecret={tokenSecret}
                     setJoinPublicChatModal={setJoinPublicChatModal}
+                    setPublicChat={setPublicChat}
                 />
                 <div className="flex bg-white min-h-[90vh]">
                     <LeftSideBar

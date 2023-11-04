@@ -3,7 +3,7 @@ import { useState, useRef } from 'react'
 import axios from 'axios'
 import { BsFillTrashFill } from 'react-icons/bs';
 
-export default function Header({ currentUser, token, tokenSecret, user_id, setJoinPublicChatModal }: any) {
+export default function Header({ currentUser, token, tokenSecret, user_id, setJoinPublicChatModal, setPublicChat }: any) {
 
     const [errormessage, setErrorMessage] = useState<string>('');
     const [searchTerm, setSearchTerm] = useState<string>('');
@@ -77,7 +77,7 @@ export default function Header({ currentUser, token, tokenSecret, user_id, setJo
                         <div className='overflow-y-auto z-30 flex flex-col w-full absolute'>
                             {
                                 searchTerm && searchResults && searchResults.length > 0 &&
-                                <div onClick={() => { setSearchTerm(''); setSearchResults([]); searchInputRef.current!.value = '' }} className="flex flex-row py-2 justify-center items-center cursor-pointer bg-red-500 gap-2">
+                                <div onClick={() => { setSearchTerm(''); setSearchResults([]); searchInputRef.current!.value = ''; }} className="flex flex-row py-2 justify-center items-center cursor-pointer bg-red-500 gap-2">
                                     <h1 className="text-md text-center font-semibold">Clear</h1>
                                     <BsFillTrashFill className="inline-block" />
                                 </div>
@@ -85,7 +85,7 @@ export default function Header({ currentUser, token, tokenSecret, user_id, setJo
                             {
                                 searchTerm && searchResults && searchResults.map((chat: any) => {
                                     return (
-                                        <div key={chat.id} onClick={() => { setJoinPublicChatModal(true); setSearchTerm(''); setSearchResults([]); searchInputRef.current!.value = '' }}
+                                        <div key={chat.id} onClick={() => { setPublicChat(chat); setJoinPublicChatModal(true); setSearchTerm(''); setSearchResults([]); searchInputRef.current!.value = ''; }}
                                         className="flex items-center justify-between px-5 py-3 bg-white hover:bg-gray-100 cursor-pointer">
                                             <div className="flex items-center">
                                                 <div className="flex flex-row pr-2">
