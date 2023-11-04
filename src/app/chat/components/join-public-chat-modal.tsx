@@ -9,7 +9,7 @@ type ModalProps = {
     token: string;
     tokenSecret: string;
     setJoinPublicChatModal: (value: boolean) => void;
-    publicChat: any[];
+    publicChat: any;
 }
 
 
@@ -62,18 +62,33 @@ export default function JoinPublicChatModal({ setJoinPublicChatModal, user_id, t
 
     return (
         <div className="fixed z-10 inset-0 overflow-y-auto h-screen w-screen bg-black bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white rounded-lg min-w-[350px] min-h-[450px]">
-                <div className="flex justify-between items-center p-5 border-b">
-                    <p className="text-xl">Join Public Chat</p>
+            <div className="bg-white rounded-lg min-w-[350px] min-h-[250px]">
+                <div className="flex justify-end p-5 border-b">
                     <AiOutlineClose className="cursor-pointer" onClick={() => setJoinPublicChatModal(false)} />
                 </div>
-                <div className="flex flex-col justify-center items-center">
-                    <div className="flex justify-center items-center">
-                        <p className="text-xl">Would you like to join this chat?</p>
+                <div className="flex flex-col justify-center items-center py-2">
+                    <div className="flex flex-row pr-2 items-center py-2">
+                        {publicChat.members.map((member: any, index: number) => (
+                            <Image key={index} width={50} height={50}
+                                src={`/${member.avatar}.png`}
+                                className="object-fit rounded-full border-4 border-[#FFFFFF]" {...(index > 0 ? { style: { marginLeft: '-35px' } } : {})}
+                                alt="avatar"
+                            />
+                        ))}
+                        <span className="text-l">{publicChat.chat_name}</span>
                     </div>
-                    <div className="flex justify-center items-center">
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleJoinPublicChat()}>Join</button>
-                    </div>
+                    {
+                        publicChat.isMember &&
+                        <div className="flex flex-col justify-center items-center">
+                            <h1 className="text-md text-center py-2">
+                                You are already a member of this chat
+                            </h1>
+                            <div className="flex w-full items-center justify-around py-2">
+                                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleJoinPublicChat()}>Leave</button>
+                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleJoinPublicChat()}>Open</button>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
 
