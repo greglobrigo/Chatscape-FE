@@ -110,10 +110,14 @@ export default function Page() {
                 else if (data.type === 'reject_subscription') { return }
             }
         }
+        // setTimeout(() => {
+        //     ws.close();
+        //     setAutoFetch(false);
+        // }, 60000 * 5);
         setTimeout(() => {
             ws.close();
             setAutoFetch(false);
-        }, 60000 * 5);
+        }, 5000);
         return () => {
             ws.close();
         }

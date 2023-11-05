@@ -3,6 +3,7 @@ import axios from 'axios';
 import Image from 'next/image';
 import { BsFillTrashFill } from 'react-icons/bs';
 import { AiFillCloseCircle } from 'react-icons/ai';
+import { AiOutlineClose } from 'react-icons/ai';
 
 
 type ModalProps = {
@@ -120,7 +121,7 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
                     <form className="flex flex-col justify-center items-center">
                          <h1 className="text-2xl font-semibold mt-4 text-center">Create New Group Chat</h1>
                          {errormessage && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-4 mt-2 rounded relative" role="alert">
-                              <span className="block sm:inline text-center text-sm">{errormessage}</span>
+                              <span className="block sm:inline text-center text-sm">{errormessage} <AiOutlineClose onClick={() => setErrorMessage('')} className="inline-block ml-2 cursor-pointer" /></span>
                          </div>}
                          {successmessage && <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-4 mt-2 rounded relative" role="alert">
                               <span className="block sm:inline text-center text-sm">{successmessage}</span>
