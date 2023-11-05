@@ -151,7 +151,7 @@ export default function Header({ currentUser, token, tokenSecret, user_id, setJo
                         </div>
                     {
                         showOptions &&
-                        <div className="flex flex-col absolute top-[4.5rem] right-2 bg-white rounded-lg shadow-lg">
+                        <div className="flex flex-col absolute top-[4.5rem] right-4 bg-white rounded-lg shadow-lg">
                             <div className="flex flex-row justify-center items-center py-2 px-5 hover:bg-gray-100 cursor-pointer border-b-2" onClick={() => logout()}>
                                 <span className="text-md font-semibold">Logout</span>
                             </div>
