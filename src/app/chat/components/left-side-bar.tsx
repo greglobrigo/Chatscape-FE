@@ -19,9 +19,10 @@ type LeftSideBarProps = {
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
     chatType: string;
     setChatType: React.Dispatch<React.SetStateAction<string>>;
+    setAddMemberModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function LeftSideBar({ chats, user_id, token, tokenSecret, setMessages, setDefaultHome, setChatId, messagesContainer, setShowModal, chatType, setChatType }: LeftSideBarProps) {
+export default function LeftSideBar({ chats, user_id, token, tokenSecret, setMessages, setDefaultHome, setChatId, messagesContainer, setShowModal, chatType, setChatType, setAddMemberModal }: LeftSideBarProps) {
 
     const handleGetMessages = async (chatID: any) => {
         setDefaultHome(false);
@@ -56,7 +57,7 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, setMes
                     <div>
                         {
                             (chatType === 'public' || chatType === 'group') &&
-                                <button onClick={() => setShowModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold py-2 px-2 rounded-full mr-2">
+                                <button onClick={() => setAddMemberModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold py-2 px-2 rounded-full mr-2">
                                     Add Member <BsPersonFillAdd className="inline-block mb-1" />
                                 </button>
 

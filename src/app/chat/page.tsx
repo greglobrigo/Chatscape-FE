@@ -9,6 +9,7 @@ import LeftSideBar from './components/left-side-bar';
 import { UUID } from 'crypto';
 import Modal from './components/create-group-modal';
 import JoinPublicChatModal from './components/join-public-chat-modal';
+import AddMemberModal from './components/add-member-modal';
 
 interface Chat {
     id: number;
@@ -46,9 +47,11 @@ export default function Page() {
     const [successmessage, setSuccessmessage] = useState<string>('');
     const [showModal, setShowModal] = useState<boolean>(false);
     const [joinPublicChatModal, setJoinPublicChatModal] = useState<boolean>(false);
+    const [addMemberModal, setAddMemberModal] = useState<boolean>(false);
     const [publicChat, setPublicChat] = useState<any[]>([]);
     const [autoFetch, setAutoFetch] = useState<boolean>(true);
     const [chatType, setChatType] = useState<string>('');
+    const [selectedChat, setSelectedChat] = useState<any>({});
 
     useEffect(() => {
         const id = localStorage.getItem('user_id');
@@ -147,7 +150,7 @@ export default function Page() {
                 setErrorMessage(response.data.error);
                 setTimeout(() => {
                     setErrorMessage('');
-                    if(response.data.error === 'Session expired, please login again.') {
+                    if (response.data.error === 'Session expired, please login again.') {
                         router.push('/home');
                     }
                 }, 3000)
@@ -192,6 +195,15 @@ export default function Page() {
                 />
             }
             {
+                addMemberModal && <AddMemberModal
+                    user_id={user_id}
+                    token={token}
+                    tokenSecret={tokenSecret}
+                    setAddMemberModal={setAddMemberModal}
+                    chatID={chatID}
+                />
+            }
+            {
                 errormessage && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-center w-screen fixed top-0 z-10" role="alert">
                     <p>{errormessage}</p>
                 </div>
@@ -224,6 +236,7 @@ export default function Page() {
                         setShowModal={setShowModal}
                         chatType={chatType}
                         setChatType={setChatType}
+                        setAddMemberModal={setAddMemberModal}
                     />
                     <MainChat
                         token={token}
