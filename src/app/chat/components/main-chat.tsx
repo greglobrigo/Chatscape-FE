@@ -12,13 +12,11 @@ type MainChatProps = {
     chatID: number;
     token: string;
     tokenSecret: string;
-    chats: React.ComponentProps<any>[];
-    setChats: React.Dispatch<React.SetStateAction<any[]>>;
     messagesContainer: React.RefObject<HTMLDivElement>;
 };
 
 
-export default function MainChat({ messages, setMessages, user_id, defaultHome, chatID, token, tokenSecret, chats, setChats, messagesContainer }: MainChatProps) {
+export default function MainChat({ messages, setMessages, user_id, defaultHome, chatID, token, tokenSecret, messagesContainer }: MainChatProps) {
 
     const inputRef = useRef<HTMLInputElement>(null);
     const [errorMessage, setErrorMessage] = useState<string>('');

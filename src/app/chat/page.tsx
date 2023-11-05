@@ -219,8 +219,6 @@ export default function Page() {
                         user_id={user_id}
                         defaultHome={defaultHome}
                         chatID={chatID}
-                        chats={chats}
-                        setChats={setChats}
                         messagesContainer={messagesContainer}
                     />
                     <RightSideBar
