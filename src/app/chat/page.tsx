@@ -143,6 +143,12 @@ export default function Page() {
             if (response.data.status === 'success') {
                 setChats(response.data.chats);
                 setMessages(response.data.messages)
+            } else if (response.data.status === 'failed') {
+                setErrorMessage(response.data.error);
+                setTimeout(() => {
+                    setErrorMessage('');
+                    router.push('/');
+                }, 3000)
             } else {
                 setErrorMessage(response.data.error);
                 setTimeout(() => {
