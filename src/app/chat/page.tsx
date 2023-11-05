@@ -48,6 +48,7 @@ export default function Page() {
     const [joinPublicChatModal, setJoinPublicChatModal] = useState<boolean>(false);
     const [publicChat, setPublicChat] = useState<any[]>([]);
     const [autoFetch, setAutoFetch] = useState<boolean>(true);
+    const [chatType, setChatType] = useState<string>('');
 
     useEffect(() => {
         const id = localStorage.getItem('user_id');
@@ -178,6 +179,7 @@ export default function Page() {
                     setChatId={setChatId}
                     messagesContainer={messagesContainer}
                     setDefaultHome={setDefaultHome}
+                    setChatType={setChatType}
                 />
             }
             {
@@ -206,14 +208,13 @@ export default function Page() {
                         user_id={user_id}
                         token={token}
                         tokenSecret={tokenSecret}
-                        messages={messages}
                         setMessages={setMessages}
-                        defaultHome={defaultHome}
                         setDefaultHome={setDefaultHome}
                         setChatId={setChatId}
-                        chatID={chatID}
                         messagesContainer={messagesContainer}
                         setShowModal={setShowModal}
+                        chatType={chatType}
+                        setChatType={setChatType}
                     />
                     <MainChat
                         token={token}
@@ -230,12 +231,11 @@ export default function Page() {
                         user_id={user_id}
                         token={token}
                         tokenSecret={tokenSecret}
-                        messages={messages}
                         setMessages={setMessages}
-                        defaultHome={defaultHome}
                         setDefaultHome={setDefaultHome}
                         messagesContainer={messagesContainer}
                         setChatId={setChatId}
+                        setChatType={setChatType}
                     />
                 </div>
             </div>

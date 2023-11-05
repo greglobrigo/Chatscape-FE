@@ -10,15 +10,14 @@ type RightSideBarProps = {
     user_id: string;
     token: string;
     tokenSecret: string;
-    messages: React.ComponentProps<any>[];
     setMessages: React.Dispatch<React.SetStateAction<any[]>>;
-    defaultHome: boolean;
     setDefaultHome: React.Dispatch<React.SetStateAction<boolean>>;
     messagesContainer: React.RefObject<HTMLDivElement>;
     setChatId: React.Dispatch<React.SetStateAction<number>>;
+    setChatType: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function RightSideBar({ activeUsers, user_id, token, tokenSecret, messages, setMessages, defaultHome, setDefaultHome, messagesContainer, setChatId }: RightSideBarProps) {
+export default function RightSideBar({ activeUsers, user_id, token, tokenSecret, setMessages, setDefaultHome, messagesContainer, setChatId, setChatType }: RightSideBarProps) {
 
     const [errormessage, setErrorMessage] = useState<string>('');
     const [searchTerm, setSearchTerm] = useState<string>('');
@@ -124,7 +123,7 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
                             }
                             {
                                 searchTerm && searchResults && searchResults.length > 0 && searchResults.map((user) => (
-                                    <div key={user.id} onClick={() => { handleCreateOrRetrieveMessages(user.id); setSearchTerm(''); setSearchResults([]); searchInputRef.current!.value = ''; }}
+                                    <div key={user.id} onClick={() => { handleCreateOrRetrieveMessages(user.id); setSearchTerm(''); setSearchResults([]); searchInputRef.current!.value = ''; setChatType('direct'); }}
                                         className="flex flex-row py-4 px-2 justify-center items-center bg-white border-b-2 cursor-pointer hover:bg-gray-200 transition duration-300 ease-in-out">
                                         <div className="w-1/2 2xl:w-1/2 3xl:w-1/3 4xl:w-1/4 5xl:w-1/6">
                                             <Image width={50} height={50}
@@ -169,7 +168,7 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
                 <div className='overflow-y-auto'>
                     {
                         activeUsers.length > 0 ? activeUsers.map((user) => (
-                            <div key={user.id} onClick={() => handleCreateOrRetrieveMessages(user.id)}
+                            <div key={user.id} onClick={() => {handleCreateOrRetrieveMessages(user.id); setChatType('direct');}}
                                 className="flex flex-row py-4 px-2 justify-center items-center border-b-2 cursor-pointer hover:bg-gray-200 transition duration-300 ease-in-out">
                                 <div className="w-1/2 2xl:w-1/2 3xl:w-1/3 4xl:w-1/4 5xl:w-1/6">
                                     <Image width={50} height={50}

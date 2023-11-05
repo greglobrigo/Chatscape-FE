@@ -17,11 +17,12 @@ type ModalProps = {
     setChatId: React.Dispatch<React.SetStateAction<number>>;
     messagesContainer: React.RefObject<HTMLDivElement>;
     setDefaultHome: React.Dispatch<React.SetStateAction<boolean>>;
+    setChatType: React.Dispatch<React.SetStateAction<string>>;
 }
 
 
 
-export default function JoinPublicChatModal({ setJoinPublicChatModal, user_id, token, tokenSecret, publicChat, setErrorMessage, setSuccessmessage, setChats, setMessages, setChatId, messagesContainer, setDefaultHome }: ModalProps) {
+export default function JoinPublicChatModal({ setJoinPublicChatModal, user_id, token, tokenSecret, publicChat, setErrorMessage, setSuccessmessage, setChats, setMessages, setChatId, messagesContainer, setDefaultHome, setChatType }: ModalProps) {
 
     const handleGetMessagesAndChats = async (chatID: any) => {
         setDefaultHome(false);
@@ -148,7 +149,7 @@ export default function JoinPublicChatModal({ setJoinPublicChatModal, user_id, t
                                 </h1>
                                 <div className="flex w-full items-center justify-around py-2">
                                     <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleLeavePublicChat()}>Leave</button>
-                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleGetMessagesAndChats(publicChat.id)}>Open</button>
+                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => {handleGetMessagesAndChats(publicChat.id); setChatType(publicChat.chat_type)}}>Open</button>
                                 </div>
                             </div>
                         }

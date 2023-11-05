@@ -12,19 +12,16 @@ type LeftSideBarProps = {
     user_id: string;
     token: string;
     tokenSecret: string;
-    messages: React.ComponentProps<any>[];
     setMessages: React.Dispatch<React.SetStateAction<any[]>>;
-    defaultHome: boolean;
     setDefaultHome: React.Dispatch<React.SetStateAction<boolean>>;
     setChatId: React.Dispatch<React.SetStateAction<number>>;
-    chatID: number;
     messagesContainer: React.RefObject<HTMLDivElement>;
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+    chatType: string;
+    setChatType: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function LeftSideBar({ chats, user_id, token, tokenSecret, messages, setMessages, defaultHome, setDefaultHome, setChatId, chatID, messagesContainer, setShowModal }: LeftSideBarProps) {
-
-    const [chatType, setChatType] = useState<string>('');
+export default function LeftSideBar({ chats, user_id, token, tokenSecret, setMessages, setDefaultHome, setChatId, messagesContainer, setShowModal, chatType, setChatType }: LeftSideBarProps) {
 
     const handleGetMessages = async (chatID: any) => {
         setDefaultHome(false);
@@ -59,12 +56,12 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, messag
                     <div>
                         {
                             (chatType === 'public' || chatType === 'group') &&
-                                <button onClick={() => setShowModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold py-2 px-4 rounded-full mr-2">
+                                <button onClick={() => setShowModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold py-2 px-2 rounded-full mr-2">
                                     Add Member <BsPersonFillAdd className="inline-block mb-1" />
                                 </button>
 
                         }
-                        <button onClick={() => setShowModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold py-2 px-4 rounded-full">
+                        <button onClick={() => setShowModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold py-2 px-2 rounded-full">
                             New Group <FaPlus className="inline-block" />
                         </button>
                     </div>
