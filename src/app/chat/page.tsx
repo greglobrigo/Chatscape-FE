@@ -192,6 +192,7 @@ export default function Page() {
                     tokenSecret={tokenSecret}
                     setJoinPublicChatModal={setJoinPublicChatModal}
                     setPublicChat={setPublicChat}
+                    autoFetch={autoFetch}
                 />
                 <div className="flex bg-white min-h-[90vh]">
                     <LeftSideBar

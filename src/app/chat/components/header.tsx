@@ -3,7 +3,7 @@ import { useState, useRef } from 'react'
 import axios from 'axios'
 import { BsFillTrashFill } from 'react-icons/bs';
 
-export default function Header({ currentUser, token, tokenSecret, user_id, setJoinPublicChatModal, setPublicChat }: any) {
+export default function Header({ currentUser, token, tokenSecret, user_id, setJoinPublicChatModal, setPublicChat, autoFetch }: any) {
 
     const [errormessage, setErrorMessage] = useState<string>('');
     const [searchTerm, setSearchTerm] = useState<string>('');
@@ -72,6 +72,11 @@ export default function Header({ currentUser, token, tokenSecret, user_id, setJo
                         placeholder="search public chats"
                         className="rounded-2xl bg-gray-100 py-3 px-5 w-full"
                     />
+                    <div className="flex justify-center items-center pt-2 bg-white">
+                        <span className="text-sm text-center font-semibold">Websocket status: {
+                            autoFetch ? <span className="text-green-500">ON</span> : <span className="text-red-500">OFF</span>
+                        }</span>
+                    </div>
                     <div className='relative'>
                         <div className='overflow-y-auto z-30 flex flex-col w-full absolute'>
                             {
