@@ -147,7 +147,9 @@ export default function Page() {
                 setErrorMessage(response.data.error);
                 setTimeout(() => {
                     setErrorMessage('');
-                    router.push('/');
+                    if(response.data.error === 'Session expired, please login again.') {
+                        router.push('/home');
+                    }
                 }, 3000)
             } else {
                 setErrorMessage(response.data.error);
