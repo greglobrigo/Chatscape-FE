@@ -2,14 +2,17 @@ import Image from 'next/image'
 import { useState, useRef } from 'react'
 import axios from 'axios'
 import { BsFillTrashFill } from 'react-icons/bs';
+import { useRouter } from 'next/navigation';
 
 export default function Header({ currentUser, token, tokenSecret, user_id, setJoinPublicChatModal, setPublicChat, autoFetch }: any) {
 
+    const router = useRouter();
     const [errormessage, setErrorMessage] = useState<string>('');
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [searchResults, setSearchResults] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [timer, setTimer] = useState<any>(null);
+    const [showOptions, setShowOptions] = useState<boolean>(false);
     const searchInputRef = useRef<HTMLInputElement>(null);
 
 
@@ -53,7 +56,12 @@ export default function Header({ currentUser, token, tokenSecret, user_id, setJo
         setTimer(newTimer);
     }
 
-
+    const logout = () => {
+        localStorage.removeItem('user_id');
+        localStorage.removeItem('token');
+        localStorage.removeItem('tokenSecret');
+        router.push('/home');
+    }
 
     return (
         <>
@@ -129,7 +137,7 @@ export default function Header({ currentUser, token, tokenSecret, user_id, setJo
                 </div>
 
                 <div className="flex">
-                    <div className="flex flex-col items-center">
+                    <div onClick={() => setShowOptions(!showOptions)} className="flex flex-col items-center cursor-pointer">
                         <div className="border-2 rounded-full border-[#1d2bcd95] w-max">
                             <Image width={50} height={50}
                                 src={`/${currentUser.avatar}.png`}
@@ -141,6 +149,14 @@ export default function Header({ currentUser, token, tokenSecret, user_id, setJo
                             <span className="text-sm font-semibold text-center">{currentUser.name}</span>
                             <span className="text-xs text-gray-500 text-center">{currentUser.handle}</span>
                         </div>
+                    {
+                        showOptions &&
+                        <div className="flex flex-col absolute top-[4.5rem] right-2 bg-white rounded-lg shadow-lg">
+                            <div className="flex flex-row justify-center items-center py-2 px-5 hover:bg-gray-100 cursor-pointer border-b-2" onClick={() => logout()}>
+                                <span className="text-md font-semibold">Logout</span>
+                            </div>
+                        </div>
+                    }
                     </div>
                 </div>
             </div>
