@@ -56,6 +56,7 @@ export default function Page() {
         const tokenSecret = process.env.NEXT_PUBLIC_TOKEN_SECRET;
         if (!id || !token || !tokenSecret) {
             router.push('/');
+            return;
         }
         setUserId(id || '');
         setToken(token || '');
