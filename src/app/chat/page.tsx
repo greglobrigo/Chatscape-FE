@@ -25,7 +25,7 @@ interface Chat {
 }
 
 interface ActiveUser {
-    user_id: number;
+    user_id: string;
     user_name: string;
 }
 
@@ -97,8 +97,8 @@ export default function Page() {
                     id: chatID,
                 }),
             }))
+            setAutoFetch(true);
             ws.onmessage = (event) => {
-                if (!chatID) return
                 const data = JSON.parse(event.data);
                 const message = data.message
                 console.log(data, 'data')
@@ -120,13 +120,15 @@ export default function Page() {
     }, [chatID]);
 
     const handleGetMessagesAndChats = async (chatID: any) => {
-        setDefaultHome(false);
+        const user_id = localStorage.getItem('user_id');
+        const token = localStorage.getItem('token');
+        const tokenSecret = process.env.NEXT_PUBLIC_TOKEN_SECRET;
         await axios({
             method: 'post',
             url: 'http://localhost:3001/messages/chats-and-messages',
             data: {
                 chat_id: chatID,
-                user_id: user_id,
+                user_id: user_id
             },
             headers: {
                 Authorization: `Bearer ${token}|${tokenSecret}`,
