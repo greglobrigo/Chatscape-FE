@@ -67,8 +67,37 @@ export default function AddMemberModal({ user_id, token, tokenSecret, setAddMemb
     }
 
     const handleAddMember = () => {
-        console.log(selectedChat)
-
+        const members = groupMembers.map((member) => member.id)
+        axios({
+            method: 'post',
+            url: 'http://localhost:3001/chatmembers/add',
+            data: {
+                user_id: user_id,
+                chat_id: selectedChat.id,
+                chat_members: members,
+            },
+            headers: {
+                Authorization: `Bearer ${token}|${tokenSecret}`,
+            }
+        }).then((response) => {
+            if (response.data.status === 'success') {
+                setSuccessMessage(response.data.message);
+                setTimeout(() => {
+                    setSuccessMessage('');
+                    setAddMemberModal(false);
+                }, 3000)
+            } else {
+                setErrorMessage(response.data.error);
+                setTimeout(() => {
+                    setErrorMessage('');
+                }, 3000)
+            }
+        }).catch((error) => {
+            setErrorMessage(error.message);
+            setTimeout(() => {
+                setErrorMessage('');
+            }, 3000)
+        })
     }
 
     return (
@@ -112,7 +141,7 @@ export default function AddMemberModal({ user_id, token, tokenSecret, setAddMemb
                         <label className="block text-gray-700 text-sm font-bold mb-2">
                             Group Members
                         </label>
-                        <input onChange={(e) => handleSearchUsers(e.target.value)} name="text" onKeyDown={(e) => e.key === 'Enter' ? null : null} value={searchTerm}
+                        <input onChange={(e) => handleSearchUsers(e.target.value)} name="text" value={searchTerm}
                             className="shadow appearance-none borde rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Search members" />
                     </div>
                     <div className='relative w-full flex justify-center items-center'>
@@ -172,7 +201,7 @@ export default function AddMemberModal({ user_id, token, tokenSecret, setAddMemb
                                     Cancel
                                 </button>
                                 <button onClick={handleAddMember} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4" type="button">
-                                    Create
+                                    Invite
                                 </button>
                             </>
                         }

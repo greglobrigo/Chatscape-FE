@@ -122,7 +122,7 @@ export default function Page() {
         setTimeout(() => {
             ws.close();
             setAutoFetch(false);
-        }, 5000);
+        }, 60000);
         return () => {
             ws.close();
         }
@@ -200,7 +200,7 @@ export default function Page() {
                     token={token}
                     tokenSecret={tokenSecret}
                     setAddMemberModal={setAddMemberModal}
-                    selectedChat={selectedChat} 
+                    selectedChat={selectedChat}
                 />
             }
             {
