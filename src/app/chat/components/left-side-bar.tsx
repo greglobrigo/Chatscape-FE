@@ -20,9 +20,10 @@ type LeftSideBarProps = {
     chatType: string;
     setChatType: React.Dispatch<React.SetStateAction<string>>;
     setAddMemberModal: React.Dispatch<React.SetStateAction<boolean>>;
+    setSelectedChat: React.Dispatch<React.SetStateAction<any>>;
 };
 
-export default function LeftSideBar({ chats, user_id, token, tokenSecret, setMessages, setDefaultHome, setChatId, messagesContainer, setShowModal, chatType, setChatType, setAddMemberModal }: LeftSideBarProps) {
+export default function LeftSideBar({ chats, user_id, token, tokenSecret, setMessages, setDefaultHome, setChatId, messagesContainer, setShowModal, chatType, setChatType, setAddMemberModal, setSelectedChat }: LeftSideBarProps) {
 
     const handleGetMessages = async (chatID: any) => {
         setDefaultHome(false);
@@ -70,7 +71,7 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, setMes
             </div>
             <div className='overflow-y-auto'>
                 {chats.length > 0 ? chats.map((chat) => (
-                    <div key={chat.id} onClick={() => { setChatId(chat.id); handleGetMessages(chat.id); setChatType(chat.chat_type); }}
+                    <div key={chat.id} onClick={() => { setChatId(chat.id); handleGetMessages(chat.id); setChatType(chat.chat_type); setSelectedChat(chat); }}
                         className="flex flex-row py-4 px-2 justify-around items-center border-b-2 cursor-pointer hover:bg-gray-200 transition duration-300 ease-in-out">
                         <div className="w-1/2 2xl:w-1/2 3xl:w-1/2.5 4xl:w-1/3 5xl:w-1/4">
                             {

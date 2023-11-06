@@ -10,11 +10,11 @@ type AddMemberModalProps = {
     token: string,
     tokenSecret: string,
     setAddMemberModal: (value: boolean) => void
-    chatID: number,
+    selectedChat: any,
 }
 
 
-export default function AddMemberModal({ user_id, token, tokenSecret, setAddMemberModal, chatID }: AddMemberModalProps) {
+export default function AddMemberModal({ user_id, token, tokenSecret, setAddMemberModal, selectedChat }: AddMemberModalProps) {
 
     const [errormessage, setErrorMessage] = useState<string>('');
     const [successmessage, setSuccessMessage] = useState<string>('');
@@ -22,7 +22,6 @@ export default function AddMemberModal({ user_id, token, tokenSecret, setAddMemb
     const [searchResults, setSearchResults] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [timer, setTimer] = useState<any>(null);
-    const grouNameRef = useRef<HTMLInputElement>(null);
     const [groupMembers, setGroupMembers] = useState<any[]>([]);
 
     const handleSearchUsers = async (searchString: string) => {
@@ -68,37 +67,27 @@ export default function AddMemberModal({ user_id, token, tokenSecret, setAddMemb
     }
 
     const handleAddMember = () => {
+        console.log(selectedChat)
 
     }
 
     return (
         <div className="fixed z-40 inset-0 overflow-y-auto h-screen w-screen bg-black bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white rounded-lg min-w-[350px] min-h-[450px]">
+            <div className="bg-white rounded-lg min-w-[350px] min-h-[300px]">
                 <form className="flex flex-col justify-center items-center">
                     <h1 className="text-2xl font-semibold mt-4 text-center">Add a member to the chat</h1>
                     {errormessage && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-4 mt-2 rounded relative" role="alert">
                         <span className="block sm:inline text-center text-sm">{errormessage} <AiOutlineClose onClick={() => setErrorMessage('')} className="inline-block ml-2 cursor-pointer" /></span>
                     </div>}
                     {successmessage && <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-4 mt-2 rounded relative" role="alert">
-                        <span className="block sm:inline text-center text-sm">{successmessage}</span>
+                        <span className="block sm:inline text-center text-sm">{successmessage} <AiOutlineClose onClick={() => setSuccessMessage('')} className="inline-block ml-2 cursor-pointer" /></span>
                     </div>}
                     <div className="mb-4 mt-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2 text-center">
-                            Group Type
-                        </label>
-                        {/* <div className="flex flex-row justify-start items-center gap-[10px]">
-                            <input onClick={() => setGroupType('group')} type="radio" name="groupType" value="group" />
-                            <label htmlFor="group">Group</label>
-                            <input onClick={() => setGroupType('public')} type="radio" name="groupType" value="public" />
-                            <label htmlFor="public">Public</label>
-                        </div> */}
-                    </div>
-                    <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
                             Group Name
                         </label>
-                        <input name="email" onKeyDown={(e) => e.key === 'Enter' ? null : null} ref={grouNameRef}
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Group Name" />
+                        <input name="chatName" value={selectedChat.chat_name} disabled={true}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-200" type="text" />
                     </div>
                     {
                         groupMembers.length > 0 &&
@@ -106,14 +95,13 @@ export default function AddMemberModal({ user_id, token, tokenSecret, setAddMemb
                     }
                     {
                         groupMembers.length > 0 &&
-                        <div className="flex flex-row justify-start items-center gap-[10px] mb-4">
+                        <div className="flex flex-col justify-start items-center gap-[10px] mb-4">
                             {
                                 groupMembers.map((member) => (
-                                    <div key={member.id} onClick={() => setGroupMembers(groupMembers.filter((groupMember) => groupMember.id !== member.id))} className="flex flex-row justify-start items-center gap-[10px] bg-blue-500 px-2 cursor-pointer hover:bg-red-500 transition duration-100 ease-in-out">
+                                    <div key={member.id} onClick={() => setGroupMembers(groupMembers.filter((groupMember) => groupMember.id !== member.id))} className="flex flex-col justify-start items-center gap-[10px] bg-blue-500 px-2 cursor-pointer hover:bg-red-500 transition duration-100 ease-in-out">
                                         <span className="text-white">
-                                            {groupMembers.length === 1 ? `${member.name}` : groupMembers.length > 1 && groupMembers[groupMembers.length - 1].id === member.id ? `${member.name}` : `${member.name},`}
+                                            {member.name} <AiFillCloseCircle className="text-white inline-block" />
                                         </span>
-                                        <AiFillCloseCircle className="text-white" />
                                     </div>
                                 ))
                             }
@@ -140,7 +128,6 @@ export default function AddMemberModal({ user_id, token, tokenSecret, setAddMemb
                                 searchTerm && searchResults && searchResults.length > 0 && searchResults.map((user) => (
                                     <div key={user.id} onClick={() => {
                                         groupMembers.some((member) => member.id === user.id) ? null :
-                                            groupMembers.length >= 3 ? setErrorMessage('Max of 3 members reached, you can add more members after creating the group') :
                                                 setGroupMembers([...groupMembers, user]);
                                         setSearchTerm('');
                                         setSearchResults([])
@@ -179,9 +166,7 @@ export default function AddMemberModal({ user_id, token, tokenSecret, setAddMemb
                         </div>
                     </div>
                     <div className="flex flex-row justify-between gap-[25px] mt-4">
-
                         {searchResults.length === 0 &&
-
                             <>
                                 <button onClick={() => setAddMemberModal(false)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4" type="button">
                                     Cancel
@@ -191,7 +176,6 @@ export default function AddMemberModal({ user_id, token, tokenSecret, setAddMemb
                                 </button>
                             </>
                         }
-
                     </div>
                 </form>
             </div>

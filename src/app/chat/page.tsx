@@ -200,7 +200,7 @@ export default function Page() {
                     token={token}
                     tokenSecret={tokenSecret}
                     setAddMemberModal={setAddMemberModal}
-                    chatID={chatID}
+                    selectedChat={selectedChat} 
                 />
             }
             {
@@ -222,6 +222,7 @@ export default function Page() {
                     setJoinPublicChatModal={setJoinPublicChatModal}
                     setPublicChat={setPublicChat}
                     autoFetch={autoFetch}
+                    setSelectedChat={setSelectedChat}
                 />
                 <div className="flex bg-white min-h-[90vh]">
                     <LeftSideBar
@@ -237,6 +238,7 @@ export default function Page() {
                         chatType={chatType}
                         setChatType={setChatType}
                         setAddMemberModal={setAddMemberModal}
+                        setSelectedChat={setSelectedChat}
                     />
                     <MainChat
                         token={token}

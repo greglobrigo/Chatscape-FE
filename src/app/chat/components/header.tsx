@@ -4,7 +4,19 @@ import axios from 'axios'
 import { BsFillTrashFill } from 'react-icons/bs';
 import { useRouter } from 'next/navigation';
 
-export default function Header({ currentUser, token, tokenSecret, user_id, setJoinPublicChatModal, setPublicChat, autoFetch }: any) {
+
+type HeadProps = {
+    currentUser: any;
+    token: string;
+    tokenSecret: string;
+    user_id: string;
+    setJoinPublicChatModal: React.Dispatch<React.SetStateAction<boolean>>;
+    setPublicChat: React.Dispatch<React.SetStateAction<any>>;
+    autoFetch: boolean;
+    setSelectedChat: React.Dispatch<React.SetStateAction<any>>;
+}
+
+export default function Header({ currentUser, token, tokenSecret, user_id, setJoinPublicChatModal, setPublicChat, autoFetch, setSelectedChat }: HeadProps) {
 
     const router = useRouter();
     const [errormessage, setErrorMessage] = useState<string>('');
@@ -97,7 +109,7 @@ export default function Header({ currentUser, token, tokenSecret, user_id, setJo
                             {
                                 searchTerm && searchResults && searchResults.map((chat: any) => {
                                     return (
-                                        <div key={chat.id} onClick={() => { setPublicChat(chat); setJoinPublicChatModal(true); setSearchTerm(''); setSearchResults([]); searchInputRef.current!.value = ''; }}
+                                        <div key={chat.id} onClick={() => { setPublicChat(chat); setJoinPublicChatModal(true); setSearchTerm(''); setSearchResults([]); searchInputRef.current!.value = ''; setSelectedChat(chat); }}
                                         className="flex items-center justify-between px-5 py-3 bg-white hover:bg-gray-100 cursor-pointer">
                                             <div className="flex items-center">
                                                 <div className="flex flex-row pr-2">

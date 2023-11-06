@@ -23,7 +23,7 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
      const [searchResults, setSearchResults] = useState<any[]>([]);
      const [loading, setLoading] = useState<boolean>(false);
      const [timer, setTimer] = useState<any>(null);
-     const grouNameRef = useRef<HTMLInputElement>(null);
+     const groupNameRef = useRef<HTMLInputElement>(null);
      const [groupType, setGroupType] = useState<string>('');
      const [groupMembers, setGroupMembers] = useState<any[]>([]);
 
@@ -77,14 +77,14 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
                }, 3000);
                return;
           }
-          if (!grouNameRef.current?.value) {
+          if (!groupNameRef.current?.value) {
                setErrorMessage('Please enter a group name');
                setTimeout(() => {
                     setErrorMessage('');
                }, 3000);
                return;
           }
-          const chat_name = grouNameRef.current?.value;
+          const chat_name = groupNameRef.current?.value;
           const chat_members = groupMembers.map((member) => member.id);
           await axios({
                method: 'post',
@@ -101,7 +101,7 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
           }).then((response) => {
                if (response.data.status === 'success') {
                     setSuccessMessage(response.data.message);
-                    grouNameRef.current!.value = '';
+                    groupNameRef.current!.value = '';
                     setGroupType('');
                     setGroupMembers([]);
                     setTimeout(() => {
@@ -141,7 +141,7 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
                               <label className="block text-gray-700 text-sm font-bold mb-2">
                                    Group Name
                               </label>
-                              <input name="email" onKeyDown={(e) => e.key === 'Enter' ? null : null} ref={grouNameRef}
+                              <input name="email" onKeyDown={(e) => e.key === 'Enter' ? null : null} ref={groupNameRef}
                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Group Name" />
                          </div>
                          {
@@ -223,7 +223,6 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
                               </div>
                          </div>
                          <div className="flex flex-row justify-between gap-[25px] mt-4">
-
                               {searchResults.length === 0 &&
 
                                    <>
@@ -235,7 +234,6 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
                                         </button>
                                    </>
                               }
-
                          </div>
                     </form>
                </div>
