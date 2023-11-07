@@ -28,7 +28,7 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
         const sender = user_id
         await axios({
             method: 'post',
-            url: 'http://localhost:3001/messages/send',
+            url: process.env.NEXT_PUBLIC_API_URL + '/messages/send',
             data: {
                 chat_id: chat_id,
                 sender: sender,

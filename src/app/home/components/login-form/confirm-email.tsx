@@ -30,7 +30,7 @@ export default function ConfirmEmail({ emailRef, setAction }: ConfirmEmailProps)
         } else {
             axios({
                 method: 'post',
-                url: 'http://localhost:3001/users/resend-token',
+                url: process.env.NEXT_PUBLIC_API_URL + '/users/resend-token',
                 data: {
                     email
                 }
@@ -55,7 +55,7 @@ export default function ConfirmEmail({ emailRef, setAction }: ConfirmEmailProps)
         } else {
             axios({
                 method: 'post',
-                url: 'http://localhost:3001/users/confirm-email',
+                url: process.env.NEXT_PUBLIC_API_URL + '/users/confirm-email',
                 data: {
                     email,
                     auth_token

@@ -40,7 +40,7 @@ export default function ConfirmForgottenPassword({ emailRef, setAction }: confir
         } else {
             axios({
                 method: 'post',
-                url: 'http://localhost:3001/users/confirm-forgotten-password',
+                url: process.env.NEXT_PUBLIC_API_URL + '/users/confirm-forgotten-password',
                 data: {
                     email,
                     forgot_password_token: auth_token,

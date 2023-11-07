@@ -32,7 +32,7 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, setMes
         setDefaultHome(false);
         await axios({
             method: 'post',
-            url: 'http://localhost:3001/messages/get',
+            url: process.env.NEXT_PUBLIC_API_URL + '/messages/chats-and-messages',
             data: {
                 chat_id: chatID,
                 user_id: user_id,

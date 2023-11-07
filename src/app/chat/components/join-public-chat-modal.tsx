@@ -29,7 +29,7 @@ export default function JoinPublicChatModal({ setJoinPublicChatModal, user_id, t
         setChatId(chatID);
         await axios({
             method: 'post',
-            url: 'http://localhost:3001/messages/chats-and-messages',
+            url: process.env.NEXT_PUBLIC_API_URL + '/messages/chats-and-messages',
             data: {
                 chat_id: chatID,
                 user_id: user_id,
@@ -62,7 +62,7 @@ export default function JoinPublicChatModal({ setJoinPublicChatModal, user_id, t
     const handleJoinPublicChat = () => {
         axios({
             method: 'post',
-            url: 'http://localhost:3001/chats/join-public',
+            url: process.env.NEXT_PUBLIC_API_URL + '/chats/join-public',
             data: {
                 user_id: user_id,
                 chat_id: publicChat.id,
@@ -95,7 +95,7 @@ export default function JoinPublicChatModal({ setJoinPublicChatModal, user_id, t
     const handleLeavePublicChat = () => {
         axios({
             method: 'post',
-            url: 'http://localhost:3001/chatmembers/leave',
+            url: process.env.NEXT_PUBLIC_API_URL + '/chats/leave-public',
             data: {
                 user_id: user_id,
                 chat_id: publicChat.id,

@@ -33,7 +33,7 @@ export default function AddMemberModal({ user_id, token, tokenSecret, setAddMemb
         const newTimer = setTimeout(async () => {
             await axios({
                 method: 'post',
-                url: 'http://localhost:3001/users/search-users-all-or-direct',
+                url: process.env.NEXT_PUBLIC_API_URL + '/users/search-users-all-or-direct',
                 data: {
                     user_id: user_id,
                     search_string: searchString,
@@ -70,7 +70,7 @@ export default function AddMemberModal({ user_id, token, tokenSecret, setAddMemb
         const members = groupMembers.map((member) => member.id)
         axios({
             method: 'post',
-            url: 'http://localhost:3001/chatmembers/add',
+            url: process.env.NEXT_PUBLIC_API_URL + '/chatmembers/add',
             data: {
                 user_id: user_id,
                 chat_id: selectedChat.id,

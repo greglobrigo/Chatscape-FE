@@ -28,7 +28,7 @@ export default function Login({ emailRef, passwordRef, setAction }: LoginProps) 
     if (email && password) {
       axios({
         method: 'post',
-        url: 'http://localhost:3001/users/login',
+        url: process.env.NEXT_PUBLIC_API_URL + '/users/login',
         data: {
           email,
           password

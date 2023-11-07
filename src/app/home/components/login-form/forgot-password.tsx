@@ -29,7 +29,7 @@ export default function ForgotPassword({ emailRef, setAction }: ForgotPasswordPr
         } else {
             axios({
                 method: 'post',
-                url: 'http://localhost:3001/users/forgot-password',
+                url: process.env.NEXT_PUBLIC_API_URL + '/users/forgot-password',
                 data: {
                     email
                 }

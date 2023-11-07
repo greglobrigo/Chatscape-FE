@@ -64,7 +64,7 @@ export default function Register({ emailRef, passwordRef, nameRef, handleRef, co
         } else {
             axios({
                 method: 'post',
-                url: 'http://localhost:3001/users/register',
+                url: process.env.NEXT_PUBLIC_API_URL + '/users/register',
                 data: {
                     email,
                     password,

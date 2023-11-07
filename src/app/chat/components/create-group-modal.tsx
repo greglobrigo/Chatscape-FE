@@ -36,7 +36,7 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
           const newTimer = setTimeout(async () => {
                await axios({
                     method: 'post',
-                    url: 'http://localhost:3001/users/search-users-all-or-direct',
+                    url: process.env.NEXT_PUBLIC_API_URL + '/users/search-users-all-or-direct',
                     data: {
                          user_id: user_id,
                          search_string: searchString,
@@ -88,7 +88,7 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
           const chat_members = groupMembers.map((member) => member.id);
           await axios({
                method: 'post',
-               url: 'http://localhost:3001/chats/public-or-group',
+               url: process.env.NEXT_PUBLIC_API_URL + '/chats/public-or-group',
                data: {
                     user_id: user_id,
                     chat_name: chat_name,

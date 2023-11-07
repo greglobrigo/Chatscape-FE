@@ -68,7 +68,7 @@ export default function Page() {
         setTokenSecret(tokenSecret || '');
         axios({
             method: 'post',
-            url: 'http://localhost:3001/users/get-profile',
+            url: process.env.NEXT_PUBLIC_API_URL + '/users/get-profile',
             data: {
                 user_id: id,
             },
@@ -95,7 +95,7 @@ export default function Page() {
     }, [router]);
 
     useEffect(() => {
-        const ws = new WebSocket('ws://localhost:3001/cable');
+        const ws = new WebSocket(`${process.env.NEXT_PUBLIC_WEBSOCKET_URL}`);
         ws.onopen = () => {
             ws.send(JSON.stringify({
                 command: 'subscribe',
@@ -136,7 +136,7 @@ export default function Page() {
         const tokenSecret = process.env.NEXT_PUBLIC_TOKEN_SECRET;
         await axios({
             method: 'post',
-            url: 'http://localhost:3001/messages/chats-and-messages',
+            url: process.env.NEXT_PUBLIC_API_URL + '/messages/chats-and-messages',
             data: {
                 chat_id: chatID,
                 user_id: user_id

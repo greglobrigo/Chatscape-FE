@@ -21,7 +21,7 @@ export default function Page() {
         if (id && token && tokenSecret) {
             axios({
                 method: 'post',
-                url: 'http://localhost:3001/users/validate',
+                url: process.env.NEXT_PUBLIC_API_URL + '/users/validate',
                 data: {
                     user_id: id,
                 },

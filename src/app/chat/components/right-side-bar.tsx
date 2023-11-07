@@ -32,7 +32,7 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
         const clickedUserID = userID;
         await axios({
             method: 'post',
-            url: 'http://localhost:3001/chats/create-or-retrieve',
+            url: process.env.NEXT_PUBLIC_API_URL + '/chats/create-or-retrieve',
             data: {
                 sender: currentUserID,
                 receiver: clickedUserID,
@@ -66,7 +66,7 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
         const newTimer = setTimeout(async () => {
             await axios({
                 method: 'post',
-                url: 'http://localhost:3001/users/search-users-all-or-direct',
+                url: process.env.NEXT_PUBLIC_API_URL + '/users/search-users-all-or-direct',
                 data: {
                     user_id: user_id,
                     search_string: searchString,

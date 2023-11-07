@@ -38,7 +38,7 @@ export default function Header({ currentUser, token, tokenSecret, user_id, setJo
         const newTimer = setTimeout(async () => {
             await axios({
                 method: 'post',
-                url: 'http://localhost:3001/chats/search-public',
+                url: process.env.NEXT_PUBLIC_API_URL + '/chats/search-public',
                 data: {
                     user_id: user_id,
                     searchTerm: searchString,
