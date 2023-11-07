@@ -1,10 +1,12 @@
 'use client'
 import axios from 'axios';
 import moment from 'moment-timezone';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image'
 import { FaPlus } from 'react-icons/fa'
 import { BsPersonFillAdd } from 'react-icons/bs'
+import { AiFillCloseCircle } from 'react-icons/ai'
+import { AiTwotoneDelete } from 'react-icons/ai'
 
 
 type LeftSideBarProps = {
@@ -24,6 +26,8 @@ type LeftSideBarProps = {
 };
 
 export default function LeftSideBar({ chats, user_id, token, tokenSecret, setMessages, setDefaultHome, setChatId, messagesContainer, setShowModal, chatType, setChatType, setAddMemberModal, setSelectedChat }: LeftSideBarProps) {
+
+    const [leaveOrArchiveModal, setLeaveOrArchiveModal] = useState<boolean>(false);
 
     const handleGetMessages = async (chatID: any) => {
         setDefaultHome(false);
@@ -57,14 +61,19 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, setMes
                     <h1 className="text-lg font-semibold text-center">Chats</h1>
                     <div>
                         {
+                            chatType &&
+                            <button onClick={() => setLeaveOrArchiveModal(true)} className="bg-red-500 hover:bg-red-700 text-white text-xs font-bold py-2 px-2 mr-2 rounded-full mr-2">
+                                Del <AiTwotoneDelete className="inline-block mb-[0.1rem]" />
+                            </button>
+                        }
+                        {
                             (chatType === 'public' || chatType === 'group') &&
-                                <button onClick={() => setAddMemberModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold py-2 px-2 rounded-full mr-2">
-                                    Add Member <BsPersonFillAdd className="inline-block mb-1" />
-                                </button>
-
+                            <button onClick={() => setAddMemberModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold py-2 px-2 rounded-full mr-2">
+                                Add <BsPersonFillAdd className="inline-block mb-1" />
+                            </button>
                         }
                         <button onClick={() => setShowModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold py-2 px-2 rounded-full">
-                            New Group <FaPlus className="inline-block" />
+                                New <FaPlus className="inline-block mb-[0.1rem]"/>
                         </button>
                     </div>
                 </div>
