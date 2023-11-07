@@ -11,6 +11,7 @@ import Modal from './components/create-group-modal';
 import JoinPublicChatModal from './components/join-public-chat-modal';
 import AddMemberModal from './components/add-member-modal';
 import LeaveOrArchiveModal from './components/leave-or-archive-modal';
+import NotifyModal from './components/notify-modal';
 
 interface Chat {
     id: number;
@@ -54,6 +55,7 @@ export default function Page() {
     const [chatType, setChatType] = useState<string>('');
     const [selectedChat, setSelectedChat] = useState<any>({});
     const [leaveOrArchiveModal, setLeaveOrArchiveModal] = useState<boolean>(false);
+    const [notifyModal, setNotifyModal] = useState<boolean>(false);
 
     useEffect(() => {
         const id = localStorage.getItem('user_id');
@@ -63,6 +65,7 @@ export default function Page() {
             router.push('/');
             return;
         }
+        setNotifyModal(true);
         setUserId(id || '');
         setToken(token || '');
         setTokenSecret(tokenSecret || '');
@@ -120,10 +123,12 @@ export default function Page() {
         // setTimeout(() => {
         //     ws.close();
         //     setAutoFetch(false);
+        //     setNotifyModal(true);
         // }, 60000 * 5);
         setTimeout(() => {
             ws.close();
             setAutoFetch(false);
+            setNotifyModal(true);
         }, 60000);
         return () => {
             ws.close();
@@ -172,6 +177,12 @@ export default function Page() {
 
     return (
         <>
+            {
+                notifyModal && <NotifyModal
+                setNotifyModal={setNotifyModal}
+                autoFetch={autoFetch}
+                />
+            }
             {
                 showModal && <Modal
                     user_id={user_id}
