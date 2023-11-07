@@ -10,6 +10,7 @@ import { UUID } from 'crypto';
 import Modal from './components/create-group-modal';
 import JoinPublicChatModal from './components/join-public-chat-modal';
 import AddMemberModal from './components/add-member-modal';
+import LeaveOrArchiveModal from './components/leave-or-archive-modal';
 
 interface Chat {
     id: number;
@@ -52,6 +53,7 @@ export default function Page() {
     const [autoFetch, setAutoFetch] = useState<boolean>(true);
     const [chatType, setChatType] = useState<string>('');
     const [selectedChat, setSelectedChat] = useState<any>({});
+    const [leaveOrArchiveModal, setLeaveOrArchiveModal] = useState<boolean>(false);
 
     useEffect(() => {
         const id = localStorage.getItem('user_id');
@@ -204,6 +206,11 @@ export default function Page() {
                 />
             }
             {
+                leaveOrArchiveModal && <LeaveOrArchiveModal
+                setLeaveOrArchiveModal={setLeaveOrArchiveModal}
+                />
+            }
+            {
                 errormessage && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-center w-screen fixed top-0 z-10" role="alert">
                     <p>{errormessage}</p>
                 </div>
@@ -239,6 +246,7 @@ export default function Page() {
                         setChatType={setChatType}
                         setAddMemberModal={setAddMemberModal}
                         setSelectedChat={setSelectedChat}
+                        setLeaveOrArchiveModal={setLeaveOrArchiveModal}
                     />
                     <MainChat
                         token={token}

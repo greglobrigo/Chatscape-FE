@@ -23,11 +23,10 @@ type LeftSideBarProps = {
     setChatType: React.Dispatch<React.SetStateAction<string>>;
     setAddMemberModal: React.Dispatch<React.SetStateAction<boolean>>;
     setSelectedChat: React.Dispatch<React.SetStateAction<any>>;
+    setLeaveOrArchiveModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function LeftSideBar({ chats, user_id, token, tokenSecret, setMessages, setDefaultHome, setChatId, messagesContainer, setShowModal, chatType, setChatType, setAddMemberModal, setSelectedChat }: LeftSideBarProps) {
-
-    const [leaveOrArchiveModal, setLeaveOrArchiveModal] = useState<boolean>(false);
+export default function LeftSideBar({ chats, user_id, token, tokenSecret, setMessages, setDefaultHome, setChatId, messagesContainer, setShowModal, chatType, setChatType, setAddMemberModal, setSelectedChat, setLeaveOrArchiveModal }: LeftSideBarProps) {
 
     const handleGetMessages = async (chatID: any) => {
         setDefaultHome(false);
