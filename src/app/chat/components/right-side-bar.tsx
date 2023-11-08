@@ -138,8 +138,8 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
                                                 <span className="text-xs text-gray-500">Last seen</span>
                                             </div>
                                             <div className="flex flex-row justify-between items-end">
-                                                <span className="text-gray-500">{user.handle}</span>
-                                                <span className="text-xs text-gray-500">{moment(user.updated_at).fromNow()}</span>
+                                                <span className="text-gray-500 text-xs">{user.handle}</span>
+                                                <span className="text-gray-500 text-xs">{moment(user.updated_at).fromNow()}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -183,8 +183,8 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
                                         <span className="text-xs text-gray-500">Last seen</span>
                                     </div>
                                     <div className="flex flex-row justify-between items-end">
-                                        <span className="text-gray-500">{user.handle}</span>
-                                        <span className="text-xs text-gray-500">{moment(user.updated_at).fromNow()}</span>
+                                        <span className="text-gray-500 text-xs">{user.handle}</span>
+                                        <span className="text-gray-500 text-xs">{moment(user.updated_at).fromNow()}</span>
                                     </div>
                                 </div>
                             </div>

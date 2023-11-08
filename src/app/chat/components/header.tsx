@@ -159,7 +159,7 @@ export default function Header({ currentUser, token, tokenSecret, user_id, setJo
                         </div>
                         <div className='flex flex-col'>
                             <span className="text-sm font-semibold text-center">{currentUser.name}</span>
-                            <span className="text-xs text-gray-500 text-center">{currentUser.handle}</span>
+                            <span className="text-gray-500 text-center text-xs">{currentUser.handle}</span>
                         </div>
                     {
                         showOptions &&

@@ -199,8 +199,8 @@ export default function Modal({ setShowModal, user_id, token, tokenSecret }: Mod
                                                   </div>
                                                   <div className="flex flex-col">
                                                        <span className="text-md font-semibold">{user.name}</span>
-                                                       <span className="text-gray-500">{user.handle}</span>
-                                                       <span className="text-gray-500">{user.email}</span>
+                                                       <span className="text-gray-500 text-xs">{user.handle}</span>
+                                                       <span className="text-gray-500 text-xs">{user.email}</span>
 
                                                   </div>
                                              </div>
