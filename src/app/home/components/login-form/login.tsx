@@ -26,6 +26,7 @@ export default function Login({ emailRef, passwordRef, setAction }: LoginProps) 
     const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
     if (email && password) {
+      setSuccessMessage('Logging in...');
       axios({
         method: 'post',
         url: process.env.NEXT_PUBLIC_API_URL + '/users/login',
@@ -34,6 +35,7 @@ export default function Login({ emailRef, passwordRef, setAction }: LoginProps) 
           password
         }
       }).then((response) => {
+        setSuccessMessage('');
         if (response.data.status === 'success') {
           if (response.data.message.includes('Login Successful!')) {
             setUserID(response.data.user);
