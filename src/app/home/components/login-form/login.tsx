@@ -54,6 +54,7 @@ export default function Login({ emailRef, passwordRef, setAction }: LoginProps) 
           setErrorMessage(response.data.error);
         }
       }).catch((error) => {
+        setSuccessMessage('');
         setErrorMessage(error.message);
       })
     }
