@@ -179,7 +179,7 @@ export default function RightSideBar({ activeUsers, user_id, token, tokenSecret,
                                 </div>
                                 <div className="w-full flex flex-col">
                                     <div className="flex flex-row justify-between items-end">
-                                        <span className="text-md font-semibold">{user.name}</span>
+                                        <span className="font-semibold">{user.name}</span>
                                         <span className="text-xs text-gray-500">Last seen</span>
                                     </div>
                                     <div className="flex flex-row justify-between items-end">
