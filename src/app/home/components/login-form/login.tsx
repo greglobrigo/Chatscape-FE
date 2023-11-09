@@ -60,6 +60,40 @@ export default function Login({ emailRef, passwordRef, setAction }: LoginProps) 
     }
   }
 
+  const handleDemoLogin = async () => {
+    setSuccessMessage('Logging in as demo user...');
+      axios({
+        method: 'post',
+        url: process.env.NEXT_PUBLIC_API_URL + '/users/login',
+        data: {
+          email: "johns@gmail.com",
+          password: "password"
+        }
+      }).then((response) => {
+        setSuccessMessage('');
+        if (response.data.status === 'success') {
+          if (response.data.message.includes('Login Successful!')) {
+            setUserID(response.data.user);
+            setToken(response.data.token);
+            setSuccessMessage(response.data.message);
+            setTimeout(() => {
+              router.push('/chat');
+            }, 1000);
+          } else if (response.data.message.includes('For email validation')) {
+            setErrorMessage(response.data.message + ' redirecting...');
+            setTimeout(() => {
+              setAction({ login: false, register: false, forgotPassword: false, confirmEmail: true, confirmForgottenPassword: false });
+            }, 1000);
+          }
+        } else {
+          setErrorMessage(response.data.error);
+        }
+      }).catch((error) => {
+        setSuccessMessage('');
+        setErrorMessage(error.message);
+      })
+  }
+
   return (
     <>
       {
@@ -92,6 +126,9 @@ export default function Login({ emailRef, passwordRef, setAction }: LoginProps) 
           <div className="flex flex-col items-center justify-center mb-4 cursor-pointer">
             <button onClick={handleLogin} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4" type="button">
               Sign In
+            </button>
+            <button onClick={handleDemoLogin} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4" type="button">
+              Demo Login
             </button>
             <div onClick={() => setAction({ login: false, register: false, forgotPassword: true, confirmEmail: false, confirmForgottenPassword: false })} className="flex items-center justify-center cursor-pointer">
               <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">

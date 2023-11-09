@@ -120,16 +120,16 @@ export default function Page() {
                 else if (data.type === 'reject_subscription') { return }
             }
         }
-        // setTimeout(() => {
-        //     ws.close();
-        //     setAutoFetch(false);
-        //     setNotifyModal(true);
-        // }, 60000 * 5);
         setTimeout(() => {
             ws.close();
             setAutoFetch(false);
             setNotifyModal(true);
-        }, 60000);
+        }, 60000 * 5);
+        // setTimeout(() => {
+        //     ws.close();
+        //     setAutoFetch(false);
+        //     setNotifyModal(true);
+        // }, 60000);
         return () => {
             ws.close();
         }
