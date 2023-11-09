@@ -103,7 +103,7 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
                                     <>
                                         <div className="flex justify-end items center mb-2 mr-3">
                                             <span
-                                                className="mr-2 py-3 px-4 bg-gray-400 rounded-bl-3xl rounded-tr-xl rounded-tl-xl text-white"
+                                                className="mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tr-xl rounded-tl-xl text-white"
                                             >
                                                 {message.message_text}
                                             </span>

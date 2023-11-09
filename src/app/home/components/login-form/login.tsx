@@ -48,7 +48,7 @@ export default function Login({ emailRef, passwordRef, setAction }: LoginProps) 
             setErrorMessage(response.data.message + ' redirecting...');
             setTimeout(() => {
               setAction({ login: false, register: false, forgotPassword: false, confirmEmail: true, confirmForgottenPassword: false });
-            }, 3000);
+            }, 1000);
           }
         } else {
           setErrorMessage(response.data.error);
