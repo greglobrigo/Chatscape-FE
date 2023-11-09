@@ -62,7 +62,11 @@ export default function ConfirmEmail({ emailRef, setAction }: ConfirmEmailProps)
                 }
             }).then((response) => {
                 if (response.data.status === 'success') {
-                    router.push('/chat');
+                    setSuccessMessage(response.data.message);
+                    setTimeout(() => {
+                        setSuccessMessage('');
+                        setAction({ login: true, register: false, forgotPassword: false, confirmEmail: false, confirmForgottenPassword: false });
+                    }, 3000);
                 } else {
                     setErrorMessage(response.data.error);
                 }
