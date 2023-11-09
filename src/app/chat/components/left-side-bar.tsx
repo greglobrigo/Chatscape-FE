@@ -117,11 +117,11 @@ export default function LeftSideBar({ chats, user_id, token, tokenSecret, setMes
                             <div className="flex flex-row justify-between items-end">
                                 {
                                     chat.chat_type === 'direct' && chat.messages &&
-                                    <span className="text-gray-500 text-sm">{chat.messages.user_id === user_id ? 'You: ' : null} {chat.messages.message_text}</span>
+                                    <span className="text-gray-500 text-sm">{chat.messages.user_id === user_id ? 'You: ' : null} {chat.messages.message_text.length > 10 ? chat.messages.message_text.substring(0, 10) + '...' : chat.messages.message_text}</span>
                                 }
                                 {
                                     (chat.chat_type === 'group' || chat.chat_type === 'public') && chat.messages &&
-                                    <span className="text-gray-500 text-md text-sm">{chat.messages.sender === 'System' ? null : chat.messages.user_id === user_id ? 'You: ' : chat.messages.sender} {chat.messages.message_text}</span>
+                                    <span className="text-gray-500 text-sm">{chat.messages.user_id === user_id ? 'You: ' : null} {chat.messages.message_text.length > 10 ? chat.messages.message_text.substring(0, 10) + '...' : chat.messages.message_text}</span>
                                 }
                                 {
                                     chat.messages &&

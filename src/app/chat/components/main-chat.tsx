@@ -73,7 +73,7 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
                                         <div className="flex justify-start items center mb-2">
                                             <Image width={50} height={50}
                                                 src={`/${message.avatar}.png`}
-                                                className="object-fit rounded-full border-4 border-[#FFFFFF]"
+                                                className="max-w-[50px] max-h-[50px] min-w-[50px] min-h-[50px] object-fit rounded-full border-4 border-[#FFFFFF]"
                                                 alt=""
                                             />
                                             <span className="ml-2 py-3 px-4 bg-blue-400 rounded-br-3xl rounded-tr-xl rounded-tl-xl text-white">
@@ -109,7 +109,7 @@ export default function MainChat({ messages, setMessages, user_id, defaultHome, 
                                             </span>
                                             <Image width={50} height={50}
                                                 src={`/${message.avatar}.png`}
-                                                className="object-fit rounded-full border-4 border-[#FFFFFF]"
+                                                className="max-w-[50px] max-h-[50px] min-w-[50px] min-h-[50px] object-fit rounded-full border-4 border-[#FFFFFF]"
                                                 alt=""
                                             />
                                         </div>
