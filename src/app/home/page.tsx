@@ -53,9 +53,9 @@ export default function Page() {
             }
             <div className="home__header section__padding gradient__bg wrapper" id="home">
                 <Navbar />
-                <div className="home__header-content">
+                <div className="xl:flex flex-col justify-center items-center flex-[1] nn:hidden">
                     <div className="bg color-[black] text-center">
-                        <h1>Welcome to Chatscape!</h1>
+                        <span className="text-4xl">Welcome to Chatscape!</span>
                         <div className="flex justify-center">
                             <a href="https://storyset.com/people" target="_blank" rel="noopener noreferrer">
                                 <Image src="/home.svg" alt="home" width={500} height={500} />

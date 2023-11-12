@@ -77,7 +77,7 @@ export default function ConfirmForgottenPassword({ emailRef, setAction }: confir
                 </div>
             }
             <div className="w-full max-w-xs bg-gradient-to-r from-blue-600 via-blue-400 to-white">
-                <h2 className="mb-4 text-center">Confirm Forgotten Password</h2>
+            <span className="w-full flex items-center justify-center text-4xl text-center py-2">Confirm Forgotten Password</span>
                 <form onClick={() => errormessage !== '' ? setErrorMessage('') : null} className="bg-white shadow-md rounded px-8 pt-1 pb-8">
                     <p className="mb-4">
                         Enter the code we sent to your email address below, together with your new password.

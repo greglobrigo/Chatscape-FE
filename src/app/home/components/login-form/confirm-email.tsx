@@ -89,7 +89,7 @@ export default function ConfirmEmail({ emailRef, setAction }: ConfirmEmailProps)
                 </div>
             }
             <div className="w-full max-w-xs bg-gradient-to-r from-blue-600 via-blue-400 to-white">
-                <h2 className="mb-2 text-center">Confirm Email</h2>
+            <span className="w-full flex items-center justify-center text-4xl text-center py-2">Confirm Email</span>
                 <form onClick={() => errormessage !== '' ? setErrorMessage('') : null} className="bg-white shadow-md rounded px-8 pt-1 pb-8">
                     <p className="mb-4">
                         We have sent an email to {email}. Please check your inbox and enter the code below to activate your account.

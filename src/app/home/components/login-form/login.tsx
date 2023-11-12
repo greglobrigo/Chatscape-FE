@@ -107,7 +107,7 @@ export default function Login({ emailRef, passwordRef, setAction }: LoginProps) 
         </div>
       }
       <div className="w-full max-w-xs bg-gradient-to-r from-blue-600 via-blue-400 to-white">
-        <h1 className="mb-4 text-center">Login</h1>
+      <span className="w-full flex items-center justify-center text-4xl text-center py-2">Login</span>
         <form onClick={() => errormessage !== '' ? setErrorMessage('') : null} className="bg-white shadow-md rounded px-8 pt-6 pb-8">
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">

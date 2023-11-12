@@ -54,7 +54,7 @@ export default function ForgotPassword({ emailRef, setAction }: ForgotPasswordPr
                 </div>
             }
             <div className="w-full max-w-xs bg-gradient-to-r from-blue-600 via-blue-400 to-white">
-                <h2 className="mb-4 text-center">Forgot Password</h2>
+            <span className="w-full flex items-center justify-center text-4xl text-center py-2">Forgot Password</span>
                 <form onClick={() => errormessage !== '' ? setErrorMessage('') : null} className="bg-white shadow-md rounded px-8 pt-1 pb-8">
                     <p className="mb-4">
                         Enter your email address below and we will send you a code to reset your password.
