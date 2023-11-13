@@ -62,36 +62,36 @@ export default function Login({ emailRef, passwordRef, setAction }: LoginProps) 
 
   const handleDemoLogin = async () => {
     setSuccessMessage('Logging in as demo user...');
-      axios({
-        method: 'post',
-        url: process.env.NEXT_PUBLIC_API_URL + '/users/login',
-        data: {
-          email: "johns@gmail.com",
-          password: "password"
+    axios({
+      method: 'post',
+      url: process.env.NEXT_PUBLIC_API_URL + '/users/login',
+      data: {
+        email: "johns@gmail.com",
+        password: "password"
+      }
+    }).then((response) => {
+      setSuccessMessage('');
+      if (response.data.status === 'success') {
+        if (response.data.message.includes('Login Successful!')) {
+          setUserID(response.data.user);
+          setToken(response.data.token);
+          setSuccessMessage(response.data.message);
+          setTimeout(() => {
+            router.push('/chat');
+          }, 1000);
+        } else if (response.data.message.includes('For email validation')) {
+          setErrorMessage(response.data.message + ' redirecting...');
+          setTimeout(() => {
+            setAction({ login: false, register: false, forgotPassword: false, confirmEmail: true, confirmForgottenPassword: false });
+          }, 1000);
         }
-      }).then((response) => {
-        setSuccessMessage('');
-        if (response.data.status === 'success') {
-          if (response.data.message.includes('Login Successful!')) {
-            setUserID(response.data.user);
-            setToken(response.data.token);
-            setSuccessMessage(response.data.message);
-            setTimeout(() => {
-              router.push('/chat');
-            }, 1000);
-          } else if (response.data.message.includes('For email validation')) {
-            setErrorMessage(response.data.message + ' redirecting...');
-            setTimeout(() => {
-              setAction({ login: false, register: false, forgotPassword: false, confirmEmail: true, confirmForgottenPassword: false });
-            }, 1000);
-          }
-        } else {
-          setErrorMessage(response.data.error);
-        }
-      }).catch((error) => {
-        setSuccessMessage('');
-        setErrorMessage(error.message);
-      })
+      } else {
+        setErrorMessage(response.data.error);
+      }
+    }).catch((error) => {
+      setSuccessMessage('');
+      setErrorMessage(error.message);
+    })
   }
 
   return (
@@ -107,7 +107,7 @@ export default function Login({ emailRef, passwordRef, setAction }: LoginProps) 
         </div>
       }
       <div className="w-full max-w-xs bg-gradient-to-r from-blue-600 via-blue-400 to-white">
-      <span className="w-full flex items-center justify-center text-4xl text-center py-2">Login</span>
+        <span className="w-full flex items-center justify-center text-4xl text-center py-2">Login</span>
         <form onClick={() => errormessage !== '' ? setErrorMessage('') : null} className="bg-white shadow-md rounded px-8 pt-6 pb-8">
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -140,6 +140,10 @@ export default function Login({ emailRef, passwordRef, setAction }: LoginProps) 
             <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
               Don&apos;t have an account? Sign Up
             </a>
+          </div>
+          <div className='text-center'>
+            <span className='text-xs text-gray-500'>
+              Note: Chatscape is only running on free tier, so it may initially take a few seconds to spin up. </span>
           </div>
         </form>
       </div>
