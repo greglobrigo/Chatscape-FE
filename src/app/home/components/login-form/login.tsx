@@ -27,6 +27,9 @@ export default function Login({ emailRef, passwordRef, setAction }: LoginProps) 
     const password = passwordRef.current?.value;
     if (email && password) {
       setSuccessMessage('Logging in...');
+      setTimeout(() => {
+        setSuccessMessage('Spinning up server...');
+      }, 5000);
       axios({
         method: 'post',
         url: process.env.NEXT_PUBLIC_API_URL + '/users/login',
