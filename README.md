@@ -1,4 +1,4 @@
-## Demo Link: [Click here](chatscape-fe.vercel.app)
+## Demo Link: [Click here](https://chatscape-fe.vercel.app/home)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
